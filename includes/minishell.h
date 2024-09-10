@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/04 17:43:29 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:00:16 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,22 @@
 #include "../libft/libft/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
+
+/*-------------STRUCT----------------*/
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	struct s_cmd	*next;
+}					t_cmd;
+
+/*-------------PROMPT----------------*/
 
 void  ft_prompt(void);
+
+/*-------------SIGNAL----------------*/
+
+void	s_handler(int signum, siginfo_t *info, void *context);
 
 #endif

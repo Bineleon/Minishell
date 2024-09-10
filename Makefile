@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/09/04 17:38:31 by bineleon         ###   ########.fr        #
+#    Updated: 2024/09/10 18:55:44 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 PROMPT_DIR	= src/prompt/
 PROMPT		= prompt.c
 SRC			+= $(addprefix ${PROMPT_DIR}, ${PROMPT})
+
+SIGNAL_DIR	= src/signal/
+SIGNAL		= signal_handler.c
+SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 G_HEADER	= hgenerator
 
