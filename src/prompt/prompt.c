@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/04 17:35:54 by bineleon         ###   ########.fr       */
+/*   Created: 2024/09/04 17:32:05 by bineleon          #+#    #+#             */
+/*   Updated: 2024/09/04 22:58:17 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int main(int ac, char **av, char **envp)
+void  ft_prompt(void)
 {
-	(void)ac;
-	(void)av;
-  (void)envp;
-	while(1)
-	{
-	  ft_prompt();
-	}
-	return (0);
+  char *prompt;
+  printf(CYAN);
+  prompt = readline("Minishell> ");
+  printf(RESET);
+  if (prompt && *prompt)
+  {
+    add_history(prompt);
+  }
 }
