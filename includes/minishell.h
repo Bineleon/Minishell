@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 17:15:15 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/12 19:38:58 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@
 
 /*-------------STRUCT----------------*/
 
-typedef struct s_lst
+typedef struct s_data
 {
-	t_cmd			*cmd;
-	struct s_lst	*next;
-}					t_lst;
+	char			**envp_cpy;
+}					t_data;
 
 typedef struct s_cmd
 {
@@ -35,6 +34,12 @@ typedef struct s_cmd
 	char			**args;
 	char			**redi;
 }					t_cmd;
+
+typedef struct s_lst
+{
+	t_cmd			*cmd;
+	struct s_lst	*next;
+}					t_lst;
 
 typedef enum e_bool
 {
@@ -44,6 +49,9 @@ typedef enum e_bool
 
 /*-------------PARSING---------------*/
 
+char				**cpy_envp(char **envp);
+t_data				*init_and_alloc_data(char **envp);
+
 /*-------------PROMPT----------------*/
 
 void				ft_prompt(t_lst **cmd);
@@ -52,7 +60,7 @@ void				ft_prompt(t_lst **cmd);
 
 /*-------------UTILS-----------------*/
 
-t_lst				*ft_lstnew(char **cmd);
+t_lst				*ft_lstnew(t_cmd *cmd);
 void				ft_lstadd_back(t_lst **lst, t_lst *new);
 void				ft_print_lst(t_lst *cmd);
 

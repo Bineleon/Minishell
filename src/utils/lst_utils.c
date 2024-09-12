@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:36:41 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 15:56:14 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:14:34 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_lst	*ft_lstnew(char **cmd)
+t_lst	*ft_lstnew(t_cmd *cmd)
 {
 	t_lst	*new;
 
@@ -44,9 +44,9 @@ void ft_print_lst(t_lst *cmd)
     t_lst *current = cmd;
     while (current)
     {
-        if (current->cmd && current->cmd[0])
+        if (current->cmd->cmd && current->cmd->cmd)
         {
-            printf("Cmd: %s\n", current->cmd[0]);
+            printf("Cmd: %s\n", current->cmd->cmd);
         }
         current = current->next;
     }
