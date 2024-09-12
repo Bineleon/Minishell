@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/09/10 18:06:38 by elilliu          ###   ########.fr        #
-=======
-#    Updated: 2024/09/12 14:51:04 by bineleon         ###   ########.fr        #
->>>>>>> master
+#    Updated: 2024/09/12 17:24:24 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +37,7 @@ SIGNAL		= signal_handler.c
 SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR	= src/utils/
-UTILS		= lst_utils.c
+UTILS		= lst_utils.c split.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 G_HEADER	= hgenerator
