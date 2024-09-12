@@ -6,10 +6,17 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:44:58 by elilliu           #+#    #+#             */
-/*   Updated: 2024/09/10 17:46:14 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:17:25 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
+int	exec(t_lst *lst)
+{
+	while (lst->next)
+	{
+		execution(lst->cmd);
+		lst = lst->next;
+	}
+}
