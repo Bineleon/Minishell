@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:36:41 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 15:00:24 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:56:14 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,17 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
+}
+
+void ft_print_lst(t_lst *cmd)
+{
+    t_lst *current = cmd;
+    while (current)
+    {
+        if (current->cmd && current->cmd[0])
+        {
+            printf("Cmd: %s\n", current->cmd[0]);
+        }
+        current = current->next;
+    }
 }

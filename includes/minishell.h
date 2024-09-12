@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 15:10:50 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:56:59 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,17 @@ typedef enum e_bool
 
 /*-------------PROMPT----------------*/
 
-void  ft_prompt(void);
+void  ft_prompt(t_lst **cmd);
 
 /*-------------SIGNAL----------------*/
 
-t_lst	*ft_lstnew(char **cmd);
-void	ft_lstadd_back(t_lst **lst, t_lst *new);
+
 
 /*-------------UTILS----------------*/
 
-
+t_lst	*ft_lstnew(char **cmd);
+void	ft_lstadd_back(t_lst **lst, t_lst *new);
+void ft_print_lst(t_lst *cmd);
 
 
 #endif
