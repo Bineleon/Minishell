@@ -6,7 +6,7 @@
 #    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/09/12 17:20:40 by neleon           ###   ########.fr        #
+#    Updated: 2024/09/12 19:52:43 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		=
+PARSING		= 00_parsing.c 01_init_struct.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
 PROMPT_DIR	= src/prompt/
@@ -37,7 +37,7 @@ SIGNAL		= signal_handler.c
 SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR	= src/utils/
-UTILS		= lst_utils.c split.c
+UTILS		= lst_utils.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 G_HEADER	= hgenerator
