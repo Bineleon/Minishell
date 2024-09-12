@@ -1,14 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 14:36:04 by bineleon         ###   ########.fr       */
+/*   Created: 2024/09/12 14:36:41 by bineleon          #+#    #+#             */
+/*   Updated: 2024/09/12 15:00:24 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+t_lst	*ft_lstnew(char **cmd)
+{
+	t_lst	*new;
+
+	new = (t_lst *)malloc(sizeof(t_lst));
+	if (!new)
+		return (NULL);
+	new->cmd = cmd;
+	new->next = NULL;
+	return (new);
+}
+
+void	ft_lstadd_back(t_lst **lst, t_lst *new)
+{
+	t_lst	*tmp;
+
+	if (!(*lst) && new)
+		*lst = new;
+	else if (*lst && new)
+	{
+		tmp = *lst;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
