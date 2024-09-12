@@ -6,7 +6,11 @@
 #    By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/09/10 18:06:38 by elilliu          ###   ########.fr        #
+=======
+#    Updated: 2024/09/12 14:51:04 by bineleon         ###   ########.fr        #
+>>>>>>> master
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +36,14 @@ PROMPT_DIR	= src/prompt/
 PROMPT		= prompt.c
 SRC			+= $(addprefix ${PROMPT_DIR}, ${PROMPT})
 
+SIGNAL_DIR	= src/signal/
+SIGNAL		= signal_handler.c
+SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
+
+UTILS_DIR	= src/utils/
+UTILS		= lst_utils.c
+SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
+
 G_HEADER	= hgenerator
 
 OBJ			= ${SRC:.c=.o}
@@ -41,7 +53,7 @@ CC			= cc
 RM			= rm -rf
 
 #Conditionnal flags depending on the building version
-cflags.release	:= -Wall -Wextra -Werror -MMD -MP -Isrc -Ilibft
+cflags.release	:= -Wall -Wextra -Werror -Isrc -Ilibft
 cflags.gdb		:= -g3
 cflags.sanitize	:= -g3 -fsanitize=address
 CFLAGS			= ${cflags.release} ${cflags.${build}}
