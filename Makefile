@@ -6,7 +6,7 @@
 #    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/09/12 19:52:43 by neleon           ###   ########.fr        #
+#    Updated: 2024/09/13 16:59:08 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		= 00_parsing.c 01_init_struct.c
+PARSING		= 00_parsing.c 01_init_struct.c 02_env.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
 PROMPT_DIR	= src/prompt/

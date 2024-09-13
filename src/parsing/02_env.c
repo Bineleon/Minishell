@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   02_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/13 17:58:41 by neleon           ###   ########.fr       */
+/*   Created: 2024/09/13 16:57:19 by neleon            #+#    #+#             */
+/*   Updated: 2024/09/13 16:57:44 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-
-int	main(int ac, char **av, char **envp)
+static int	get_envp_size(char **envp)
 {
-	t_lst	*cmd_arg;
-	t_data	*data;
+	int	envp_size;
+
+	envp_size = 0;
+	while (envp[envp_size])
+		envp_size++;
+	return (envp_size);
+}
+
+char	**cpy_envp(char **envp)
+{
+	int		size;
 	int		i;
+	char	**envp_cpy;
 
 	i = 0;
-	(void)ac;
-	(void)av;
-	(void)envp;
-	cmd_arg = ft_lstnew(NULL);
-	data = init_and_alloc_data(envp);
-	while (1)
+	size = get_envp_size(envp);
+	envp_cpy = (char **)malloc(size * sizeof(char *) + 1);
+	if (!envp_cpy)
+		return (NULL);
+	while (envp[i])
 	{
-		ft_prompt(&cmd_arg);
-		
-		// ft_print_lst(cmd_arg);
+		envp_cpy[i] = ft_strdup(envp[i]);
+		i++;
 	}
-	return (0);
+	envp_cpy[i] = NULL;
+	return (envp_cpy);
 }

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 19:52:08 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/13 18:00:03 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@
 typedef struct s_data
 {
 	char			**envp_cpy;
+	size_t			cmds_count;
 }					t_data;
 
 typedef struct s_cmd
 {
-	char			*cmd;
+	// char			*cmd;
 	char			**args;
 	char			**redi;
 }					t_cmd;
@@ -51,6 +52,9 @@ typedef enum e_bool
 
 char				**cpy_envp(char **envp);
 t_data				*init_and_alloc_data(char **envp);
+char	**get_cmds_in_pipe(char *prompt);
+void	add_cmd_to_lst(char **cmds, t_lst *lst);
+
 
 /*-------------PROMPT----------------*/
 
