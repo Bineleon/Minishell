@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/18 18:32:55 by neleon           ###   ########.fr       */
+/*   Created: 2024/09/18 17:25:43 by neleon            #+#    #+#             */
+/*   Updated: 2024/09/18 18:05:17 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-
-int	main(int ac, char **av, char **envp)
+void	*gc_mem(t_garbage_co *mem_lst, t_mem type, size_t size, void *ptr)
 {
-	t_lst	*cmd_arg;
-	t_data	*data;
-	int		i;
-
-	i = 0;
-	(void)ac;
-	(void)av;
-	(void)envp;
-	cmd_arg = ft_lstnew(NULL);
-	data = init_and_alloc_data(envp);
-	while (1)
+	void	*new_ptr;
+	void	*new_node;
+	
+	if (type == MALLOC)
 	{
-		ft_prompt(&cmd_arg);
-		
-		// ft_print_lst(cmd_arg);
+		new_ptr = malloc(size);
+		if (!new_ptr)
+		{
+			perror("malloc");
+			return (NULL);
+		}
+		new_node->ptr = new_ptr;
+		if (!mem_lst)
+			mem_lst = malloc(sizeof(t_garbage_co *) + 1);
+		else
+		{
+			mem_lst->next = new_node->ptr;
+			new_node->next = NULL;
+		}
 	}
-	return (0);
+	else if (type == FREE)
+	// TODO
 }

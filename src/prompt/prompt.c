@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:32:05 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/12 20:05:20 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/18 18:32:46 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_prompt(t_lst **cmd)
 {
 	char	*prompt;
-	(void) cmd;
-	// char	**cmd_args;
+	// (void) cmd;
+	char	**cmds;
 	// t_lst	*new;
 	
 	// new = NULL;
@@ -25,9 +25,12 @@ void	ft_prompt(t_lst **cmd)
 	if (prompt && *prompt)
 	{
 		add_history(prompt);
-		// cmd_args = ft_split(prompt, ' ');
-		// new = ft_lstnew(cmd_args);
-		// ft_lstadd_back(cmd, new);
+		cmds = get_cmds_in_pipe(prompt);
+		// add_cmd_to_lst(cmds, &cmd);
+		// while((*cmd))
+		// {
+			
+		// }
 	}
 	free(prompt);
 }
