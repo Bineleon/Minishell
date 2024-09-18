@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 17:32:05 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/18 17:21:15 by neleon           ###   ########.fr       */
+/*   Created: 2024/09/18 17:25:43 by neleon            #+#    #+#             */
+/*   Updated: 2024/09/18 18:05:17 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_prompt(t_lst **cmd)
+void	*gc_mem(t_garbage_co *mem_lst, t_mem type, size_t size, void *ptr)
 {
-	char	*prompt;
-	// (void) cmd;
-	char	**cmds;
-	// t_lst	*new;
+	void	*new_ptr;
+	void	*new_node;
 	
-	// new = NULL;
-	printf(CYAN);
-	prompt = readline("Minishell>\033[0m ");
-	if (prompt && *prompt)
+	if (type == MALLOC)
 	{
-		add_history(prompt);
-		cmds = get_cmds_in_pipe(prompt);
-		// add_cmd_to_lst(cmds, &cmd);
-		// while((*cmd))
-		// {
-			
-		// }
+		new_ptr = malloc(size);
+		if (!new_ptr)
+		{
+			perror("malloc");
+			return (NULL);
+		}
+		new_node->ptr = new_ptr;
+		if (!mem_lst)
+			mem_lst = malloc(sizeof(t_garbage_co *) + 1);
+		else
+		{
+			mem_lst->next = new_node->ptr;
+			new_node->next = NULL;
+		}
 	}
-	free(prompt);
+	else if (type == FREE)
+	// TODO
 }
