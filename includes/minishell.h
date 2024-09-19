@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/19 18:42:18 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:13:29 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ typedef struct s_data
 {
 	char				**envp_cpy;
 	size_t				cmds_count;
-  void         *ptr1;
-  void         *ptr2;
-  void         *ptr3;
     t_garbage_co        *garbage;    // Chained list of all the malloced pointers
 }						t_data;
 
