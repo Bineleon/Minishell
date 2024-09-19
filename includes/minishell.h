@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/18 17:59:09 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/19 18:42:18 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,21 @@
 # include <readline/readline.h>
 # include <signal.h>
 
-/*-------------STRUCT----------------*/
+/* ╔════════════════════════════════════╗ */
+/* ║             STRUCTURES             ║ */
+/* ╚════════════════════════════════════╝ */
 
 typedef enum e_token
 {
-	C_WORD = -1,
-	C_NULL = '\0',
-	C_PIPE = '|',
-	C_IN = '<',
-	C_OUT = '>',
-	C_DOLLAR = '$',
-	C_SQUOTE = '\'',
-	C_DQUOTE = '\"',
-	C_SPACE = ' ',
+	WORD = -1,
+	PIPE = '|',
+	IN = '<',
+	OUT = '>',
+	EXPAND = '$',
+	SQUOTE = '\'',
+	DQUOTE = '\"',
+	SPC = ' ',
 }						t_token;
-
-typedef struct s_data
-{
-	char				**envp_cpy;
-	size_t				cmds_count;
-}						t_data;
 
 typedef struct s_cmd
 {
@@ -64,7 +59,8 @@ typedef struct s_garbage_co
 typedef enum e_mem
 {
 	MALLOC,
-	FREE
+	FREE,
+    FULL_CLEAN
 }						t_mem;
 
 typedef enum e_bool
@@ -73,25 +69,60 @@ typedef enum e_bool
 	true
 }						t_bool;
 
-/*-------------PARSING---------------*/
+typedef struct s_data
+{
+	char				**envp_cpy;
+	size_t				cmds_count;
+  void         *ptr1;
+  void         *ptr2;
+  void         *ptr3;
+    t_garbage_co        *garbage;    // Chained list of all the malloced pointers
+}						t_data;
+
+/* ╔════════════════════════════════════╗ */
+/* ║              PARSING               ║ */
+/* ╚════════════════════════════════════╝ */
 
 char					**cpy_envp(char **envp);
 t_data					*init_and_alloc_data(char **envp);
 char					**get_cmds_in_pipe(char *prompt);
 void					add_cmd_to_lst(char **cmds, t_lst *lst);
 
-/*-------------PROMPT----------------*/
+/* ╔════════════════════════════════════╗ */
+/* ║               EXEC                 ║ */
+/* ╚════════════════════════════════════╝ */
+
+
+
+/* ╔════════════════════════════════════╗ */
+/* ║              PROMPT                ║ */
+/* ╚════════════════════════════════════╝ */
 
 void					ft_prompt(t_lst **cmd);
 
-/*-------------SIGNAL----------------*/
+/* ╔════════════════════════════════════╗ */
+/* ║              SIGNALS               ║ */
+/* ╚════════════════════════════════════╝ */
 
-/*-------------UTILS-----------------*/
+
+
+/* ╔════════════════════════════════════╗ */
+/* ║               UTILS                ║ */
+/* ╚════════════════════════════════════╝ */
 
 t_lst					*ft_lstnew(t_cmd *cmd);
 void					ft_lstadd_back(t_lst **lst, t_lst *new);
 void					ft_print_lst(t_lst *cmd);
-void					*gc_mem(t_garbage_co *mem_lst, t_mem type, size_t size,
-							void *ptr);
+t_data                  *get_data(void);
+
+/* ╔════════════════════════════════════╗ */
+/* ║        GARBAGE COLLECTOR           ║ */
+/* ╚════════════════════════════════════╝ */
+
+void          *gc_mem(t_mem type, size_t size, void *ptr);
+// Exemples :
+  // gc_mem(MALLOC, sizeof(char *), str)
+  // gc_mem(FREE, 0, str) ---> free pointer
+  // gc_mem(FULL_CLEAN, 0, NULL)
 
 #endif
