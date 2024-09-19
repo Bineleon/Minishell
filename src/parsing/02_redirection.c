@@ -6,16 +6,13 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/09/19 16:35:04 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/09/19 18:26:03 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	redirection(t_element *element)
+int	redirection(t_data *data)
 {
-	while (element->next)
-	{
-		
-	}
+	
 }
