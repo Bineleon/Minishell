@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 20:21:59 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/19 20:30:42 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/19 21:11:29 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,22 @@
 static int	ft_word_len(char const *s, char c)
 {
 	int	len;
+  t_bool in_quote;
 
 	len = 0;
+  in_quote = false;
 	while (s[len] && s[len] != c)
+  {
+    if (s[len] == SQUOTE || s[len] == DQUOTE)
+    {
+      if (!in_quote)
+          in_quote = true;
+      else
+          in_quote = false;
+    }
+    
 		len++;
+  }
 	return (len);
 }
 

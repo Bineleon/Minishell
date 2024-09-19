@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   prompt.c                    content                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_prompt(t_lst **cmd)
+void	ft_prompt(void)
 {
 	char	*prompt;
-	(void) cmd;
 	// char	**cmds;
 	// t_lst	*new;
 
