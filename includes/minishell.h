@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/18 18:32:33 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/19 16:42:54 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,16 @@ typedef enum e_token
 	C_SPACE = ' ',
 }						t_token;
 
-typedef struct s_data
-{
-	char				**envp_cpy;
-	size_t				cmds_count;
-}						t_data;
+
 
 typedef struct s_cmd
 {
-	// char			*cmd;
+	char				*cmd;
 	char				**args;
-	char				**redi;
+	char				*input;
+	char				*output;
+	struct s_cmd		*next;
 }						t_cmd;
-
-typedef struct s_lst
-{
-	t_cmd				*cmd;
-	struct s_lst		*next;
-}						t_lst;
 
 typedef struct s_garbage_co
 {
@@ -72,6 +64,14 @@ typedef enum e_bool
 	false,
 	true
 }						t_bool;
+
+typedef struct s_data
+{
+	char				**envp_cpy;
+	size_t				cmds_count;
+	int					fd[2];
+	struct s_cmd		*cmds;
+}						t_data;
 
 /*-------------PARSING---------------*/
 
