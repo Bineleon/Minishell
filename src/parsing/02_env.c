@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   02_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:57:19 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/13 16:57:44 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/19 18:32:32 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ char	**cpy_envp(char **envp)
 	int		size;
 	int		i;
 	char	**envp_cpy;
+  t_data *data;
 
+  data = get_data();
 	i = 0;
 	size = get_envp_size(envp);
 	envp_cpy = (char **)malloc(size * sizeof(char *) + 1);
@@ -39,5 +41,5 @@ char	**cpy_envp(char **envp)
 		i++;
 	}
 	envp_cpy[i] = NULL;
-	return (envp_cpy);
+	return (data->envp_cpy = envp_cpy, envp_cpy);
 }
