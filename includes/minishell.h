@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/19 19:19:31 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:20:07 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <signal.h>
 
 /* ╔════════════════════════════════════╗ */
-/* ║             STRUCTURES             ║ */
+/* ║                ENUM                ║ */
 /* ╚════════════════════════════════════╝ */
 
 typedef enum e_token
@@ -36,6 +36,29 @@ typedef enum e_token
 	DQUOTE = '\"',
 	SPC = ' ',
 }						t_token;
+
+typedef enum e_mem
+{
+	MALLOC,
+	FREE,
+	FULL_CLEAN
+}						t_mem;
+
+typedef enum e_bool
+{
+	false,
+	true
+}						t_bool;
+
+/* ╔════════════════════════════════════╗ */
+/* ║             STRUCTURES             ║ */
+/* ╚════════════════════════════════════╝ */
+
+typedef struct s_fullcmd
+{
+	t_fullcmd			*str;
+	t_token				type;
+}						t_fullcmd;
 
 typedef struct s_cmd
 {
@@ -52,19 +75,6 @@ typedef struct s_garbage_co
 	void				*ptr;
 	struct s_garbage_co	*next;
 }						t_garbage_co;
-
-typedef enum e_mem
-{
-	MALLOC,
-	FREE,
-	FULL_CLEAN
-}						t_mem;
-
-typedef enum e_bool
-{
-	false,
-	true
-}						t_bool;
 
 typedef struct s_data
 {
