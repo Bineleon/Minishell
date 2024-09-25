@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 20:21:59 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/25 19:58:51 by bineleon         ###   ########.fr       */
+/*   Created: 2024/09/25 21:34:33 by neleon            #+#    #+#             */
+/*   Updated: 2024/09/25 22:17:16 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int skip_quotes(char *line, int i, char quote)
 {
     while (line[i] && line[i] != quote)
         i++;
-    return i + 1;
+    return (i + 1);
 }
 
 char **allocate_args(int arg_count)
@@ -72,15 +72,15 @@ int in_quote_arg(char *line, char **args, int i, int *j)
     int len;
 
     quote = line[i];
-    i++;
     start = i;
+    i++;
     i = skip_quotes(line, i, quote);
     len = i - start;
     args[*j] = gc_mem(MALLOC, len + 1, NULL);
-    ft_strlcpy(args[*j], &line[start], len);
+    ft_strlcpy(args[*j], &line[start], len + 1);
     args[*j][len] = '\0';
     (*j)++;
-    return (i + 1);
+    return (i);
 }
 
 int not_quoted_arg(char *line, char **args, int i, int *j)
@@ -96,7 +96,7 @@ int not_quoted_arg(char *line, char **args, int i, int *j)
     ft_strlcpy(args[*j], &line[start], len + 1);
     args[*j][len] = '\0';
     (*j)++;
-    return i;
+    return (i);
 }
 
 void extract_args(char *line, char **args)
@@ -130,7 +130,7 @@ char **split_args(char *line)
 
 // int main(void)
 // {
-//     char *line = "echo              \"Hello       you\" > output.txt              ";
+//     char *line = "echo           \"Hello      you\" > 'output.txt'            ";
 
 //     char **args = split_args(line);
 
