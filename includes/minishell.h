@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/19 19:19:31 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/24 18:17:21 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/wait.h>
 
 /* ╔════════════════════════════════════╗ */
 /* ║             STRUCTURES             ║ */
@@ -39,11 +43,11 @@ typedef enum e_token
 
 typedef struct s_cmd
 {
-	t_fullcmd			**str;
+	char				**str;
 	char				*cmd;
 	char				**args;
-	char				*input;
-	char				*output;
+	int					input; // a initialiser a STDIN_FILENO
+	int					output; // a initialiser a STDOUT_FILENO
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -71,10 +75,10 @@ typedef struct s_data
 	char				**envp_cpy;
 	size_t				cmds_count;
 	int					fd[2];
+	int					pid;
 	struct s_cmd		*cmds;
-	t_garbage_co *garbage; // Chained list of all the malloced pointers
+	t_garbage_co		*garbage; // Chained list of all the malloced pointers
 }						t_data;
-
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PARSING               ║ */
