@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/19 21:01:27 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:54:36 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_fullcmd
 
 typedef struct s_cmd
 {
-	t_fullcmd			**str; 
+	t_fullcmd			**str;
 	char				*cmd;
 	char				**args;
 	char				*input;
@@ -117,6 +117,15 @@ void					ft_prompt(void);
 // void					ft_lstadd_back(t_lst **lst, t_lst *new);
 // void					ft_print_lst(t_lst *cmd);
 t_data					*get_data(void);
+t_bool	is_whitespace(char c);
+int count_arguments(char *line);
+int skip_quotes(char *line, int i, char quote);
+char **allocate_args(int arg_count);
+int skip_spaces(char *line, int i);
+int in_quote_arg(char *line, char **args, int i, int *j);
+int not_quoted_arg(char *line, char **args, int i, int *j);
+void extract_args(char *line, char **args);
+char **split_args(char *line);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */
