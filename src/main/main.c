@@ -6,27 +6,27 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/25 19:04:55 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:45:15 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	// t_data	*data;`
-// 	// int		i;
+int	main(int ac, char **av, char **envp)
+{
+	// t_data	*data;`
+	// int		i;
 
-// 	// i = 0;
-// 	(void)ac;
-// 	(void)av;
-// 	(void)envp;
-// 	// data = get_data();
-// 	while (1)
-// 	{
-// 		ft_prompt();
+	// i = 0;
+	(void)ac;
+	(void)av;
+	(void)envp;
+	// data = get_data();
+	while (1)
+	{
+		ft_prompt();
 
-// 		// ft_print_lst(cmd_arg);
-// 	}
-// 	return (0);
-// }
+		// ft_print_lst(cmd_arg);
+	}
+	return (0);
+}

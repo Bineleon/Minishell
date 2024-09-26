@@ -25,6 +25,7 @@ void	ft_prompt(void)
 	if (prompt && *prompt)
 	{
 		add_history(prompt);
+    check_open_quotes(prompt);
 		// cmds = get_cmds_in_pipe(prompt);
 		// add_cmd_to_lst(cmds, &cmd);
 		// while((*cmd))

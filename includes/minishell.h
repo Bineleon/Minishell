@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/25 18:54:36 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:43:40 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ typedef struct s_data
 
 
 /* ╔════════════════════════════════════╗ */
+/* ║               ERROR                ║ */
+/* ╚════════════════════════════════════╝ */
+
+t_bool check_open_quotes(char *line);
+
+/* ╔════════════════════════════════════╗ */
 /* ║              PARSING               ║ */
 /* ╚════════════════════════════════════╝ */
 
@@ -136,5 +142,7 @@ void					*gc_mem(t_mem type, size_t size, void *ptr);
 // gc_mem(MALLOC, sizeof(char *), str)
 // gc_mem(FREE, 0, str) ---> free pointer
 // gc_mem(FULL_CLEAN, 0, NULL)
+
+
 
 #endif
