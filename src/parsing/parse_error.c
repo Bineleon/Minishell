@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:06:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/26 15:41:41 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:49:29 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_bool check_open_quotes(char *line)
     if (dq || sq)
     {
         ft_putstr_fd("Error: Open quote\n", 2);
-        return true;
+        return (true);
     }
-    return false;
+    return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/26 15:43:40 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:51:38 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef enum e_token
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	SPC = ' ',
+  HEREDOC = -2,
+  APPEND = -3
 }						t_token;
 
 typedef enum e_mem
@@ -58,11 +60,12 @@ typedef struct s_fullcmd
 {
 	char		    	*str;
 	t_token				type;
+  struct s_fullcmd *next;
 }						t_fullcmd;
 
 typedef struct s_cmd
 {
-	t_fullcmd			**str;
+	t_fullcmd			*full_cmd;
 	char				*cmd;
 	char				**args;
 	char				*input;
@@ -82,6 +85,7 @@ typedef struct s_data
 	size_t				cmds_count;
 	int					  fd[2];
 	t_cmd		      *cmds;
+  t_fullcmd       *token;
 	t_garbage_co  *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
@@ -99,6 +103,7 @@ t_bool check_open_quotes(char *line);
 char					**cpy_envp(char **envp);
 t_data					*init_and_alloc_data(char **envp);
 char					**get_cmds_in_pipe(char *prompt);
+t_fullcmd *parse_tokens(char *line, t_data *data);
 // void					add_cmd_to_lst(char **cmds, t_lst *lst);
 
 /* ╔════════════════════════════════════╗ */
@@ -109,7 +114,7 @@ char					**get_cmds_in_pipe(char *prompt);
 /* ║              PROMPT                ║ */
 /* ╚════════════════════════════════════╝ */
 
-void					ft_prompt(void);
+void					ft_prompt(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              SIGNALS               ║ */
@@ -123,7 +128,9 @@ void					ft_prompt(void);
 // void					ft_lstadd_back(t_lst **lst, t_lst *new);
 // void					ft_print_lst(t_lst *cmd);
 t_data					*get_data(void);
+void  init_data(t_data *data, char **envp);
 t_bool	is_whitespace(char c);
+t_bool is_separator(char c);
 int count_arguments(char *line);
 int skip_quotes(char *line, int i, char quote);
 char **allocate_args(int arg_count);
