@@ -32,10 +32,10 @@ void print_tokens(t_fullcmd *tokens)
         else if (tokens->type == EXPAND)
             printf("EXPAND");
         else if (tokens->type == SQUOTE)
-            printf("SINGLE QUOTE");
+            printf("SQUOTE");
         else if (tokens->type == DQUOTE)
-            printf("DOUBLE QUOTE");
-        printf(", token = (%s)\n", tokens->str ? tokens->str : "NULL");
+            printf("DQUOTE");
+        printf(", token = (%s)\n", tokens->str);
         tokens = tokens->next;
     }
 }
