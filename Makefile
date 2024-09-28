@@ -6,10 +6,9 @@
 #    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/09/25 19:05:32 by bineleon         ###   ########.fr        #
+#    Updated: 2024/09/27 18:05:17 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 GREEN			= \033[0;32m\e[1m
 RESET			= \e[0m\033[0m
@@ -25,7 +24,8 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		= parsing.c init_struct.c env.c token_check.c parse_error.c
+PARSING		= parsing.c init_struct.c env.c token_check.c parse_error.c\
+					token.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
 PROMPT_DIR	= src/prompt/

@@ -43,19 +43,22 @@ void print_tokens(t_fullcmd *tokens)
 void	ft_prompt(t_data *data)
 {
 	char	*prompt;
+  t_fullcmd *tokens;
 	// char	**cmds;
 	// t_lst	*new;
 
 	// new = NULL;
   // cmds = NULL;
+  tokens = NULL;
 	printf(CYAN);
 	prompt = readline("Minishell>\033[0m ");
 	if (prompt && *prompt)
 	{
 		add_history(prompt);
     check_open_quotes(prompt);
-    t_fullcmd *tokens = parse_tokens(prompt, data);
-    print_tokens(tokens);
+    tokens = parse_tokens(prompt, data);
+    if (!check_errors(tokens))
+      print_tokens(tokens);
 		// cmds = get_cmds_in_pipe(prompt);
 		// add_cmd_to_lst(cmds, &cmd);
 		// while((*cmd))

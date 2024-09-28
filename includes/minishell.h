@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/26 17:51:38 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:03:07 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_data
 	size_t				cmds_count;
 	int					  fd[2];
 	t_cmd		      *cmds;
-  t_fullcmd       *token;
+  t_fullcmd       *token_fullcmd;
 	t_garbage_co  *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
@@ -94,7 +94,11 @@ typedef struct s_data
 /* ║               ERROR                ║ */
 /* ╚════════════════════════════════════╝ */
 
+t_bool  check_errors(t_fullcmd *tokens);
 t_bool check_open_quotes(char *line);
+t_bool pipe_errors(t_fullcmd *tokens);
+t_bool redirect_errors(t_fullcmd *tokens);
+t_bool expand_errors(t_fullcmd *tokens);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PARSING               ║ */
@@ -131,6 +135,7 @@ t_data					*get_data(void);
 void  init_data(t_data *data, char **envp);
 t_bool	is_whitespace(char c);
 t_bool is_separator(char c);
+t_bool  isquote(char c);
 int count_arguments(char *line);
 int skip_quotes(char *line, int i, char quote);
 char **allocate_args(int arg_count);

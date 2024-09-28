@@ -14,7 +14,7 @@ t_fullcmd *create_new_token(t_fullcmd **current_token, t_fullcmd **head)
     return (new_token);
 }
 
-int handle_quotes(char *line, int i, t_fullcmd *token)
+int to_handle_quotes(char *line, int i, t_fullcmd *token)
 {
     char quote_type;
     int word_start;
@@ -32,7 +32,7 @@ int handle_quotes(char *line, int i, t_fullcmd *token)
     return (i);
 }
 
-int handle_pipe(char *line, int i, t_fullcmd *token)
+int to_handle_pipe(char *line, int i, t_fullcmd *token)
 {
     token->type = PIPE;
     token->str = gc_mem(MALLOC, 2, NULL);
@@ -40,7 +40,7 @@ int handle_pipe(char *line, int i, t_fullcmd *token)
     token->str[1] = '\0';
     return (i + 1);
 }
-int handle_in(char *line, int i, t_fullcmd *token)
+int to_handle_in(char *line, int i, t_fullcmd *token)
 {
     if (line[i + 1] == '<')
     {
@@ -61,7 +61,7 @@ int handle_in(char *line, int i, t_fullcmd *token)
     }
 }
 
-int handle_out(char *line, int i, t_fullcmd *token)
+int to_handle_out(char *line, int i, t_fullcmd *token)
 {
     if (line[i + 1] == '>')
     {
@@ -82,7 +82,7 @@ int handle_out(char *line, int i, t_fullcmd *token)
     }
 }
 
-int handle_expand(char *line, int i, t_fullcmd *token)
+int to_handle_expand(char *line, int i, t_fullcmd *token)
 {
     token->type = EXPAND;
     token->str = gc_mem(MALLOC, 2, NULL);
@@ -91,7 +91,7 @@ int handle_expand(char *line, int i, t_fullcmd *token)
     return (i + 1);
 }
 
-int handle_word(char *line, int i, t_fullcmd *token)
+int to_handle_word(char *line, int i, t_fullcmd *token)
 {
     int word_start;
 
@@ -120,19 +120,19 @@ t_fullcmd *parse_tokens(char *line, t_data *data)
             i++;
         new_token = create_new_token(&current_token, &head);
         if (isquote(line[i]))
-            i = handle_quotes(line, i, new_token);
+            i = to_handle_quotes(line, i, new_token);
         else if (line[i] == PIPE)
-            i = handle_pipe(line, i, new_token);
+            i = to_handle_pipe(line, i, new_token);
         else if (line[i] == IN)
-            i = handle_in(line, i, new_token);
+            i = to_handle_in(line, i, new_token);
         else if (line[i] == OUT)
-            i = handle_out(line, i, new_token);
+            i = to_handle_out(line, i, new_token);
         else if (line[i] == EXPAND)
-            i = handle_expand(line, i, new_token);
+            i = to_handle_expand(line, i, new_token);
         else
-            i = handle_word(line, i, new_token);
+            i = to_handle_word(line, i, new_token);
         current_token = new_token;
     }
-    data->token = head;
+    data->token_fullcmd = head;
     return (head);
 }

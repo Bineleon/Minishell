@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:33 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/25 23:11:31 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/27 18:34:01 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int skip_spaces(char *line, int i)
 {
     while (is_whitespace(line[i]))
         i++;
-    return i;
+    return (i);
 }
 
 int in_quote_arg(char *line, char **args, int i, int *j)
@@ -125,7 +125,7 @@ char **split_args(char *line)
     arg_count = count_args(line);
     args = allocate_args(arg_count);
     extract_args(line, args);
-    return args;
+    return (args);
 }
 
 // int main(void)
