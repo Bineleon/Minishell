@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/28 16:03:07 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:34:16 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,17 @@ typedef struct s_garbage_co
 	struct s_garbage_co	*next;
 }						t_garbage_co;
 
+typedef struct s_env
+{
+  char          *key;
+  char          *value;
+  struct s_env  *next;
+}         t_env;
+
+
 typedef struct s_data
 {
-	char				  **envp_cpy;
+	t_env				  *envp_cpy;
 	size_t				cmds_count;
 	int					  fd[2];
 	t_cmd		      *cmds;
