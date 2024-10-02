@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:06:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/28 16:09:51 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:43:45 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_bool pipe_errors(t_fullcmd *tokens)
     current  = tokens;
     if (current && current->type == PIPE)
     {
-        ft_putstr_fd("Error: Pipe at the start of the line.\n", 2);
+        ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
         return (true);
     }
     while (current)
@@ -53,12 +53,27 @@ t_bool pipe_errors(t_fullcmd *tokens)
             && (current->next->type == PIPE || current->next->type == WORD
             || !current->next)))
         {
-            ft_putstr_fd("Error: Syntax error near \'|\'.\n", 2);
+            ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return (true);
         }
         current = current->next;
     }
     return (false);
+}
+
+t_bool  sub_redirect_errors(t_fullcmd *tokens)
+{
+      if (!current->next || current->next->type != WORD)
+      {
+        if (current->type == IN || current->type == OUT)
+            ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+        if (current->type == APPEND)
+            ft_putstr_fd("syntax error near unexpected token `<<'\n");
+        if (current->type == HEREDOC)
+            ft_putstr_fd("syntax error near unexpected token `>>'\n", 2);
+        return (true);
+      }
+      return (false);
 }
 
 t_bool redirect_errors(t_fullcmd *tokens)
@@ -67,20 +82,15 @@ t_bool redirect_errors(t_fullcmd *tokens)
 
     current = tokens;
     if (current && (current->type == IN || current->type == OUT
-        || current->type == APPEND || current->type == HEREDOC))
+        || current->type == APPEND || current->type == HEREDOC)
+        && !current->next )
     {
-        ft_putstr_fd("Error: Redirection at the start of the line.\n", 2);
+        ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
         return (true);
     }
     while (current)
     {
-        if ((current->type == IN || current->type == OUT
-            || current->type == APPEND || current->type == HEREDOC)
-            && (!current->next || current->next->type != WORD))
-        {
-            ft_putstr_fd("Error: Redirection\n", 2);
-            return (true);
-        }
+        sub_redirect_errors(current);
         current = current->next;
     }
     return (false);

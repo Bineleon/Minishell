@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/28 16:34:16 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:48:27 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void					ft_prompt(t_data *data);
 // void					ft_print_lst(t_lst *cmd);
 t_data					*get_data(void);
 void  init_data(t_data *data, char **envp);
+void init_env(t_env *env);
 t_bool	is_whitespace(char c);
 t_bool is_separator(char c);
 t_bool  isquote(char c);
@@ -159,8 +160,8 @@ char **split_args(char *line);
 
 void					*gc_mem(t_mem type, size_t size, void *ptr);
 // Exemples :
-// gc_mem(MALLOC, sizeof(char *), str)
-// gc_mem(FREE, 0, str) ---> free pointer
+// gc_mem(MALLOC, sizeof(char *), NULL) -->
+// gc_mem(FREE, 0, str) ---> free pointer "str"
 // gc_mem(FULL_CLEAN, 0, NULL)
 
 

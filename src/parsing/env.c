@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:57:19 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/28 16:35:26 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:50:33 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,17 @@ char	**cpy_envp(char **envp)
 
 t_env *env_cpy(char **envp)
 {
-  
+    t_env  *env_copy;
+    t_data *data;
+    int i;
+
+    i = 0;
+    data = get_data();
+    init_env(env_copy);
+    while(envp[i])
+    {
+      
+      i++;
+    }
+
 }
