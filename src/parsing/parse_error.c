@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:06:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/02 10:43:45 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:14:22 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ t_bool pipe_errors(t_fullcmd *tokens)
 
 t_bool  sub_redirect_errors(t_fullcmd *tokens)
 {
-      if (!current->next || current->next->type != WORD)
+      if (!tokens->next || tokens->next->type != WORD)
       {
-        if (current->type == IN || current->type == OUT)
+        if (tokens->type == IN || tokens->type == OUT)
             ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
-        if (current->type == APPEND)
-            ft_putstr_fd("syntax error near unexpected token `<<'\n");
-        if (current->type == HEREDOC)
+        if (tokens->type == APPEND)
+            ft_putstr_fd("syntax error near unexpected token `<<'\n", 2);
+        if (tokens->type == HEREDOC)
             ft_putstr_fd("syntax error near unexpected token `>>'\n", 2);
         return (true);
       }

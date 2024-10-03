@@ -6,57 +6,76 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:57:19 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/02 11:50:33 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:07:02 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	get_envp_size(char **envp)
-{
-	int	envp_size;
+// static int	get_envp_size(char **envp)
+// {
+// 	int	envp_size;
 
-	envp_size = 0;
-	while (envp[envp_size])
-		envp_size++;
-	return (envp_size);
-}
+// 	envp_size = 0;
+// 	while (envp[envp_size])
+// 		envp_size++;
+// 	return (envp_size);
+// }
 
-char	**cpy_envp(char **envp)
-{
-	int		size;
-	int		i;
-	char	**envp_cpy;
-  t_data *data;
+// char	**cpy_envp(char **envp)
+// {
+// 	int		size;
+// 	int		i;
+// 	char	**envp_cpy;
+//   t_data *data;
 
-  data = get_data();
-	i = 0;
-	size = get_envp_size(envp);
-	envp_cpy = (char **)malloc(size * sizeof(char *) + 1);
-	if (!envp_cpy)
-		return (NULL);
-	while (envp[i])
-	{
-		envp_cpy[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	envp_cpy[i] = NULL;
-	return (data->envp_cpy = envp_cpy, envp_cpy);
-}
+//   data = get_data();
+// 	i = 0;
+// 	size = get_envp_size(envp);
+// 	envp_cpy = (char **)malloc(size * sizeof(char *) + 1);
+// 	if (!envp_cpy)
+// 		return (NULL);
+// 	while (envp[i])
+// 	{
+// 		envp_cpy[i] = ft_strdup(envp[i]);
+// 		i++;
+// 	}
+// 	envp_cpy[i] = NULL;
+// 	return (data->envp_cpy = envp_cpy, envp_cpy);
+// }
 
 t_env *env_cpy(char **envp)
 {
-    t_env  *env_copy;
-    t_data *data;
+    t_env  *head;
+    t_env  *current;
+    t_env  *new_node;
+    size_t  key_size;
+    char *equal;
     int i;
 
     i = 0;
-    data = get_data();
-    init_env(env_copy);
+    equal = NULL;
+    key_size = 0;
+    current = NULL;
+    new_node = NULL;
+    head = NULL;
     while(envp[i])
     {
-      
-      i++;
+        equal = ft_strchr(envp[i], '=');
+        if (!equal)
+            continue;
+        new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
+        key_size = equal - envp[i];
+        new_node->key =  gc_mem(MALLOC, key_size + 1, NULL);
+        ft_strlcpy(new_node->key, envp[i], key_size + 1);
+        new_node->value = ft_strdup(equal + 1);
+        new_node->next = NULL;
+        if (current)
+            current->next = new_node;
+        else
+            head = new_node;
+        current = new_node;
+        i++;  
     }
-
+    return (head);
 }

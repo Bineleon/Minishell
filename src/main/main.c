@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/26 17:32:06 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:54:29 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@ int	main(int ac, char **av, char **envp)
 
   data = get_data();
   init_data(data, envp);
+  t_env  *curr = data->envp_cpy;
+  while (curr->next)
+  {
+      printf("key = %s   value = %s\n", curr->key, curr->value);
+      curr = curr->next;
+  }
 	while (1)
 	{
 		ft_prompt(data);
-
 		// ft_print_lst(cmd_arg);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/02 11:47:39 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:54:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void  init_data(t_data *data, char **envp)
     data->cmds = NULL;
     data->token_fullcmd = NULL;
     data->cmds_count = 0;
-    data->envp_cpy = cpy_envp(envp);
+    data->envp_cpy = env_cpy(envp);
     data->garbage = NULL;
 }
 
