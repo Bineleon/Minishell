@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/10 17:48:10 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/10/10 19:44:36 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	redir_input(t_data *data, t_cmd *cmd)
 				close(fd);
 			fd = open(str[i + 1], O_RDONLY);
 			if (fd == -1)
-				return ((void)ft_putstr_fd("error: \n", 2));
+				return ((void)ft_putstr_fd("bash: \n", 2));
 		}
 		i++;
 	}
@@ -76,10 +76,10 @@ int	redirection(t_data *data)
 	while (data->cmds->next != NULL)
 	{
 		if (pipe(data->fd) == -1)
-			return (ft_putstr_fd("error: pipe creation failure\n", 2), 0);
+			return (error_mess(NULL, NULL), 0);
 		data->pid = fork();
 		if (data->pid == -1)
-			return (ft_putstr_fd("error: fork failure\n", 2), 0);
+			return (error_mess(NULL, NULL), 0);
 		if (data->pid == 0)
 			exec_cmd(data, data->cmds, true);
 		dup2(data->fd[0], data->cmds->next->input);

@@ -129,7 +129,7 @@ t_bool expand_errors(t_fullcmd *tokens);
 /* ╚════════════════════════════════════╝ */
 
 char					**cpy_envp(char **envp);
-t_env *env_cpy(char **envp);
+t_env					*env_cpy(char **envp);
 t_data					*init_and_alloc_data(char **envp);
 char					**get_cmds_in_pipe(char *prompt);
 t_fullcmd *parse_tokens(char *line, t_data *data);
@@ -147,7 +147,6 @@ void					execute(t_data *data, t_cmd *cmd);
 char					*new_path(char *av, char **env);
 char					**all_paths(char **env);
 char					**jointab(char **tab, char *str);
-void					freetab(char **tab);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
@@ -180,6 +179,7 @@ int in_quote_arg(char *line, char **args, int i, int *j);
 int not_quoted_arg(char *line, char **args, int i, int *j);
 void extract_args(char *line, char **args);
 char **split_args(char *line);
+void	error_mess(char *input, char *mess);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */
