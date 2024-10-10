@@ -6,7 +6,8 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/10 16:02:49 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:06:56 by bineleon         ###   ########.fr       */
+*/
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +54,6 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 
-typedef struct s_garbage_co
-{
-	void				*ptr;
-	struct s_garbage_co	*next;
-}						t_garbage_co;
-
 typedef enum e_mem
 {
 	MALLOC,
@@ -86,10 +81,11 @@ typedef struct s_fullcmd
 typedef struct s_cmd
 {
 	t_fullcmd			*full_cmd;
+	char				**str;
 	char				*cmd;
 	char				**args;
-	char				*input;
-	char				*output;
+	int					input; // a initialiser a STDIN_FILENO
+	int					output; // a initialiser a STDOUT_FILENO
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -115,7 +111,7 @@ typedef struct s_data
 	int					pid;
 	t_cmd		      *cmds;
   t_fullcmd       *token_fullcmd;
-	t_garbage_co		*garbage; // Chained list of all the malloced pointers
+	t_garbage_co  *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */

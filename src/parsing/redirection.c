@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/27 18:26:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/10 16:17:24 by bineleon         ###   ########.fr       */
+/*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
+/*   Updated: 2024/10/10 16:21:31 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	freetab(char **tab)
+int	redirection(t_data *data)
 {
 	int	row;
 

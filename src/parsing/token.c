@@ -82,14 +82,41 @@ int to_handle_out(char *line, int i, t_fullcmd *token)
     }
 }
 
+void  skip_var_name(char *line, int *i)
+{
+    while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+        *i += 1;
+}
+
 int to_handle_expand(char *line, int i, t_fullcmd *token)
 {
+    int start;
+
+    start = i;
+    i++;
+    skip_var_name(line, &i);
+    if (i == start + 1)
+    {
+        token->type = EXPAND;
+        token->str = gc_mem(MALLOC, 2, NULL);
+        token->str[0] = '$';
+        token->str[1] = '\0';
+        return (i);
+    }
     token->type = EXPAND;
-    token->str = gc_mem(MALLOC, 2, NULL);
-    token->str[0] = line[i];
-    token->str[1] = '\0';
-    return (i + 1);
+    token->str = gc_mem(MALLOC, i - start + 1, NULL);
+    ft_strlcpy(token->str, line + start, i - start + 1);
+    return (i);
 }
+
+// int to_handle_expand(char *line, int i, t_fullcmd *token)
+// {
+//     token->type = EXPAND;
+//     token->str = gc_mem(MALLOC, 2, NULL);
+//     token->str[0] = line[i];
+//     token->str[1] = '\0';
+//     return (i + 1);
+// }
 
 int to_handle_word(char *line, int i, t_fullcmd *token)
 {
