@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/24 18:17:21 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/09/27 18:37:13 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,16 @@ void					add_cmd_to_lst(char **cmds, t_lst *lst);
 /* ╔════════════════════════════════════╗ */
 /* ║               EXEC                 ║ */
 /* ╚════════════════════════════════════╝ */
+
+int						redirection(t_data *data);
+void					exec_cmd(t_data *data, t_cmd *cmd, int is_pipe);
+void					redir_input(t_data *data, t_cmd *cmd);
+void					redir_output(t_data *data, t_cmd *cmd, int is_pipe);
+void					execute(t_data *data, t_cmd *cmd);
+char					*new_path(char *av, char **env);
+char					**all_paths(char **env);
+char					**jointab(char **tab, char *str);
+void					freetab(char **tab);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
