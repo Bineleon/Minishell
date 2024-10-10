@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_init_struct.c                                   :+:      :+:    :+:   */
+/*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/19 19:20:03 by neleon           ###   ########.fr       */
+/*   Created: 2024/09/25 21:34:01 by neleon            #+#    #+#             */
+/*   Updated: 2024/09/27 18:34:47 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_data *get_data(void)
+t_token get_token_type(char c)
 {
-       static t_data  data;
-
-       return (&data);
+	if (c == '|')
+		return PIPE;
+	if (c == '<')
+		return IN;
+	if (c == '>')
+		return OUT;
+  if (c == ' ')
+		return SPC;
+	if (c == '$')
+		return EXPAND;
+	return WORD;
 }

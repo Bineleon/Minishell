@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
+#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/09/19 19:20:12 by neleon           ###   ########.fr        #
+#    Updated: 2024/10/08 19:04:46 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 GREEN			= \033[0;32m\e[1m
 RESET			= \e[0m\033[0m
@@ -25,7 +24,8 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		= 00_parsing.c 01_init_struct.c 02_env.c
+PARSING		= parsing.c init_struct.c env.c token_check.c parse_error.c expand.c\
+					token.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
 PROMPT_DIR	= src/prompt/
@@ -37,7 +37,7 @@ SIGNAL		= signal_handler.c
 SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR	= src/utils/
-UTILS		= lst_utils.c garbage_collector.c
+UTILS		= lst_utils.c garbage_collector.c split.c utils.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 G_HEADER	= hgenerator

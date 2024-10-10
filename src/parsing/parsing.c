@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   00_parsing.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:06:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/18 18:33:58 by neleon           ###   ########.fr       */
+/*   Updated: 2024/09/27 17:56:07 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,3 @@ char	**get_cmds_in_pipe(char *prompt)
 	pipe_split = ft_split(prompt, '|');
 	return (pipe_split);
 }
-
-// void	get_args_count(t_data *data, char **cmds)
-// {
-// 	int count;
-	
-// 	count = 0;
-// 	while (cmds[i])
-// 		count++;
-// 	data->cmds_count = count;
-// }
-
-// void	add_cmd_to_lst(char **cmds, t_lst *lst, t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	lst->cmd->args = malloc(data->cmds_count * sizeof(char *) + 1);
-// 	while (cmds[i])
-// 	{
-// 		lst->cmd->args = cmds[i];
-// 		lst = lst->next;
-// 	}
-	
-// }

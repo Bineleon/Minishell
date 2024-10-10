@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/03 17:27:24 by bineleon         ###   ########.fr       */
+/*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
+/*   Updated: 2024/09/27 17:53:32 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+t_bool	is_whitespace(char c)
 {
-	t_data	*data;
-	// int		i;
+	if ((c == 32 || (c >= 9 && c <= 13)))
+		return (true);
+	return (false);
+}
 
-	// i = 0;
-	(void)ac;
-	(void)av;
+t_bool  isquote(char c)
+{
+  if (c == SQUOTE || c == DQUOTE)
+      return(true);
+  return (false);
+}
 
-  data = get_data();
-  init_data(data, envp);
-  t_env  *curr = data->envp_cpy;
-  while (curr->next)
-  {
-      printf("key = %s   value = %s\n", curr->key, curr->value);
-      curr = curr->next;
-  }
-	while (1)
-	{
-		ft_prompt(data);
-		// ft_print_lst(cmd_arg);
-	}
-	return (0);
+t_bool is_separator(char c)
+{
+    if (c == '|' || c == '<' || c == '>' || c == '$')
+      return (true);
+    return (false);
 }

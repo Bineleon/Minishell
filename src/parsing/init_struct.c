@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/03 17:27:24 by bineleon         ###   ########.fr       */
+/*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
+/*   Updated: 2024/10/03 16:54:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+t_data *get_data(void)
 {
-	t_data	*data;
-	// int		i;
+      static t_data  data;
+      return (&data);
+}
+void  init_data(t_data *data, char **envp)
+{
+    data->cmds = NULL;
+    data->token_fullcmd = NULL;
+    data->cmds_count = 0;
+    data->envp_cpy = env_cpy(envp);
+    data->garbage = NULL;
+}
 
-	// i = 0;
-	(void)ac;
-	(void)av;
-
-  data = get_data();
-  init_data(data, envp);
-  t_env  *curr = data->envp_cpy;
-  while (curr->next)
-  {
-      printf("key = %s   value = %s\n", curr->key, curr->value);
-      curr = curr->next;
-  }
-	while (1)
-	{
-		ft_prompt(data);
-		// ft_print_lst(cmd_arg);
-	}
-	return (0);
+void init_env(t_env *env)
+{
+    env->key = NULL;
+    env->value = NULL;
+    env->next = NULL;
 }

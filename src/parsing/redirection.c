@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_parse_error.c                                   :+:      :+:    :+:   */
+/*   02_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 17:06:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/13 17:12:21 by neleon           ###   ########.fr       */
+/*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
+/*   Updated: 2024/09/19 18:26:03 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static t_bool	is_whitespace(char c)
+int	redirection(t_data *data)
 {
-	if ((c == 32 || (c >= 9 && c <= 13)))
-		return (true);
-	return (false);
+	
 }
-
