@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:06:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/11 14:03:38 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:09:45 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ t_bool pipe_errors(t_fullcmd *tokens)
     }
     while (current)
     {
-        if (current->type == PIPE && (current->next
-            && (current->next->type == PIPE || current->next->type == WORD
-            || !current->next)))
+        if (current->type == PIPE && (current->next->type == PIPE || current->next->type != WORD
+            || !current->next))
         {
             ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
             return (true);
