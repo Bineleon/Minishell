@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/11 13:55:54 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:44:59 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char *get_env_value(char *var_name, t_env *env_list);
 char *expand_token_value(char *str, t_env *env_list);
 void expand_var(t_data *data);
 void handle_expand(t_fullcmd *token, t_env *env_list);
+void handle_dquote_exp(t_fullcmd *token, t_env *env_list);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               EXEC                 ║ */
@@ -174,6 +175,7 @@ int in_quote_arg(char *line, char **args, int i, int *j);
 int not_quoted_arg(char *line, char **args, int i, int *j);
 void extract_args(char *line, char **args);
 char **split_args(char *line);
+char	*gc_strjoin(char const *s1, char const *s2);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

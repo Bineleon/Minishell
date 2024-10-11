@@ -20,7 +20,7 @@ char *get_env_value(char *var_name, t_env *env_list)
     return (NULL);
 }
 
-char *expand_token_value(char *str, t_env *env_list)
+char *expand_token(char *str, t_env *env_list)
 {
     char *var_name;
     char *var_value;
@@ -37,6 +37,29 @@ char *expand_token_value(char *str, t_env *env_list)
     return (NULL);
 }
 
+char *expand_in_dquote(char *str, t_env *env_list)
+{
+    char *var_name;
+    char *var_value;
+    char *result;
+    int   i;
+
+    i = 1;
+    while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+        i++;
+    var_name = gc_mem(MALLOC, i, NULL);
+    ft_strlcpy(var_name, str + 1, i);
+    var_value = get_env_value(var_name, env_list);
+    gc_mem(FREE, 0, var_name);
+    if (var_value)
+    {
+        result = gc_mem(MALLOC, ft_strlen(var_value) + 1, NULL);
+        ft_strlcpy(result, var_value, ft_strlen(var_value) + 1);
+        return (result);
+    }
+    return (NULL);
+}
+
 void expand_var(t_data *data)
 {
     t_fullcmd *current;
@@ -46,8 +69,8 @@ void expand_var(t_data *data)
     {
         if (current->type == EXPAND)
             handle_expand(current, data->envp_cpy);
-        // else if (current->type == WORD && is_in_dquote(current))
-        //     handle_dquote_exp(current, data->envp_cpy);
+        else if (current->type == WORD && is_in_dquote(current))
+            handle_dquote_exp(current, data->envp_cpy);
         current = current->next;
     }
 }
@@ -56,7 +79,7 @@ void handle_expand(t_fullcmd *token, t_env *env_list)
 {
     char *exp_value;
 
-    exp_value = expand_token_value(token->str, env_list);
+    exp_value = expand_token(token->str, env_list);
     gc_mem(FREE, 0, token->str);
     if (exp_value)
     {
@@ -71,56 +94,37 @@ void handle_expand(t_fullcmd *token, t_env *env_list)
     token->type = WORD;
 }
 
-// void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
-// {
-//     char *new_str;
-//     int i = 0;
-//     int j = 0;
+void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
+{
+    char    *temp;
+    char    *result;
+    char    *env_value;
+    int     i;
+    int     j;
 
-//     new_str = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
-//     while (token->str[i])
-//     {
-//         if (token->str[i] == '$')
-//             expand_in_quotes(token, env_list, new_str, &i, &j);
-//         else
-//         {
-//             new_str[j++] = token->str[i++];
-//         }
-//     }
-//     new_str[j] = '\0';
-//     gc_mem(FREE, 0, token->str);
-//     token->str = new_str;
-// }
-
-// void expand_in_quotes(t_data *data, char *new_str, int *i, int *j)
-// {
-//     char *start;
-//     char *exp_var;
-//     int var_len;
-
-//     start = data->token->str + *i;
-//     exp_var = expand_token_value(start, data->envp_cpy);
-//     if (exp_var)
-//     {
-//         var_len = ft_strlen(exp_var);
-//         new_str = gc_mem(MALLOC, ft_strlen(new_str) + var_len + 1, NULL);
-//         ft_strlcpy(new_str + *j, exp_var, var_len + 1);
-//         *j += var_len;
-//         *i += ft_strlen(start);
-//     }
-// }
-
-// void    replace_env(t_fullcmd *token)
-// {
-//     t_fullcmd   *current;
-
-//     current = token;
-//     while(current)
-//     {
-//         if (current->type == WORD && !is_in_squote(current))
-//         {
-
-//         }
-//         current = current->next;
-//     }
-// }
+    i = 1;
+    j = 0;
+    temp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+    result = gc_mem(MALLOC, 1, NULL);
+    while (token->str[i] && token->str[i] != DQUOTE)
+    {
+        if (token->str[i] == EXPAND && token->str[i + 1] && ft_isalnum(token->str[i + 1]))
+        {
+            temp[j] = '\0';
+            result = gc_strjoin(result, temp);
+            env_value = expand_in_dquote(token->str + i, env_list);
+            if (env_value)
+                result = gc_strjoin(result, env_value);
+            i++;
+            while (token->str[i] && (ft_isalnum(token->str[i]) || token->str[i] == '_'))
+                i++;
+            j = 0;
+        }
+        else
+            temp[j++] = token->str[i++];
+    }
+    temp[j] = '\0';
+    result = gc_strjoin(result, temp);
+    gc_mem(FREE, 0, token->str);
+    token->str = result;
+}

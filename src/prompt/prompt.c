@@ -58,7 +58,11 @@ void	ft_prompt(t_data *data)
     check_open_quotes(prompt);
     tokens = parse_tokens(prompt, data);
     if (!check_errors(tokens))
+    {
+      printf("1st tokenization : \n");
       print_tokens(tokens);
+    }
+    printf("post expand : \n");
     expand_var(data);
     print_tokens(tokens);
 		// cmds = get_cmds_in_pipe(prompt);
