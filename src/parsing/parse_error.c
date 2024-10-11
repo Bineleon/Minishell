@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 17:06:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/03 16:14:22 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:03:38 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_bool expand_errors(t_fullcmd *tokens)
     while (current)
     {
         if ((current->type == EXPAND)
-            && (!current->next || current->next->type != WORD))
+            && (!current->next || current->next->type == EXPAND))
         {
             ft_putstr_fd("Error: Expand\n", 2);
             return (true);
@@ -117,7 +117,7 @@ t_bool expand_errors(t_fullcmd *tokens)
 
 t_bool  check_errors(t_fullcmd *tokens)
 {
-  if (pipe_errors(tokens) || redirect_errors(tokens) || expand_errors(tokens))
+  if (pipe_errors(tokens) || redirect_errors(tokens))
     return (true);
   return (false);
 }

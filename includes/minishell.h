@@ -6,8 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/03 16:06:56 by bineleon         ###   ########.fr       */
-*/
+/*   Updated: 2024/10/11 13:55:54 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +43,6 @@ typedef enum e_token
   APPEND = -3
 }						t_token;
 
-typedef struct s_cmd
-{
-	char				**str;
-	char				*cmd;
-	char				**args;
-	int					input; // a initialiser a STDIN_FILENO
-	int					output; // a initialiser a STDOUT_FILENO
-	struct s_cmd		*next;
-}						t_cmd;
 
 typedef enum e_mem
 {
@@ -133,7 +123,11 @@ t_env *env_cpy(char **envp);
 t_data					*init_and_alloc_data(char **envp);
 char					**get_cmds_in_pipe(char *prompt);
 t_fullcmd *parse_tokens(char *line, t_data *data);
-// void					add_cmd_to_lst(char **cmds, t_lst *lst);
+
+char *get_env_value(char *var_name, t_env *env_list);
+char *expand_token_value(char *str, t_env *env_list);
+void expand_var(t_data *data);
+void handle_expand(t_fullcmd *token, t_env *env_list);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               EXEC                 ║ */
