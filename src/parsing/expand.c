@@ -7,6 +7,13 @@ t_bool    is_in_dquote(t_fullcmd *token)
     return (false);
 }
 
+t_bool    is_in_squote(t_fullcmd *token)
+{
+    if (token->str[0] == SQUOTE && token->str[ft_strlen(token->str) - 1] == SQUOTE)
+        return (true);
+    return (false);
+}
+
 char *get_env_value(char *var_name, t_env *env_list)
 {
     t_env *current = env_list;
@@ -71,6 +78,8 @@ void expand_var(t_data *data)
             handle_expand(current, data->envp_cpy);
         else if (current->type == WORD && is_in_dquote(current))
             handle_dquote_exp(current, data->envp_cpy);
+        else if (current->type == WORD && is_in_squote(current))
+            handle_squote_exp(current);
         current = current->next;
     }
 }
@@ -94,9 +103,30 @@ void handle_expand(t_fullcmd *token, t_env *env_list)
     token->type = WORD;
 }
 
+void handle_squote_exp(t_fullcmd *token)
+{
+    char    *tmp;
+    char    *result;
+    int     i;
+    int     j;
+
+    i = 1;
+    j = 0;
+    tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+    result = gc_mem(MALLOC, 1, NULL);
+    result[0] = '\0';
+    while (token->str[i] && token->str[i] != SQUOTE)
+        tmp[j++] = token->str[i++];
+    tmp[j] = '\0';
+    result = gc_strjoin(result, tmp);
+    gc_mem(FREE, 0, token->str);
+    token->str = result;
+    gc_mem(FREE, 0, tmp);
+}
+
 void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 {
-    char    *temp;
+    char    *tmp;
     char    *result;
     char    *env_value;
     int     i;
@@ -104,14 +134,14 @@ void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 
     i = 1;
     j = 0;
-    temp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+    tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
     result = gc_mem(MALLOC, 1, NULL);
     while (token->str[i] && token->str[i] != DQUOTE)
     {
         if (token->str[i] == EXPAND && token->str[i + 1] && ft_isalnum(token->str[i + 1]))
         {
-            temp[j] = '\0';
-            result = gc_strjoin(result, temp);
+            tmp[j] = '\0';
+            result = gc_strjoin(result, tmp);
             env_value = expand_in_dquote(token->str + i, env_list);
             if (env_value)
                 result = gc_strjoin(result, env_value);
@@ -121,10 +151,10 @@ void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
             j = 0;
         }
         else
-            temp[j++] = token->str[i++];
+            tmp[j++] = token->str[i++];
     }
-    temp[j] = '\0';
-    result = gc_strjoin(result, temp);
+    tmp[j] = '\0';
+    result = gc_strjoin(result, tmp);
     gc_mem(FREE, 0, token->str);
     token->str = result;
 }

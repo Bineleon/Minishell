@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 16:57:19 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/03 17:07:02 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:30:22 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ t_env *env_cpy(char **envp)
         key_size = equal - envp[i];
         new_node->key =  gc_mem(MALLOC, key_size + 1, NULL);
         ft_strlcpy(new_node->key, envp[i], key_size + 1);
-        new_node->value = ft_strdup(equal + 1);
+        new_node->value = gc_strdup(equal + 1);
         new_node->next = NULL;
         if (current)
             current->next = new_node;
         else
             head = new_node;
         current = new_node;
-        i++;  
+        i++;
     }
     return (head);
 }
