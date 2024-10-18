@@ -44,5 +44,5 @@ char	**jointab(char **tab, char *str)
 			return (freetab(newtab), NULL);
 		i++;
 	}
-	return (newtab);
+	return (newtab);``````
 }
