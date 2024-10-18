@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   01_redirection.c                                   :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/10 19:44:36 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/10/18 14:23:05 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,18 @@ void	redir_output(t_data *data, t_cmd *cmd, int is_pipe)
 		dup2(fd, cmd->output);
 }
 
+void	redir_pipe(t_data *data, t_cmd *cmd)
+{
+	dup2(cmd->input, STDIN_FILENO);
+	if (cmd->next)
+	{
+		if (pipe(data->fd) == -1)
+			return (error_mess(NULL, NULL));
+		cmd->next->input = data->fd[0];
+		dup2(data->fd[1], STDOUT_FILENO);
+	}
+}
+
 void	redir_input(t_data *data, t_cmd *cmd)
 {
 	int	i;
@@ -47,7 +59,6 @@ void	redir_input(t_data *data, t_cmd *cmd)
 
 	i = 0;
 	fd = 0;
-	dup2(cmd->input, STDIN_FILENO);
 	while (cmd->str[i])
 	{
 		if (ft_strncmp(str[i], "<") == 0)
@@ -66,25 +77,21 @@ void	redir_input(t_data *data, t_cmd *cmd)
 
 void	exec_cmd(t_data *data, t_cmd *cmd, int is_pipe)
 {
+	redir_pipe(data, cmd);
 	redir_input(data, cmd);
 	redir_output(data, cmd, is_pipe);
 	execute(data, cmd);
 }
 
-int	redirection(t_data *data)
+int	exec(t_data *data)
 {
-	while (data->cmds->next != NULL)
+	while (data->cmds != NULL)
 	{
-		if (pipe(data->fd) == -1)
-			return (error_mess(NULL, NULL), 0);
 		data->pid = fork();
 		if (data->pid == -1)
 			return (error_mess(NULL, NULL), 0);
 		if (data->pid == 0)
 			exec_cmd(data, data->cmds, true);
-		dup2(data->fd[0], data->cmds->next->input);
-		close(data->fd[0]);
-		close(data->fd[1]);
 		data->cmds = data->cmds->next;
 	}
 }

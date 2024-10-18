@@ -6,7 +6,7 @@
 #    By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/10/10 19:46:49 by elilliu          ###   ########.fr        #
+#    Updated: 2024/10/11 14:45:56 by elilliu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RESET			= \e[0m\033[0m
 NAME			= minishell
 
 EXEC_DIR	= src/exec/
-EXEC		=
+EXEC		= exec.c execute.c redir_utils.c redirection.c
 SRC			+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR	= src/main/
@@ -37,7 +37,7 @@ SIGNAL		= signal_handler.c
 SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR	= src/utils/
-UTILS		= lst_utils.c garbage_collector.c split.c utils.c
+UTILS		= lst_utils.c garbage_collector.c split.c utils.c error_mess.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 G_HEADER	= hgenerator
