@@ -6,7 +6,7 @@
 #    By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/10/11 14:45:56 by elilliu          ###   ########.fr        #
+#    Updated: 2024/10/18 21:28:55 by elilliu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RESET			= \e[0m\033[0m
 NAME			= minishell
 
 EXEC_DIR	= src/exec/
-EXEC		= exec.c execute.c redir_utils.c redirection.c
+EXEC		= children.c exec.c exec_utils.c redir_input.c redir_output.c
 SRC			+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR	= src/main/
