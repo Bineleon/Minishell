@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_redir_utils.c                                   :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:26:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/09/27 18:28:54 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/10/18 21:28:12 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	freetab(char **tab)
-{
-	int	row;
-
-	row = 0;
-	while (tab[row])
-		free(tab[row++]);
-	free(tab);
-}
 
 char	**jointab(char **tab, char *str)
 {

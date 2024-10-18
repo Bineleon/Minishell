@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/03 16:06:56 by bineleon         ###   ########.fr       */
-*/
+/*   Updated: 2024/10/18 21:26:39 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -40,19 +40,9 @@ typedef enum e_token
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	SPC = ' ',
-  HEREDOC = -2,
-  APPEND = -3
+	HEREDOC = -2,
+	APPEND = -3
 }						t_token;
-
-typedef struct s_cmd
-{
-	char				**str;
-	char				*cmd;
-	char				**args;
-	int					input; // a initialiser a STDIN_FILENO
-	int					output; // a initialiser a STDOUT_FILENO
-	struct s_cmd		*next;
-}						t_cmd;
 
 typedef enum e_mem
 {
@@ -80,6 +70,7 @@ typedef struct s_fullcmd
 
 typedef struct s_cmd
 {
+	struct s_cmd		*prev;
 	t_fullcmd			*full_cmd;
 	char				**str;
 	char				*cmd;
@@ -139,14 +130,13 @@ t_fullcmd *parse_tokens(char *line, t_data *data);
 /* ║               EXEC                 ║ */
 /* ╚════════════════════════════════════╝ */
 
-int						redirection(t_data *data);
-void					exec_cmd(t_data *data, t_cmd *cmd, int is_pipe);
-void					redir_input(t_data *data, t_cmd *cmd);
-void					redir_output(t_data *data, t_cmd *cmd, int is_pipe);
-void					execute(t_data *data, t_cmd *cmd);
-char					*new_path(char *av, char **env);
-char					**all_paths(char **env);
-char					**jointab(char **tab, char *str);
+int						exec(t_data *data);
+void					which_child(t_data *data);
+void					first_child(t_data *data);
+void					middle_child(t_data *data);
+void					last_child(t_data *data);
+void					redir_input(t_data *data);
+void					redir_output(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
