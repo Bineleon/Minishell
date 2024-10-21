@@ -3,36 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:26:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/18 21:28:12 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/10/21 23:32:20 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**jointab(char **tab, char *str)
+char	*join(char *path, char *cmd)
 {
-	int		i;
-	char	**newtab;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	newtab = malloc(sizeof(char *) * (i + 1));
-	if (!newtab)
+	char	*tmp;
+	char	*str;
+	
+	tmp = ft_strjoin(path, "/");
+	if (!tmp)
 		return (NULL);
-	newtab[0] = ft_strdup(str);
-	if (!newtab[0])
-		return (free(newtab), NULL);
-	i = 0;
-	while (tab[i])
-	{
-		newtab[i + 1] = ft_strdup(tab[i]);
-		if (!newtab[i + 1])
-			return (freetab(newtab), NULL);
-		i++;
-	}
-	return (newtab);``````
+	str = ft_strjoin(tmp, cmd);
+	if (!str)
+		return (free(tmp), (NULL));
+	free(tmp);
+	return (str);
 }
