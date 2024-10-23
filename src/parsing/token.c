@@ -84,7 +84,7 @@ int to_handle_out(char *line, int i, t_fullcmd *token)
 
 void  skip_var_name(char *line, int *i)
 {
-    while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+    while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_' || line[*i] == '?'))
         *i += 1;
 }
 

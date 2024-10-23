@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/12 16:30:07 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:48:31 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ typedef struct s_fullcmd
 
 typedef struct s_cmd
 {
-	t_fullcmd			*full_cmd;
+	t_fullcmd			*full_cmd; // keep ?
 	char				**str;
 	char				*cmd;
-	char				**args;
+	char				**args; //keep ?
 	int					input; // a initialiser a STDIN_FILENO
 	int					output; // a initialiser a STDOUT_FILENO
 	struct s_cmd		*next;
@@ -99,6 +99,7 @@ typedef struct s_data
 	size_t				cmds_count;
 	int					  fd[2];
 	int					pid;
+  int           exit_status;
 	t_cmd		      *cmds;
   t_fullcmd       *token_fullcmd;
 	t_garbage_co  *garbage; // Chained list of all the malloced pointers
@@ -178,6 +179,7 @@ void extract_args(char *line, char **args);
 char **split_args(char *line);
 char	*gc_strjoin(char const *s1, char const *s2);
 char	*gc_strdup(const char *s1);
+char	*gc_itoa(int n);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

@@ -27,12 +27,31 @@ char *get_env_value(char *var_name, t_env *env_list)
     return (NULL);
 }
 
+char *expand_exit_st(char *str, char **result, int i)
+{
+    t_data *data;
+
+    data = get_data();
+    printf("exit_status : %d\n", data->exit_status);
+    if (str[i] == '?')
+    {
+        *result = ft_itoa(data->exit_status);
+        printf("exit 2 : %d\n", data->exit_status);
+        return (*result);
+    }
+    return (NULL);
+}
+
 char *expand_token(char *str, t_env *env_list)
 {
     char *var_name;
     char *var_value;
     char *result;
 
+    result = NULL;
+    result = expand_exit_st(str, &result, 1);
+    if (result)
+        return (result);
     var_name = str + 1;
     var_value = get_env_value(var_name, env_list);
     if (var_value)
@@ -52,6 +71,10 @@ char *expand_in_dquote(char *str, t_env *env_list)
     int   i;
 
     i = 1;
+    result = NULL;
+    result = expand_exit_st(str, &result, i);
+    if (result)
+        return (result);
     while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
         i++;
     var_name = gc_mem(MALLOC, i, NULL);
