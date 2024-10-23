@@ -6,7 +6,7 @@
 /*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/21 23:39:29 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/10/23 14:51:46 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_env
   char         			*key;
   char					*value;
   struct s_env			*next;
-}      				   t_env;
+} 						t_env;
 
 
 typedef struct s_data
@@ -128,7 +128,7 @@ t_fullcmd				*parse_tokens(char *line, t_data *data);
 /* ║               EXEC                 ║ */
 /* ╚════════════════════════════════════╝ */
 
-int						exec(t_data *data);
+void					exec(t_data *data);
 void					which_child(t_data *data);
 void					first_child(t_data *data);
 void					middle_child(t_data *data);
@@ -138,6 +138,7 @@ void					redir_output(t_data *data);
 void					exec_cmd(t_data *data);
 char					*new_path(char *arg, t_env *env_cpy);
 char					**all_paths(t_env *env);
+char					*join(char *path, char *cmd);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */

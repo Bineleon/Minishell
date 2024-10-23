@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:17:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/18 21:18:32 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:49:53 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	first_child(t_data *data)
 {
 	redir_input(data);
-	if (data->cmd->next)
+	if (data->cmds->next)
 	{
 		dup2(data->fd[1], STDOUT_FILENO);
 		close(data->fd[0]);
