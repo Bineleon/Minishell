@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/25 17:09:49 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/10/25 19:14:28 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ typedef struct s_data
   t_fullcmd       *token_fullcmd;
 	t_garbage_co  *garbage; // Chained list of all the malloced pointers
 }						t_data;
+
+/* ╔════════════════════════════════════╗ */
+/* ║                ENV                 ║ */
+/* ╚════════════════════════════════════╝ */
+
+void	env(t_env *env_cpy);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */

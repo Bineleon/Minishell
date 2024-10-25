@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 17:25:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/02 11:40:43 by bineleon         ###   ########.fr       */
+/*   Created: 2024/10/25 18:58:53 by neleon            #+#    #+#             */
+/*   Updated: 2024/10/25 18:58:57 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ static void	*gc_malloc(t_data *data, size_t size, void *ptr)
 
 	new = malloc(sizeof(t_garbage_co));
 	if (!new)
-		return (perror("malloc"), gc_mem(FULL_CLEAN, 0, NULL), exit(EXIT_FAILURE), NULL);
+		return (perror("malloc"), gc_mem(FULL_CLEAN, 0, NULL),
+			exit(EXIT_FAILURE), NULL);
 	if (ptr)
 		new->ptr = ptr;
 	else
 		new->ptr = malloc(size);
 	if (!new->ptr)
-		return (perror("malloc"), gc_mem(FULL_CLEAN, 0, NULL), exit(EXIT_FAILURE), NULL);
+		return (perror("malloc"), gc_mem(FULL_CLEAN, 0, NULL),
+			exit(EXIT_FAILURE), NULL);
 	if (data->garbage)
 	{
 		new->next = data->garbage;
@@ -71,7 +73,7 @@ static void	*gc_malloc(t_data *data, size_t size, void *ptr)
 
 void	*gc_mem(t_mem type, size_t size, void *ptr)
 {
-	t_data		*data;
+	t_data			*data;
 	t_garbage_co	*garb;
 
 	data = get_data();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/23 19:20:43 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:59:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ t_bool	is_whitespace(char c)
 	return (false);
 }
 
-t_bool  isquote(char c)
+t_bool	isquote(char c)
 {
-  if (c == SQUOTE || c == DQUOTE)
-      return(true);
-  return (false);
+	if (c == SQUOTE || c == DQUOTE)
+		return (true);
+	return (false);
 }
 
-t_bool is_separator(char c)
+t_bool	is_separator(char c)
 {
-    if (c == '|' || c == '<' || c == '>' || c == '$')
-      return (true);
-    return (false);
+	if (c == '|' || c == '<' || c == '>' || c == '$')
+		return (true);
+	return (false);
 }
 
 char	*gc_strjoin(char const *s1, char const *s2)
@@ -70,7 +70,6 @@ char	*gc_strdup(const char *s1)
 	str[i] = '\0';
 	return (str);
 }
-
 
 static long	ft_nb_size(long nb)
 {

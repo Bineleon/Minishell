@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 21:34:01 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/27 18:34:47 by bineleon         ###   ########.fr       */
+/*   Created: 2024/10/25 18:57:31 by neleon            #+#    #+#             */
+/*   Updated: 2024/10/25 18:58:07 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_token get_token_type(char c)
+t_token	get_token_type(char c)
 {
 	if (c == '|')
-		return PIPE;
+		return (PIPE);
 	if (c == '<')
-		return IN;
+		return (IN);
 	if (c == '>')
-		return OUT;
-  if (c == ' ')
-		return SPC;
+		return (OUT);
+	if (c == ' ')
+		return (SPC);
 	if (c == '$')
-		return EXPAND;
-	return WORD;
+		return (EXPAND);
+	return (WORD);
 }

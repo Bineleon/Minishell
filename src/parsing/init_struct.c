@@ -3,41 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/25 17:06:08 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/10/25 18:57:43 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_data *get_data(void)
+t_data	*get_data(void)
 {
-      static t_data  data;
-      return (&data);
+	static t_data	data;
+
+	return (&data);
 }
 
-void  init_data(t_data *data, char **envp)
+void	init_data(t_data *data, char **envp)
 {
-    data->cmds = NULL;
-    data->token_fullcmd = NULL;
-    data->garbage = NULL;
-    data->cmds_count = 0;
-    data->exit_status = 0;
-    data->envp_cpy = env_cpy(envp);
+	data->cmds = NULL;
+	data->token_fullcmd = NULL;
+	data->garbage = NULL;
+	data->cmds_count = 0;
+	data->exit_status = 0;
+	data->envp_cpy = env_cpy(envp);
 }
 
-void init_env(t_env *env)
+void	init_env(t_env *env)
 {
-    env->key = NULL;
-    env->value = NULL;
-    env->next = NULL;
+	env->key = NULL;
+	env->value = NULL;
+	env->next = NULL;
 }
 
-void  init_cmd(t_cmd *cmd)
+void	init_cmd(t_cmd *cmd)
 {
-    cmd->str = NULL;
-    cmd->input = STDIN_FILENO;
-    cmd->output = STDOUT_FILENO;
+	cmd->str = NULL;
 }

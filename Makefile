@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/10/23 14:40:44 by elilliu@stu      ###   ########.fr        #
+#    Updated: 2024/10/25 19:14:56 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		= parsing.c init_struct.c env.c token_check.c parse_error.c expand.c\
+PARSING		= parsing.c init_struct.c parse_env.c token_check.c parse_error.c expand.c\
 					token.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
@@ -39,6 +39,10 @@ SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 UTILS_DIR	= src/utils/
 UTILS		= lst_utils.c garbage_collector.c split.c utils.c error_mess.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
+
+BUILTINS_DIR	= src/builtins/
+BUILTINS		= env.c
+SRC			+= $(addprefix ${BUILTINS_DIR}, ${BUILTINS})
 
 G_HEADER	= hgenerator
 
