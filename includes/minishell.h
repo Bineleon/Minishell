@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/23 14:51:46 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/10/25 17:41:34 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ typedef struct s_garbage_co
 
 typedef struct s_env
 {
-  char         			*key;
-  char					*value;
-  struct s_env			*next;
-} 						t_env;
+	char				*key;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
 
 typedef struct s_data
