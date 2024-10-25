@@ -84,7 +84,7 @@ int to_handle_out(char *line, int i, t_fullcmd *token)
 
 void  skip_var_name(char *line, int *i)
 {
-    while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
+    while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_' || line[*i] == '?'))
         *i += 1;
 }
 
@@ -109,15 +109,6 @@ int to_handle_expand(char *line, int i, t_fullcmd *token)
     return (i);
 }
 
-// int to_handle_expand(char *line, int i, t_fullcmd *token)
-// {
-//     token->type = EXPAND;
-//     token->str = gc_mem(MALLOC, 2, NULL);
-//     token->str[0] = line[i];
-//     token->str[1] = '\0';
-//     return (i + 1);
-// }
-
 int to_handle_word(char *line, int i, t_fullcmd *token)
 {
     int word_start;
@@ -125,9 +116,9 @@ int to_handle_word(char *line, int i, t_fullcmd *token)
     word_start = i;
     while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i]) && !isquote(line[i]))
         i++;
-    token->type = WORD;
     token->str = gc_mem(MALLOC, i - word_start + 1, NULL);
     ft_strlcpy(token->str, line + word_start, i - word_start + 1);
+    token->type = WORD;
     return (i);
 }
 
@@ -144,7 +135,10 @@ t_fullcmd *parse_tokens(char *line, t_data *data)
     while (line[i])
     {
         if (is_whitespace(line[i]))
+        {
             i++;
+            continue;
+        }
         new_token = create_new_token(&current_token, &head);
         if (isquote(line[i]))
             i = to_handle_quotes(line, i, new_token);
