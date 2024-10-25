@@ -65,8 +65,7 @@ void	ft_prompt(t_data *data)
 		printf("post expand : \n");
 		expand_var(data);
 		print_tokens(tokens);
-		if (!ft_strncmp("env", prompt, ft_strlen(prompt)))
-			env(data->envp_cpy);
+		exec(data);
 		// cmds = get_cmds_in_pipe(prompt);
 		// add_cmd_to_lst(cmds, &cmd);
 		// while((*cmd))

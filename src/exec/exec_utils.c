@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:26:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/25 19:43:42 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/10/25 19:54:47 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*joinequal(char *key, char *value)
 {
-	char	tmp;
-	char	str;
+	char	*tmp;
+	char	*str;
 
 	tmp = gc_strjoin(key, "=");
 	str = gc_strjoin(tmp, value);

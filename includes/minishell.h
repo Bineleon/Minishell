@@ -6,12 +6,9 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/25 19:49:11 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:15:55 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -20,13 +17,13 @@
 # include "../libft/gnl/get_next_line_bonus.h"
 # include "../libft/libft/libft.h"
 # include "./constants.h"
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
-# include <fcntl.h>
-# include <unistd.h>
 # include <sys/wait.h>
+# include <unistd.h>
 
 /* ╔════════════════════════════════════╗ */
 /* ║                ENUM                ║ */
@@ -79,7 +76,6 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 
-
 typedef struct s_garbage_co
 {
 	void				*ptr;
@@ -93,7 +89,6 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
-
 typedef struct s_data
 {
 	t_env				*envp_cpy;
@@ -103,14 +98,14 @@ typedef struct s_data
 	int					exit_status;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co		*garbage; // Chained list of all the malloced pointers
+	t_garbage_co *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */
 /* ║                ENV                 ║ */
 /* ╚════════════════════════════════════╝ */
 
-void	env(t_env *env_cpy);
+void					env(t_env *env_cpy);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */
@@ -157,7 +152,7 @@ char					*join(char *path, char *cmd);
 void					init_cmds(t_data *data);
 void					new_cmd(t_data *data, t_fullcmd *fullcmd);
 char					*joinequal(char *key, char *value);
-char					**newenv(t_data *data);
+char					**ft_newenv(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
@@ -179,6 +174,7 @@ void					ft_prompt(t_data *data);
 t_data					*get_data(void);
 void					init_data(t_data *data, char **envp);
 void					init_env(t_env *env);
+void					init_cmd(t_cmd *cmd);
 t_bool					is_whitespace(char c);
 t_bool					is_separator(char c);
 t_bool					isquote(char c);
@@ -204,7 +200,5 @@ void					*gc_mem(t_mem type, size_t size, void *ptr);
 // gc_mem(MALLOC, sizeof(char *), NULL) -->
 // gc_mem(FREE, 0, str) ---> free pointer "str"
 // gc_mem(FULL_CLEAN, 0, NULL)
-
-
 
 #endif
