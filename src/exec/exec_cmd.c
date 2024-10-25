@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/10/23 14:56:49 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/10/25 19:46:08 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,43 @@ char	*new_path(char *arg, t_env *env_cpy)
 	{
 		str = join(paths[i], arg);
 		if (!str)
-			return (gc_mem(FREE, 0, paths), NULL); // a remplacer avec le garbage collector
+			return (gc_mem(FREE, 0, paths), NULL);
 		if (access(str, F_OK | X_OK) == 0)
-			return (gc_mem(FREE, 0, paths), str); // idem
-		free(str);
+			return (gc_mem(FREE, 0, paths), str);
+		gc_mem(FREE, 0, str);
 		i++;
 	}
-	return (gc_mem(FREE, 0, paths), NULL); // idem
+	return (gc_mem(FREE, 0, paths), NULL);
+}
+
+char	**newenv(t_data *data)
+{
+	char	**newenv;
+	t_env	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = data->envp_cpy;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	newenv = gc_mem(MALLOC, i + 1, NULL);
+	i = 0;
+	while (data->envp_cpy)
+	{
+		newenv[i] = joinequal(data->envp_cpy->key, data->envp_cpy->value);
+		i++;
+		data->envp_cpy = data->envp_cpy->next;
+	}
+	return (newenv);
 }
 
 void	exec_cmd(t_data *data)
 {
 	char	*path;
+	char	**newenv;
 
 	if (access(data->cmds->args[0], F_OK | X_OK) == 0)
 		path = ft_strdup(data->cmds->args[0]);
@@ -65,6 +90,9 @@ void	exec_cmd(t_data *data)
 		path = new_path(data->cmds->args[0], data->envp_cpy);
 	if (!path)
 		error_mess(NULL, NULL);
-	// if (execve(path, data->cmds->args, data->envp_cpy) == -1) // remplacer env_cpy par la bonne valeur
-	// 	free(path);
+	newenv = newenv(data);
+	if (!newenv)
+		return ((void)gc_mem(FREE, 0, path));
+	if (execve(path, data->cmds->args, newenv) == -1)
+		gc_mem(FREE, 0, path);
 }
