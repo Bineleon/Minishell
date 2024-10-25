@@ -3,206 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 17:44:58 by elilliu           #+#    #+#             */
-/*   Updated: 2024/09/18 18:34:56 by neleon           ###   ########.fr       */
+/*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
+/*   Updated: 2024/10/23 14:58:55 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_free_tab(char **tab)
+void	which_child(t_data *data)
 {
-	int	row;
-
-	row = 0;
-	while (tab[row])
-		free(tab[row++]);
-	free(tab);
-}
-
-char	*join(char *path, char *name)
-{
-	char	*tmp;
-	char	*str;
-
-	tmp = ft_strjoin(path, "/");
-	if (!tmp)
-		return (NULL);
-	str = ft_strjoin(tmp, name);
-	if (!str)
-	{
-		free(tmp);
-		return (NULL);
-	}
-	free(tmp);
-	return (str);
-}
-
-char	**all_paths(char **env)
-{
-	char	**paths;
-	char	*str;
-	int		i;
-
-	i = 0;
-	if (!env[i])
-		return (NULL);
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			str = ft_strtrim(env[i], "PATH");
-			if (!str)
-				return (NULL);
-			paths = ft_split(str, ':');
-			if (!paths)
-				return (free(str), NULL);
-			free(str);
-			return (paths);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char	*new_path(char *av, char **env)
-{
-	char	**paths;
-	char	*str;
-	int		i;
-
-	i = 0;
-	paths = all_paths(env);
-	if (!paths)
-		return (NULL);
-	while (paths[i])
-	{
-		str = join(paths[i], av);
-		if (!str)
-			return (ft_free_tab(paths), NULL);
-		if (access(str, F_OK | X_OK) == 0)
-			return (ft_free_tab(paths), str);
-		free(str);
-		i++;
-	}
-	return (ft_free_tab(paths), NULL);
-}
-
-char	**join_tabs(char *str, char **tab)
-{
-	char	**new_tab;
-	int		i;
-
-	i = 0;
-	while (tab[i + 1])
-		i++;
-	while (i >= 0)
-	{
-		tab[i + 1] = ft_strdup(tab[i]);
-		if (!tab[i + 1])
-			return (ft_free_tab(paths), )
-		free(tab[i]);
-		i--;
-	}
-	tab[0] = ft_strdup(str);
-}
-
-int	execution(t_cmd **cmd, char **env)
-{
-	char	*path;
-	char	**args;
-void	ft_free_tab(char **tab)
-{
-	int	row;
-
-	row = 0;
-	while (tab[row])
-		free(tab[row++]);
-	free(tab);
-}
-
-char	*join(char *path, char *name)
-{
-	char	*tmp;
-	char	*str;
-
-	tmp = ft_strjoin(path, "/");
-	if (!tmp)
-		return (NULL);
-	str = ft_strjoin(tmp, name);
-	if (!str)
-	{
-		free(tmp);
-		return (NULL);
-	}
-	free(tmp);
-	return (str);
-}
-
-char	**all_paths(char **env)
-{
-	char	**paths;
-	char	*str;
-	int		i;
-
-	i = 0;
-	if (!env[i])
-		return (NULL);
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			str = ft_strtrim(env[i], "PATH");
-			if (!str)
-				return (NULL);
-			paths = ft_split(str, ':');
-			if (!paths)
-				return (free(str), NULL);
-			free(str);
-			return (paths);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char	*new_path(char *av, char **env)
-{
-	char	**paths;
-	char	*str;
-	int		i;
-
-	i = 0;
-	paths = all_paths(env);
-	if (!paths)
-		return (NULL);
-	while (paths[i])
-	{
-		str = join(paths[i], av);
-		if (!str)
-			return (ft_free_tab(paths), NULL);
-		if (access(str, F_OK | X_OK) == 0)
-			return (ft_free_tab(paths), str);
-		free(str);
-		i++;
-
-	if (access(cmd->cmd, F_OK | X_OK) == 0)
-		path = ft_strdup(cmd->cmd);
+	if (!data->cmds->prev)
+		first_child(data);
+	else if (!data->cmds->next)
+		last_child(data);
 	else
-		path = new_path(cmd->cmd, env);
-	if (!path)
-		error_cmd();
-	if (execve(path, ))
+		middle_child(data);
+	if (data->cmds->next)
+	{
+		dup2(data->fd[1], STDOUT_FILENO);
+		close(data->fd[0]);
+		close(data->fd[1]);
+	}
 }
 
-int	exec(t_lst *lst)
+void	exec(t_data *data)
 {
-	while (lst->next)
+	printf("bienvenue dans l'exec!\n");
+	while (data->cmds != NULL)
 	{
-		execution(lst->cmd, lst->copie_envp);
-		lst = lst->next;
+		if (data->cmds->next)
+		{
+			if (pipe(data->fd) == -1)
+				return ((void)error_mess(NULL, NULL));
+		}
+		data->pid = fork();
+		if (data->pid == -1)
+			return ((void)error_mess(NULL, NULL));
+		if (data->pid == 0)
+			which_child(data);
+		if (data->cmds->next)
+		{
+			dup2(data->fd[0], STDIN_FILENO);
+			close(data->fd[0]);
+			close(data->fd[1]);
+		}
+		data->cmds = data->cmds->next;
 	}
-	return (1);
+	while (wait(NULL) != -1)
+		continue ;
 }

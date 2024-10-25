@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
+#    By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/10/08 19:04:46 by bineleon         ###   ########.fr        #
+#    Updated: 2024/10/23 14:40:44 by elilliu@stu      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RESET			= \e[0m\033[0m
 NAME			= minishell
 
 EXEC_DIR	= src/exec/
-EXEC		=
+EXEC		= children.c exec.c exec_utils.c redir_input.c redir_output.c exec_cmd.c
 SRC			+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR	= src/main/
@@ -37,7 +37,7 @@ SIGNAL		= signal_handler.c
 SRC			+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR	= src/utils/
-UTILS		= lst_utils.c garbage_collector.c split.c utils.c
+UTILS		= lst_utils.c garbage_collector.c split.c utils.c error_mess.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 G_HEADER	= hgenerator
