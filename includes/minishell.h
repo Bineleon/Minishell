@@ -5,10 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/29 17:40:23 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/25 19:14:28 by neleon           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/10/25 19:49:11 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 
 #ifndef MINISHELL_H
@@ -70,11 +72,10 @@ typedef struct s_fullcmd
 
 typedef struct s_cmd
 {
-  struct s_cmd		*prev;
-	t_fullcmd			*full_cmd; // keep ?
+	struct s_cmd		*prev;
 	char				**str;
 	char				*cmd;
-	char				**args; //keep ?
+	char				**args;
 	struct s_cmd		*next;
 }						t_cmd;
 
@@ -87,10 +88,10 @@ typedef struct s_garbage_co
 
 typedef struct s_env
 {
-  char         			*key;
-  char					*value;
-  struct s_env			*next;
-} 						t_env;
+	char				*key;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
 
 typedef struct s_data
@@ -99,10 +100,10 @@ typedef struct s_data
 	size_t				cmds_count;
 	int					fd[2];
 	int					pid;
-  int           exit_status;
-	t_cmd		      *cmds;
-  t_fullcmd       *token_fullcmd;
-	t_garbage_co  *garbage; // Chained list of all the malloced pointers
+	int					exit_status;
+	t_cmd				*cmds;
+	t_fullcmd			*token_fullcmd;
+	t_garbage_co		*garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */
@@ -129,14 +130,14 @@ char					**cpy_envp(char **envp);
 t_env					*env_cpy(char **envp);
 t_data					*init_and_alloc_data(char **envp);
 char					**get_cmds_in_pipe(char *prompt);
-t_fullcmd *parse_tokens(char *line, t_data *data);
+t_fullcmd				*parse_tokens(char *line, t_data *data);
 
-char *get_env_value(char *var_name, t_env *env_list);
-char *expand_token_value(char *str, t_env *env_list);
-void expand_var(t_data *data);
-void handle_expand(t_fullcmd *token, t_env *env_list);
-void handle_dquote_exp(t_fullcmd *token, t_env *env_list);
-void  handle_squote_exp(t_fullcmd *token);
+char					*get_env_value(char *var_name, t_env *env_list);
+char					*expand_token_value(char *str, t_env *env_list);
+void					expand_var(t_data *data);
+void					handle_expand(t_fullcmd *token, t_env *env_list);
+void					handle_dquote_exp(t_fullcmd *token, t_env *env_list);
+void					handle_squote_exp(t_fullcmd *token);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               EXEC                 ║ */
@@ -153,6 +154,10 @@ void					exec_cmd(t_data *data);
 char					*new_path(char *arg, t_env *env_cpy);
 char					**all_paths(t_env *env);
 char					*join(char *path, char *cmd);
+void					init_cmds(t_data *data);
+void					new_cmd(t_data *data, t_fullcmd *fullcmd);
+char					*joinequal(char *key, char *value);
+char					**newenv(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
@@ -172,27 +177,28 @@ void					ft_prompt(t_data *data);
 // void					ft_lstadd_back(t_lst **lst, t_lst *new);
 // void					ft_print_lst(t_lst *cmd);
 t_data					*get_data(void);
-void  init_data(t_data *data, char **envp);
-void init_env(t_env *env);
-t_bool	is_whitespace(char c);
-t_bool is_separator(char c);
-t_bool  isquote(char c);
-int count_arguments(char *line);
-int skip_quotes(char *line, int i, char quote);
-char **allocate_args(int arg_count);
-int skip_spaces(char *line, int i);
-int in_quote_arg(char *line, char **args, int i, int *j);
-int not_quoted_arg(char *line, char **args, int i, int *j);
-void extract_args(char *line, char **args);
-char **split_args(char *line);
+void					init_data(t_data *data, char **envp);
+void					init_env(t_env *env);
+t_bool					is_whitespace(char c);
+t_bool					is_separator(char c);
+t_bool					isquote(char c);
+int						count_arguments(char *line);
+int						skip_quotes(char *line, int i, char quote);
+char					**allocate_args(int arg_count);
+int						skip_spaces(char *line, int i);
+int						in_quote_arg(char *line, char **args, int i, int *j);
+int						not_quoted_arg(char *line, char **args, int i, int *j);
+void					extract_args(char *line, char **args);
+char					**split_args(char *line);
 void					error_mess(char *input, char *mess);
-char	*gc_strjoin(char const *s1, char const *s2);
-char	*gc_strdup(const char *s1);
-char	*gc_itoa(int n);
+char					*gc_strjoin(char const *s1, char const *s2);
+char					*gc_strdup(const char *s1);
+char					*gc_itoa(int n);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */
 /* ╚════════════════════════════════════╝ */
+
 void					*gc_mem(t_mem type, size_t size, void *ptr);
 // Exemples :
 // gc_mem(MALLOC, sizeof(char *), NULL) -->

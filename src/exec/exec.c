@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/23 14:58:55 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/10/25 19:30:10 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	which_child(t_data *data)
 void	exec(t_data *data)
 {
 	printf("bienvenue dans l'exec!\n");
+	init_cmds(data);
 	while (data->cmds != NULL)
 	{
 		if (data->cmds->next)

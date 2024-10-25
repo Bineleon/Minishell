@@ -5,10 +5,11 @@
 #                                                     +:+ +:+         +:+      #
 #    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/28 16:39:09 by neleon            #+#    #+#              #
-#    Updated: 2024/10/25 19:14:56 by neleon           ###   ########.fr        #
+#    Created: Invalid date        by                   #+#    #+#              #
+#    Updated: 2024/10/25 19:49:47 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 GREEN			= \033[0;32m\e[1m
 RESET			= \e[0m\033[0m
@@ -16,7 +17,7 @@ RESET			= \e[0m\033[0m
 NAME			= minishell
 
 EXEC_DIR	= src/exec/
-EXEC		= children.c exec.c exec_utils.c redir_input.c redir_output.c exec_cmd.c
+EXEC		= children.c exec.c init_cmds.c exec_utils.c redir_input.c redir_output.c exec_cmd.c
 SRC			+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR	= src/main/
