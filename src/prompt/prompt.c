@@ -52,6 +52,12 @@ void	ft_prompt(t_data *data)
 	tokens = NULL;
 	printf(CYAN);
 	prompt = readline("Minishell>\033[0m ");
+  if (!prompt)
+  {
+      printf("exit\n");
+      gc_mem(FULL_CLEAN, 0, NULL);
+      exit(EXIT_SUCCESS);
+  }
 	if (prompt && *prompt)
 	{
 		add_history(prompt);
