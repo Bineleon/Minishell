@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/25 18:57:50 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/28 16:43:16 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ t_env	*env_cpy(char **envp)
 		current = new_node;
 		i++;
 	}
+  
 	return (head);
 }

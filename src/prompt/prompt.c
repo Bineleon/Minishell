@@ -63,7 +63,7 @@ void	ft_prompt(t_data *data)
 			print_tokens(tokens);
 		}
 		printf("post expand : \n");
-		expand_var(data);
+		// expand_var(data);
 		print_tokens(tokens);
 		exec(data);
 		// cmds = get_cmds_in_pipe(prompt);

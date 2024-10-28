@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/10/25 19:55:27 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/28 17:13:00 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 char	**all_paths(t_env *env)
 {
 	char	**paths;
+  t_env *tmp;
 
-	if (!env->key)
+  tmp = env;
+	if (!tmp->key)
 		return (NULL);
-	while (env->key)
+	while (tmp->key)
 	{
-		if (ft_strncmp(env->key, "PATH", 4) == 0)
+		if (ft_strncmp(tmp->key, "PATH", 4) == 0)
 		{
-			paths = ft_split(env->value, ':');
+			paths = ft_split(tmp->value, ':');
 			if (!paths)
 				return (NULL);
 			return (paths);
 		}
-		env = env->next;
+		tmp = tmp->next;
 	}
 	return (NULL);
 }
@@ -69,12 +71,27 @@ char	**ft_newenv(t_data *data)
 		tmp = tmp->next;
 	}
 	newenv = gc_mem(MALLOC, i + 1, NULL);
+  newenv[i + 1] = NULL;
+  printf("i = %d\n\n", i);
 	i = 0;
-	while (data->envp_cpy)
+  tmp = data->envp_cpy;
+  while (tmp)
+  {
+    printf("TMP : %s=%s\n", tmp->key, tmp->value);
+    tmp = tmp->next;
+  }
+	while (tmp)
 	{
-		newenv[i] = joinequal(data->envp_cpy->key, data->envp_cpy->value);
+    printf("TMP : %s=%s\n", tmp->key, tmp->value);
+		newenv[i] = joinequal(tmp->key, tmp->value);
+    printf("new_env[i] : %s\n", newenv[i]);eleon/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+TMP : GDMSESSION=ubuntu
+TMP : DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+TMP : OLDPWD=/home/bineleon
+TMP : _=./minishell
+Makefile  en.subject.pdf  includes  libft  mini
 		i++;
-		data->envp_cpy = data->envp_cpy->next;
+		tmp = tmp->next;
 	}
 	return (newenv);
 }

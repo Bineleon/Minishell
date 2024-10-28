@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/25 20:15:55 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/28 16:40:49 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,3 +202,4 @@ void					*gc_mem(t_mem type, size_t size, void *ptr);
 // gc_mem(FULL_CLEAN, 0, NULL)
 
 #endif
+
