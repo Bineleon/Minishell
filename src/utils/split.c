@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:59:12 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/25 18:59:16 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/28 13:14:49 by nelbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int not_quoted_arg(char *line, char **args, int i, int *j)
     int len;
 
     start = i;
-    while (line[i] && line[i] != SPACE && line[i] != DQUOTE && line[i] != SQUOTE)
+    while (line[i] && line[i] != SPC && line[i] != DQUOTE && line[i] != SQUOTE)
         i++;
     len = i - start;
     args[*j] = gc_mem(MALLOC, len + 1, NULL);

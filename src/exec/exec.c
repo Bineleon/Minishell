@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/25 19:57:12 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/28 14:18:12 by nelbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	exec(t_data *data)
 	init_cmds(data);
 	while (data->cmds != NULL)
 	{
+    printf("\n\nICI\n\n");
 		if (data->cmds->next)
 		{
 			if (pipe(data->fd) == -1)
