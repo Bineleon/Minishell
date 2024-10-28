@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/10/28 17:13:00 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:01:53 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,35 @@ char	*new_path(char *arg, t_env *env_cpy)
 	return (gc_mem(FREE, 0, paths), NULL);
 }
 
+static size_t    count_env(t_env *env)
+{
+    t_env *tmp;
+    size_t  i;
+
+    tmp = env;
+    i = 0;
+    while (tmp)
+	  {
+		    i++;
+		    tmp = tmp->next;
+	  }
+    return(i);
+}
+
 char	**ft_newenv(t_data *data)
 {
 	char	**newenv;
 	t_env	*tmp;
 	int		i;
 
-	i = 0;
+	i = count_env(data->envp_cpy);
 	tmp = data->envp_cpy;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	newenv = gc_mem(MALLOC, i + 1, NULL);
-  newenv[i + 1] = NULL;
-  printf("i = %d\n\n", i);
+	newenv = gc_mem(MALLOC, (i + 1) * sizeof(char *), NULL);
+  newenv[i] = NULL;
 	i = 0;
-  tmp = data->envp_cpy;
-  while (tmp)
-  {
-    printf("TMP : %s=%s\n", tmp->key, tmp->value);
-    tmp = tmp->next;
-  }
 	while (tmp)
 	{
-    printf("TMP : %s=%s\n", tmp->key, tmp->value);
 		newenv[i] = joinequal(tmp->key, tmp->value);
-    printf("new_env[i] : %s\n", newenv[i]);eleon/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
-TMP : GDMSESSION=ubuntu
-TMP : DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-TMP : OLDPWD=/home/bineleon
-TMP : _=./minishell
-Makefile  en.subject.pdf  includes  libft  mini
 		i++;
 		tmp = tmp->next;
 	}
