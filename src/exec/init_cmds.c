@@ -3,137 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:07:41 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/10/28 14:30:45 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/10/29 13:09:50 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void new_cmd(t_data *data, t_fullcmd *fullcmd)
+void	new_str(t_cmd *cmds, t_fullcmd **fullcmd)
 {
-    int i;
-    int arg_count;
-    t_fullcmd *tmp;
+	int			i;
+	t_fullcmd	*firstcmd;
 
-    i = 0;
-    arg_count = 0;
-    tmp = fullcmd;
-    // A refactoriser
-    while (tmp && tmp->type != PIPE && tmp->type != IN && tmp->type != OUT)
-    {
-        arg_count++;
-        tmp = tmp->next;
-    }
-    data->cmds->args = gc_mem(MALLOC, sizeof(char *) * (arg_count + 1), NULL);
-    data->cmds->str = gc_mem(MALLOC, sizeof(char *) * (arg_count + 1), NULL);
-    tmp = fullcmd;
-    data->cmds->cmd = gc_strdup(tmp->str);
-    while (tmp && tmp->type != PIPE && tmp->type != IN && tmp->type != OUT)
-    {
-        data->cmds->args[i] = gc_strdup(tmp->str);
-        data->cmds->str[i] = gc_strdup(tmp->str);
-        i++;
-        tmp = tmp->next;
-    }
-    data->cmds->args[i] = NULL;
-    data->cmds->str[i] = NULL;
+	i = 0;
+	firstcmd = *fullcmd;
+	while (cmds->args[i])
+		i++;
+	while (*fullcmd && (*fullcmd)->type != PIPE)
+	{
+		i++;
+		*fullcmd = (*fullcmd)->next;
+	}
+	cmds->str = gc_mem(MALLOC, sizeof(char *) * (i + 1), NULL);
+	i = 0;
+	cmds->str[i] = gc_strdup(cmds->args[i]);
+	while (cmds->args[++i])
+		cmds->str[i] = gc_strdup(cmds->args[i]);
+	*fullcmd = firstcmd;
+	while (*fullcmd && (*fullcmd)->type != PIPE)
+	{
+		cmds->str[i++] = gc_strdup((*fullcmd)->str);
+		*fullcmd = (*fullcmd)->next;
+	}
+	cmds->str[i] = NULL;
 }
 
-void init_cmds(t_data *data)
+void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 {
-    t_cmd *tmp;
+	int			i;
+	t_fullcmd	*firstcmd;
 
-    data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
-    init_cmd(data->cmds);
-    tmp = data->cmds;
-
-    while (data->token_fullcmd)
-    {
-        new_cmd(data, data->token_fullcmd);
-
-        while (data->token_fullcmd && data->token_fullcmd->type != PIPE)
-            data->token_fullcmd = data->token_fullcmd->next;
-        if (data->token_fullcmd && data->token_fullcmd->type == PIPE)
-        {
-            data->token_fullcmd = data->token_fullcmd->next;
-            tmp->next = gc_mem(MALLOC, sizeof(t_cmd), NULL);
-            tmp->next->prev = tmp;
-            tmp = tmp->next;
-            init_cmd(tmp);
-        }
-	      // printf("\n\nICI\n\n");
-    }
+	printf("fullcmd: %s\n\n", (*fullcmd)->str);
+	i = 0;
+	firstcmd = *fullcmd;
+	while (*fullcmd && (*fullcmd)->type != PIPE && (*fullcmd)->type != IN
+		&& (*fullcmd)->type != OUT)
+	{
+		i++;
+		*fullcmd = (*fullcmd)->next;
+	}
+	printf("i: %d\n", i);
+	cmds->args = gc_mem(MALLOC, sizeof(char *) * (i + 1), NULL);
+	cmds->cmd = gc_strdup(firstcmd->str);
+	i = 0;
+	*fullcmd = firstcmd;
+	printf("fullcmd2: %s\n\n", (*fullcmd)->str);
+	while (*fullcmd && (*fullcmd)->type != PIPE && (*fullcmd)->type != IN
+		&& (*fullcmd)->type != OUT)
+	{
+		cmds->args[i] = gc_strdup((*fullcmd)->str);
+		printf("strdup OK\n\n");
+		i++;
+		*fullcmd = (*fullcmd)->next;
+	}
+	printf("c tout bon\n\n");
+	cmds->args[i] = NULL;
 }
 
+void	init_cmds(t_data *data)
+{
+	t_cmd		*cmdstmp;
+	t_fullcmd	*fullcmdtmp;
+	t_fullcmd	*test;
 
-// void	new_cmd(t_data *data, t_fullcmd *fullcmd)
-// {
-// 	int		i;
-//   t_fullcmd *tmp;
-
-//   tmp = fullcmd;
-
-// 	i = 0;
-//       data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
-//       init_cmd(data->cmds);
-// 	while (fullcmd->str && fullcmd->type != PIPE && fullcmd->type != IN
-// 		&& fullcmd->type != OUT)
-// 	{
-// 		  printf("\n\nstr: %s\n", fullcmd->str);
-// 		// if (i == 0)
-//     // {
-// 			data->cmds->cmd = gc_strdup(fullcmd->str);
-//       // data->cmds->cmd = gc_mem(MALLOC, ft_strlen(fullcmd->str) + 1, NULL);
-//       // ft_strlcpy(data->cmds->cmd, fullcmd->str, ft_strlen(fullcmd->str) + 1);
-//        printf("\n\ndata->cmds->cmd = %s\n\n", data->cmds->cmd);
-
-//     // }
-//     data->cmds->args = gc_mem(MALLOC, sizeof(char *) + 1, NULL);
-// 		data->cmds->args[i] = gc_strdup(fullcmd->str);
-//     data->cmds->str = gc_mem(MALLOC, sizeof(char *) + 1, NULL);
-// 		data->cmds->str[i] = gc_strdup(fullcmd->str);
-// 		i++;
-// 		fullcmd = fullcmd->next;
-//     printf("\n\nICI\n\n");
-// 	}
-
-//     data->cmds->args[i] = NULL;
-//     data->cmds->str[i] = NULL;
-// 	while (fullcmd->str && fullcmd->type != PIPE)
-// 	{
-//     printf("\n\nICI\n\n");
-// 		data->cmds->str[i] = gc_strdup(fullcmd->str);
-// 		i++;
-// 		fullcmd = fullcmd->next;
-// 	}
-// }
-
-// void	init_cmds(t_data *data)
-// {
-// 	// int	i;
-
-// 	// i = 0;
-// 	// data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
-// 	// init_cmd(data->cmds);
-// 	new_cmd(data, data->token_fullcmd);
-//   printf("\n\nICI\n\n");
-// 	while (data->token_fullcmd->str)
-// 	{
-// 		while(data->cmds)
-// 		{
-// 			data->cmds->next = gc_mem(MALLOC, sizeof(t_cmd), NULL);
-// 			data->cmds->next->prev = data->cmds;
-// 			data->cmds = data->cmds->next;
-// 		}
-// 		init_cmd(data->cmds);
-// 		new_cmd(data, data->token_fullcmd);
-// 		while (data->token_fullcmd && data->token_fullcmd->type != PIPE)
-// 			data->token_fullcmd = data->token_fullcmd->next;
-// 		if (data->token_fullcmd && data->token_fullcmd->type == PIPE)
-// 			data->token_fullcmd = data->token_fullcmd->next;
-// 		data->token_fullcmd = data->token_fullcmd->next;
-// 	}
-// }
+	test = data->token_fullcmd;
+	while (test)
+	{
+		printf("token: %s\n\n", test->str);
+		test = test->next;
+	}
+	data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
+	init_cmd(data->cmds);
+	cmdstmp = data->cmds;
+	fullcmdtmp = data->token_fullcmd;
+	while (fullcmdtmp)
+	{
+		printf ("\n\nICI\n\n");
+		new_cmd(cmdstmp, &fullcmdtmp);
+		printf("fullcmdtmp: %s\n", fullcmdtmp->str);
+		new_str(cmdstmp, &fullcmdtmp);
+		if (fullcmdtmp && fullcmdtmp->type == PIPE)
+		{
+			printf("normalement on rentre pas la dedans\n\n");
+			fullcmdtmp = fullcmdtmp->next;
+			cmdstmp->next = gc_mem(MALLOC, sizeof(t_cmd), NULL);
+			cmdstmp->next->prev = cmdstmp;
+			cmdstmp = cmdstmp->next;
+			init_cmd(cmdstmp);
+		}
+	}
+}
