@@ -6,7 +6,7 @@
 #    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/10/25 19:49:47 by neleon           ###   ########.fr        #
+#    Updated: 2024/10/29 21:36:45 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ UTILS		= lst_utils.c garbage_collector.c split.c utils.c error_mess.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 BUILTINS_DIR	= src/builtins/
-BUILTINS		= env.c
+BUILTINS		= env.c pwd.c
 SRC			+= $(addprefix ${BUILTINS_DIR}, ${BUILTINS})
 
 G_HEADER	= hgenerator
@@ -54,18 +54,18 @@ CC			= cc
 RM			= rm -rf
 
 #Conditionnal flags depending on the building version
-cflags.release	:= -Wall -Wextra -Werror -Isrc -Ilibft
+cflags.release	:= -Wall -Wextra -Werror -Isrc -Ilibft 
 cflags.gdb		:= -g3
 cflags.sanitize	:= -g3 -fsanitize=address
 CFLAGS			= ${cflags.release} ${cflags.${build}}
 export			CFLAGS
 
 %.o : %.c
-		@${CC} ${CFLAGS} -c $< -o $@
+		@${CC} ${CFLAGS} -g3 -c $< -o $@
 
 ${NAME}:${OBJ}
 		@${MAKE} --no-print-directory -C libft
-		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -o ${NAME} -lreadline
+		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -g3 -o ${NAME} -lreadline
 		@echo "${GREEN}Minishell   : DONE!${RESET}"
 
 all: ${NAME}

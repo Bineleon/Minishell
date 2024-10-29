@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/29 21:14:43 by neleon           ###   ########.fr       */
+/*   Created: 2024/10/29 19:09:28 by neleon            #+#    #+#             */
+/*   Updated: 2024/10/29 19:11:33 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	ft_echo()
 {
-	t_data	*data;
-
-	(void)ac;
-	(void)av;
-
-  data = get_data();
-  init_data(data, envp);
-  // t_env  *curr = data->envp_cpy;
-  // while (curr->next)
-  // {
-  //     printf("key = %s   value = %s\n", curr->key, curr->value);
-  //     curr = curr->next;
-  // }
-	while (1)
-	{
-		handle_signals();
-		ft_prompt(data);
-	}
-	return (0);
+	
 }

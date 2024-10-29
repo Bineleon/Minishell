@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/29 17:29:23 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/29 23:29:01 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "../libft/libft/libft.h"
 # include "./constants.h"
 # include <fcntl.h>
+# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -106,6 +107,7 @@ typedef struct s_data
 /* ╚════════════════════════════════════╝ */
 
 void					env(t_env *env_cpy);
+void					ft_pwd(void);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */
@@ -150,7 +152,7 @@ char					*new_path(char *arg, t_env *env_cpy);
 char					**all_paths(t_env *env);
 char					*join(char *path, char *cmd);
 void					init_cmds(t_data *data);
-void					new_cmd(t_data *data, t_fullcmd *fullcmd);
+void					new_cmd(t_cmd *cmds, t_fullcmd *fullcmd);
 char					*joinequal(char *key, char *value);
 char					**ft_newenv(t_data *data);
 
@@ -164,7 +166,7 @@ void					ft_prompt(t_data *data);
 /* ║              SIGNALS               ║ */
 /* ╚════════════════════════════════════╝ */
 
-void    handle_signals(void);
+void					handle_signals(void);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
