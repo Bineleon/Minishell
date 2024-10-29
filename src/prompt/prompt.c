@@ -45,16 +45,14 @@ void	ft_prompt(t_data *data)
 	char		*prompt;
 	t_fullcmd	*tokens;
 
-	// char	**cmds;
-	// t_lst	*new;
-	// new = NULL;
-	// cmds = NULL;
 	tokens = NULL;
 	printf(CYAN);
 	prompt = readline("Minishell>\033[0m ");
   if (!prompt)
   {
-      printf("exit\n");
+      printf(MAGENTA);
+      printf("    \e[4mCIAO BABY!\e[0m\n");
+      printf(RESET);
       gc_mem(FULL_CLEAN, 0, NULL);
       exit(EXIT_SUCCESS);
   }
@@ -69,14 +67,9 @@ void	ft_prompt(t_data *data)
 			print_tokens(tokens);
 		}
 		printf("post expand : \n");
-		// expand_var(data);
+		expand_var(data);
 		print_tokens(tokens);
 		exec(data);
-		// cmds = get_cmds_in_pipe(prompt);
-		// add_cmd_to_lst(cmds, &cmd);
-		// while((*cmd))
-		// {
-		// }
 	}
 	free(prompt);
 }

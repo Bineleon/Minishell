@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/28 16:40:49 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:29:23 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_data
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */
-/* ║                ENV                 ║ */
+/* ║              BUILTINS              ║ */
 /* ╚════════════════════════════════════╝ */
 
 void					env(t_env *env_cpy);
@@ -164,13 +164,12 @@ void					ft_prompt(t_data *data);
 /* ║              SIGNALS               ║ */
 /* ╚════════════════════════════════════╝ */
 
+void    handle_signals(void);
+
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
 /* ╚════════════════════════════════════╝ */
 
-// t_lst				*ft_lstnew(t_cmd *cmd);
-// void					ft_lstadd_back(t_lst **lst, t_lst *new);
-// void					ft_print_lst(t_lst *cmd);
 t_data					*get_data(void);
 void					init_data(t_data *data, char **envp);
 void					init_env(t_env *env);
@@ -202,4 +201,3 @@ void					*gc_mem(t_mem type, size_t size, void *ptr);
 // gc_mem(FULL_CLEAN, 0, NULL)
 
 #endif
-

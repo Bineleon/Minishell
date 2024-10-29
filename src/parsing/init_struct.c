@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/25 20:06:09 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/29 17:15:04 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_data(t_data *data, char **envp)
 	data->cmds_count = 0;
 	data->exit_status = 0;
 	data->envp_cpy = env_cpy(envp);
+  handle_signals();
 }
 
 void	init_env(t_env *env)

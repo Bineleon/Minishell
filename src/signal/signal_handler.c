@@ -6,9 +6,13 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:30:52 by neleon            #+#    #+#             */
-/*   Updated: 2024/09/11 17:13:43 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:33:20 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void    handle_signals(void)
+{
+    signal(SIGQUIT, SIG_IGN);
+}
