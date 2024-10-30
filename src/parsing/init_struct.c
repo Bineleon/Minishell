@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/10/29 19:05:36 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/30 21:21:43 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	init_env(t_env *env)
 
 void	init_cmd(t_cmd *cmd)
 {
-	cmd->str = NULL;
 	cmd->next = NULL;
+	cmd->str = NULL;
 	cmd->args = NULL;
 	cmd->cmd = NULL;
 	cmd->prev = NULL;

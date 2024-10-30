@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/30 21:08:30 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/30 22:29:13 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	exec(t_data *data)
 			which_child(data);
 		if (data->cmds->next)
 		{
-			dup2(data->fd[0], STDIN_FILENO);
-			close(data->fd[0]);
-			close(data->fd[1]);
+			// dup2(data->fd[0], STDIN_FILENO); !!! Pas de dup2 dans le main, seulement dans les children
+			// close(data->fd[0]);
+			// close(data->fd[1]);
 		}
 		data->cmds = data->cmds->next;
 	}

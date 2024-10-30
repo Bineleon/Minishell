@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/30 21:05:09 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/30 21:23:02 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	init_cmds(t_data *data)
 			cmdstmp->next->prev = cmdstmp;
 			cmdstmp = cmdstmp->next;
 			init_cmd(cmdstmp);
+			// cmdstmp->str = NULL;
+			// cmdstmp->args = NULL;
+			// cmdstmp->cmd = NULL;
 		}
 	}
 }
