@@ -5,10 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/10/29 23:50:36 by neleon           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/10/30 21:02:48 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
+
 
 #include "../../includes/minishell.h"
 
@@ -64,11 +68,6 @@ void	which_child(t_data *data)
 
 void	exec(t_data *data)
 {
-	int i = 0;
-	t_cmd *tmp;
-
-	// printf("bienvenue dans l'exec!\n");
-	// printf("JE SUIS DANS EXEC PREMIER TOKEN = %s\n", data->token_fullcmd->str);
 	init_cmds(data);
 	tmp = data->cmds;
 	// printf("JE SUIS DANS EXEC PREMIERE CMD = %s\n", data->cmds->str[0]);

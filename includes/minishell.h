@@ -6,9 +6,10 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/29 23:29:01 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/30 21:03:49 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -99,7 +100,7 @@ typedef struct s_data
 	int					exit_status;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co *garbage; // Chained list of all the malloced pointers
+	t_garbage_co		*garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */
@@ -152,7 +153,8 @@ char					*new_path(char *arg, t_env *env_cpy);
 char					**all_paths(t_env *env);
 char					*join(char *path, char *cmd);
 void					init_cmds(t_data *data);
-void					new_cmd(t_cmd *cmds, t_fullcmd *fullcmd);
+void					new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
+void					new_str(t_cmd *cmds, t_fullcmd **fullcmd);
 char					*joinequal(char *key, char *value);
 char					**ft_newenv(t_data *data);
 
