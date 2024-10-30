@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/30 21:02:48 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/30 21:08:30 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,9 @@ void	which_child(t_data *data)
 void	exec(t_data *data)
 {
 	init_cmds(data);
-	tmp = data->cmds;
-	// printf("JE SUIS DANS EXEC PREMIERE CMD = %s\n", data->cmds->str[0]);
-	while (tmp != NULL)
+	while (data->cmds != NULL)
 	{
-		// printf("-----%s\n", tmp->str[i]);
-		i++;
-		if (tmp->next)
+		if (data->cmds->next)
 		{
 			if (pipe(data->fd) == -1)
 				return ((void)error_mess(NULL, NULL));
@@ -85,13 +81,13 @@ void	exec(t_data *data)
 			return ((void)error_mess(NULL, NULL));
 		if (data->pid == 0)
 			which_child(data);
-		if (tmp->next)
+		if (data->cmds->next)
 		{
 			dup2(data->fd[0], STDIN_FILENO);
 			close(data->fd[0]);
 			close(data->fd[1]);
 		}
-		tmp = tmp->next;
+		data->cmds = data->cmds->next;
 	}
 	while (wait(NULL) != -1)
 		continue ;
