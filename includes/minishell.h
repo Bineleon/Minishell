@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/30 21:03:49 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/31 18:38:08 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_data
 {
 	t_env				*envp_cpy;
 	size_t				cmds_count;
-	int					fd[2];
+	int					fd[3];
 	int					pid;
 	int					exit_status;
 	t_cmd				*cmds;
