@@ -67,13 +67,9 @@ void	ft_prompt(t_data *data)
 		if (prompt && *prompt)
 		{
 			add_history(prompt);
-			// printf("1\n");
 			check_open_quotes(prompt);
-			// printf("2\n");
 			tokens = parse_tokens(prompt, data);
-			// printf("3\n");
 			check_errors(tokens);
-			// printf("4\n");
 			// if (!check_errors(tokens))
 			// {
 			// 	printf("1st tokenization : \n");
@@ -81,7 +77,6 @@ void	ft_prompt(t_data *data)
 			// }
 			// printf("post expand : \n");
 			expand_var(data);
-			// printf("5\n");
 			// print_tokens(tokens);
 			// if (ft_strncmp("pwd", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
 			// 	ft_pwd();

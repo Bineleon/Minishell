@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/28 16:43:16 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:01:51 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,21 @@ t_env	*env_cpy(char **envp)
 	{
 		equal = ft_strchr(envp[i], '=');
 		if (!equal)
-			continue ;
-		new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
-		key_size = equal - envp[i];
-		new_node->key = gc_mem(MALLOC, key_size + 1, NULL);
-		ft_strlcpy(new_node->key, envp[i], key_size + 1);
-		new_node->value = gc_strdup(equal + 1);
-		new_node->next = NULL;
+		{
+      new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
+		  key_size = ft_strlen(envp[i]);
+		  new_node->key = gc_mem(MALLOC, key_size + 1, NULL);
+		  ft_strlcpy(new_node->key, envp[i], key_size + 1);
+    }
+    else
+    {
+      new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
+      key_size = equal - envp[i];
+      new_node->key = gc_mem(MALLOC, key_size + 1, NULL);
+      ft_strlcpy(new_node->key, envp[i], key_size + 1);
+      new_node->value = gc_strdup(equal + 1);
+      new_node->next = NULL;
+    }
 		if (current)
 			current->next = new_node;
 		else
@@ -77,6 +85,5 @@ t_env	*env_cpy(char **envp)
 		current = new_node;
 		i++;
 	}
-  
 	return (head);
 }
