@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/30 21:03:49 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:28:11 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_data
 /* ║              BUILTINS              ║ */
 /* ╚════════════════════════════════════╝ */
 
-void					env(t_env *env_cpy);
+void					ft_env(t_env *env_cpy);
 void					ft_pwd(void);
 
 /* ╔════════════════════════════════════╗ */

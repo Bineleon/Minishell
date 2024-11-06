@@ -74,8 +74,8 @@ void	ft_prompt(t_data *data)
 			// printf("post expand : \n");
 			expand_var(data);
 			// print_tokens(tokens);
-			// if (ft_strncmp("pwd", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
-			// 	ft_pwd();
+			// if (ft_strncmp("env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+			// 	ft_env(data->envp_cpy);
 			exec(data);
 		}
 	}
