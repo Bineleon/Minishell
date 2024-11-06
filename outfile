@@ -1,0 +1,9 @@
+en.subject.pdf
+ignore_readline.supp
+includes
+libft
+Makefile
+minishell
+outfile
+src
+test.c

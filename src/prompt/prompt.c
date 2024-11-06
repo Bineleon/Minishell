@@ -49,6 +49,10 @@ void	ft_prompt(t_data *data)
 	while (1)
 	{
 		printf(CYAN);
+		// if (isatty(STDIN_FILENO) == 1)
+		// 	printf("Pipi\n");
+		// else
+		// 	printf("caca\n");
 		prompt = readline("Minishell>\033[0m ");
 		if (!prompt)
 		{

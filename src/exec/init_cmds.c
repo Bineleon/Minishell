@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/30 21:23:02 by neleon           ###   ########.fr       */
+/*   Updated: 2024/10/31 18:16:11 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,9 @@ void	init_cmds(t_data *data)
 		{
 			fullcmdtmp = fullcmdtmp->next;
 			cmdstmp->next = gc_mem(MALLOC, sizeof(t_cmd), NULL);
+			init_cmd(cmdstmp->next);
 			cmdstmp->next->prev = cmdstmp;
 			cmdstmp = cmdstmp->next;
-			init_cmd(cmdstmp);
-			// cmdstmp->str = NULL;
-			// cmdstmp->args = NULL;
-			// cmdstmp->cmd = NULL;
 		}
 	}
 }

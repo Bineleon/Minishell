@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/10/28 18:05:22 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:59:54 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 char	**all_paths(t_env *env)
 {
 	char	**paths;
-  t_env *tmp;
+	t_env	*tmp;
 
-  tmp = env;
+	tmp = env;
 	if (!tmp->key)
 		return (NULL);
 	while (tmp->key)
@@ -57,19 +57,19 @@ char	*new_path(char *arg, t_env *env_cpy)
 	return (gc_mem(FREE, 0, paths), NULL);
 }
 
-static size_t    count_env(t_env *env)
+static size_t	count_env(t_env *env)
 {
-    t_env *tmp;
-    size_t  i;
+	t_env	*tmp;
+	size_t	i;
 
-    tmp = env;
-    i = 0;
-    while (tmp)
-	  {
-		    i++;
-		    tmp = tmp->next;
-	  }
-    return(i);
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
 }
 
 char	**ft_newenv(t_data *data)
@@ -81,7 +81,7 @@ char	**ft_newenv(t_data *data)
 	i = count_env(data->envp_cpy);
 	tmp = data->envp_cpy;
 	newenv = gc_mem(MALLOC, (i + 1) * sizeof(char *), NULL);
-  newenv[i] = NULL;
+	newenv[i] = NULL;
 	i = 0;
 	while (tmp)
 	{
