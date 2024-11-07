@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/07 16:26:00 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:49:16 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_garbage_co
 typedef struct s_env
 {
 	char				*key;
+  t_bool      *equal;
 	char				*value;
 	struct s_env		*next;
 }						t_env;
