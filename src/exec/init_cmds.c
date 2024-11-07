@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/31 18:16:11 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/11/07 16:43:45 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,21 @@ void	init_cmds(t_data *data)
 	{
 		new_cmd(cmdstmp, &fullcmdtmp);
 		new_str(cmdstmp, &fullcmdtmp);
+    // char **tmparg = data->cmds->args;
+    // char **tmpstr = data->cmds->str;
+    // int i = 0;
+    // int j = 0;
+    // printf("\ncmd->cmd : %s\n", data->cmds->cmd);
+    // while (tmparg[i])
+    // {
+    //     printf("\ncmd->args[%d] : %s\n", i, tmparg[i]);
+    //     i++;
+    // }
+    // while (tmpstr[j])
+    // {
+    //     printf("\ncmd->str[%d] : %s\n", j, tmpstr[j]);
+    //     j++;
+    // }
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{
 			fullcmdtmp = fullcmdtmp->next;

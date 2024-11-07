@@ -50,9 +50,9 @@ void	ft_prompt(t_data *data)
 	{
 		printf(CYAN);
 		// if (isatty(STDIN_FILENO) == 1)
-		// 	printf("Pipi\n");
+		// 	printf("OK\n");
 		// else
-		// 	printf("caca\n");
+		// 	printf("NOT OK\n");
 		prompt = readline("Minishell>\033[0m ");
 		if (!prompt)
 		{
@@ -78,9 +78,9 @@ void	ft_prompt(t_data *data)
 			// printf("post expand : \n");
 			expand_var(data);
 			// print_tokens(tokens);
-			// if (ft_strncmp("env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
-			// 	ft_env(data->envp_cpy);
 			exec(data);
+			// if (ft_strncmp("ft_echo", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+			// 	ft_echo(data);
 		}
 	}
 	free(prompt);
