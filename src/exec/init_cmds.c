@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/07 16:43:45 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:52:58 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	init_cmds(t_data *data)
 	t_cmd		*cmdstmp;
 	t_fullcmd	*fullcmdtmp;
 
+	data->fd[0] = -1;
+	data->fd[1] = -1;
+	data->fd[2] = -1;
 	data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
 	init_cmd(data->cmds);
 	cmdstmp = data->cmds;

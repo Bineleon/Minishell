@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/11/13 15:11:18 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:52:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	which_child(t_data *data)
 void	exec(t_data *data)
 {
 	init_cmds(data);
-	data->fd[2] = -1;
 	while (data->cmds != NULL)
 	{
 		if (data->cmds->next)
