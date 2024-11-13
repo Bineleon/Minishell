@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/07 16:49:16 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:27:03 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_data
 void					ft_env(t_env *env_cpy);
 void					ft_pwd(void);
 void          ft_echo(t_data *data);
+void          ft_export(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */

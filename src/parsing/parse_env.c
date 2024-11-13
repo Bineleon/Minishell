@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/07 18:34:14 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:30:56 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_env	*env_cpy(char **envp)
     }
     else
     {
-      new_node->equal = true;
+      // new_node->equal = true;
       new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
       key_size = equal - envp[i];
       new_node->key = gc_mem(MALLOC, key_size + 1, NULL);

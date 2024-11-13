@@ -69,18 +69,23 @@ void	ft_prompt(t_data *data)
 			add_history(prompt);
 			check_open_quotes(prompt);
 			tokens = parse_tokens(prompt, data);
-			check_errors(tokens);
-			// if (!check_errors(tokens))
-			// {
-			// 	printf("1st tokenization : \n");
-			// 	print_tokens(tokens);
-			// }
-			// printf("post expand : \n");
-			expand_var(data);
-			// print_tokens(tokens);
-			exec(data);
-			// if (ft_strncmp("ft_echo", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
-			// 	ft_echo(data);
+      // print_tokens(tokens);
+			if (!check_errors(tokens))
+      {
+          expand_var(data);
+          if (ft_strncmp("ft_export", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          {
+              init_cmds(data);
+              ft_export(data);
+          }
+          else if (ft_strncmp("ft_env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          {
+              init_cmds(data);
+              ft_env(data->envp_cpy);
+          }
+          else
+              exec(data);
+      }
 		}
 	}
 	free(prompt);
