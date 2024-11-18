@@ -6,7 +6,7 @@
 #    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/11/13 17:47:51 by bineleon         ###   ########.fr        #
+#    Updated: 2024/11/14 16:36:42 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,8 @@ CC			= cc
 RM			= rm -rf
 
 #Conditionnal flags depending on the building version
-cflags.release	:= -Wall -Wextra -Werror -Isrc -Ilibft
-cflags.gdb		:= -g3
+cflags.release	:= -Wall -Wextra -Werror -Ilibft
+cflags.gdb			:= -g3
 cflags.sanitize	:= -g3 -fsanitize=address
 CFLAGS			= ${cflags.release} ${cflags.${build}}
 export			CFLAGS
@@ -65,7 +65,7 @@ export			CFLAGS
 
 ${NAME}:${OBJ}
 		@${MAKE} --no-print-directory -C libft
-		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -g3 -o ${NAME} -lreadline
+		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -o ${NAME} -lreadline
 		@echo "${GREEN}Minishell   : DONE!${RESET}"
 
 all: ${NAME}
@@ -80,7 +80,6 @@ clean:
 
 fclean: clean
 	@${RM} ${NAME}
-	@${RM} $(OUTPUT_LEAKS)
 	@echo "${GREEN}Full clean  : DONE!${RESET}"
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:23 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/13 14:29:35 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:55:45 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	ft_env(t_env *env_cpy)
 	curr = env_cpy;
 	while (curr)
 	{
-    if (curr->value)
-		  printf("%s=%s\n", curr->key, curr->value);
-    else if (curr->equal && !curr->value)
-      printf("%s=\n", curr->key);
+      if (curr->value)
+        printf("%s=%s\n", curr->key, curr->value);
+      else if (curr->equal && !curr->value)
+        printf("%s=\n", curr->key);
 		curr = curr->next;
 	}
 }
-

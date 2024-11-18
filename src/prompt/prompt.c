@@ -57,7 +57,7 @@ void	ft_prompt(t_data *data)
 		if (!prompt)
 		{
 			printf(MAGENTA);
-			printf("    \e[4mCIAO BABY!\e[0m\n");
+			printf("\e[4mCIAO BABY!\e[0m\n");
 			printf(RESET);
 			gc_mem(FULL_CLEAN, 0, NULL);
 			exit(EXIT_SUCCESS);
@@ -73,7 +73,7 @@ void	ft_prompt(t_data *data)
 			if (!check_errors(tokens))
       {
           expand_var(data);
-          if (ft_strncmp("ft_export", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          if (ft_strncmp("export", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
           {
               init_cmds(data);
               ft_export(data);
