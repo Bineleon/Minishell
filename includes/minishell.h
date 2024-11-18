@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/10/31 18:38:08 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/11/13 14:27:03 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_garbage_co
 typedef struct s_env
 {
 	char				*key;
+  t_bool      *equal;
 	char				*value;
 	struct s_env		*next;
 }						t_env;
@@ -107,8 +108,10 @@ typedef struct s_data
 /* ║              BUILTINS              ║ */
 /* ╚════════════════════════════════════╝ */
 
-void					env(t_env *env_cpy);
+void					ft_env(t_env *env_cpy);
 void					ft_pwd(void);
+void          ft_echo(t_data *data);
+void          ft_export(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */

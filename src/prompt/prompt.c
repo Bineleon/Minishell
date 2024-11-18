@@ -50,9 +50,9 @@ void	ft_prompt(t_data *data)
 	{
 		printf(CYAN);
 		// if (isatty(STDIN_FILENO) == 1)
-		// 	printf("Pipi\n");
+		// 	printf("OK\n");
 		// else
-		// 	printf("caca\n");
+		// 	printf("NOT OK\n");
 		prompt = readline("Minishell>\033[0m ");
 		if (!prompt)
 		{
@@ -69,18 +69,23 @@ void	ft_prompt(t_data *data)
 			add_history(prompt);
 			check_open_quotes(prompt);
 			tokens = parse_tokens(prompt, data);
-			check_errors(tokens);
-			// if (!check_errors(tokens))
-			// {
-			// 	printf("1st tokenization : \n");
-			// 	print_tokens(tokens);
-			// }
-			// printf("post expand : \n");
-			expand_var(data);
-			// print_tokens(tokens);
-			// if (ft_strncmp("pwd", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
-			// 	ft_pwd();
-			exec(data);
+      // print_tokens(tokens);
+			if (!check_errors(tokens))
+      {
+          expand_var(data);
+          if (ft_strncmp("ft_export", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          {
+              init_cmds(data);
+              ft_export(data);
+          }
+          else if (ft_strncmp("ft_env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          {
+              init_cmds(data);
+              ft_env(data->envp_cpy);
+          }
+          else
+              exec(data);
+      }
 		}
 	}
 	free(prompt);
