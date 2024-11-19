@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/19 18:06:10 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:13:10 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,72 +122,6 @@ void	expand_var(t_data *data)
 	}
 }
 
-// // Fonction pour extraire et développer une variable d'environnement
-// char	*process_env_variable(const char *str, int *i, t_env *env_list)
-// {
-// 	char	*var_name;
-// 	char	*expanded_value;
-// 	int		start;
-
-// 	start = *i;
-// 	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
-// 		(*i)++;
-// 	var_name = gc_mem(MALLOC, *i - start, NULL);
-// 	ft_strlcpy(var_name, str + start, *i - start);
-// 	expanded_value = get_env_value(var_name, env_list);
-// 	gc_mem(FREE, 0, var_name);
-// 	if (!expanded_value)
-// 	{
-// 		expanded_value = gc_mem(MALLOC, 1, NULL);
-// 		expanded_value[0] = '\0';
-// 	}
-// 	return (expanded_value);
-// }
-
-
-// // Fonction pour concaténer du texte normal
-// char	*process_plain_text(const char *str, int *i)
-// {
-// 	char	*text;
-// 	int		start;
-// 	int		len;
-
-// 	start = *i;
-// 	while (str[*i] && str[*i] != '$')
-// 		(*i)++;
-// 	len = *i - start;
-// 	text = gc_mem(MALLOC, len + 1, NULL);
-// 	ft_strlcpy(text, str + start, len + 1);
-// 	return (text);
-// }
-
-// // Fonction principale pour orchestrer les appels
-// void	handle_expand(t_fullcmd *token, t_env *env_list)
-// {
-// 	char	*result;
-// 	char	*to_add;
-// 	int		i;
-
-// 	result = gc_mem(MALLOC, 1, NULL);
-// 	result[0] = '\0';
-// 	i = 0;
-// 	while (token->str[i])
-// 	{
-// 		if (token->str[i] == '$')
-// 		{
-// 			i++;
-// 			to_add = process_env_variable(token->str, &i, env_list);
-// 		}
-// 		else
-// 			to_add = process_plain_text(token->str, &i);
-// 		result = gc_strjoin(result, to_add);
-// 		gc_mem(FREE, 0, to_add);
-// 	}
-// 	gc_mem(FREE, 0, token->str);
-// 	token->str = result;
-// 	token->type = WORD;
-// }
-
 char	*init_result(void)
 {
 	char	*result;
@@ -241,7 +175,6 @@ int	process_exp(char *str, int i, t_env *env_list, char **result)
 	}
 	else
 		*result = gc_strjoin(*result, "$");
-
 	return (i);
 }
 
