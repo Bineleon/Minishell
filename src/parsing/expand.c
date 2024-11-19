@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/25 18:57:39 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/19 17:12:10 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*expand_exit_st(char *str, char **result, int i)
 	printf("exit_status : %d\n", data->exit_status);
 	if (str[i] == '?')
 	{
-		*result = ft_itoa(data->exit_status);
+		*result = gc_itoa(data->exit_status);
 		printf("exit 2 : %d\n", data->exit_status);
 		return (*result);
 	}
@@ -122,24 +122,135 @@ void	expand_var(t_data *data)
 	}
 }
 
+// Fonction pour extraire et développer une variable d'environnement
+char	*process_env_variable(const char *str, int *i, t_env *env_list)
+{
+	char	*var_name;
+	char	*expanded_value;
+	int		start;
+
+	start = *i;
+	while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+		(*i)++;
+	var_name = gc_mem(MALLOC, *i - start, NULL);
+	ft_strlcpy(var_name, str + start + 1, *i - start);
+	expanded_value = get_env_value(var_name, env_list);
+	gc_mem(FREE, 0, var_name);
+	if (expanded_value)
+		return (expanded_value);
+	return (gc_mem(MALLOC, 2, NULL)); // Retourne une chaîne vide par défaut
+}
+
+// Fonction pour concaténer du texte normal
+char	*process_plain_text(const char *str, int *i)
+{
+	char	*text;
+	int		start;
+	int		len;
+
+	start = *i;
+	while (str[*i] && str[*i] != '$')
+		(*i)++;
+	len = *i - start;
+	text = gc_mem(MALLOC, len + 1, NULL);
+	ft_strlcpy(text, str + start, len + 1);
+	return (text);
+}
+
+// Fonction principale pour orchestrer les appels
 void	handle_expand(t_fullcmd *token, t_env *env_list)
 {
-	char	*exp_value;
+	char	*result;
+	char	*to_add;
+	int		i;
 
-	exp_value = expand_token(token->str, env_list);
+	result = gc_mem(MALLOC, 1, NULL);
+	result[0] = '\0';
+	i = 0;
+	while (token->str[i])
+	{
+		if (token->str[i] == '$')
+		{
+			i++;
+			to_add = process_env_variable(token->str, &i, env_list);
+		}
+		else
+			to_add = process_plain_text(token->str, &i);
+		result = gc_strjoin(result, to_add);
+		gc_mem(FREE, 0, to_add);
+	}
 	gc_mem(FREE, 0, token->str);
-	if (exp_value)
-	{
-		token->str = gc_mem(MALLOC, ft_strlen(exp_value) + 1, NULL);
-		ft_strlcpy(token->str, exp_value, ft_strlen(exp_value) + 1);
-	}
-	else
-	{
-		token->str = gc_mem(MALLOC, 1, NULL);
-		token->str[0] = '\0';
-	}
+	token->str = result;
 	token->type = WORD;
 }
+
+
+// void	handle_expand(t_fullcmd *token, t_env *env_list)
+// {
+// 	char	*expanded_value;
+// 	char	*result;
+//   char  *var_name;
+//   char *text;
+// 	int		i;
+// 	int		start;
+
+// 	result = gc_mem(MALLOC, 1, NULL);
+// 	result[0] = '\0';
+// 	i = 0;
+// 	while (token->str[i])
+// 	{
+// 		if (token->str[i] == '$')
+// 		{
+// 			start = i;
+// 			i++;
+// 			while (token->str[i] && (ft_isalnum(token->str[i]) || token->str[i] == '_'))
+// 				i++;
+// 			if (i > start + 1)
+// 			{
+// 				var_name = gc_mem(MALLOC, i - start, NULL);
+// 				ft_strlcpy(var_name, token->str + start + 1, i - start);
+// 				expanded_value = get_env_value(var_name, env_list);
+// 				gc_mem(FREE, 0, var_name);
+// 				if (expanded_value)
+// 					result = gc_strjoin(result, expanded_value);
+// 			}
+// 			else
+// 				result = gc_strjoin(result, "$");
+// 		}
+// 		else
+// 		{
+// 			start = i;
+// 			while (token->str[i] && token->str[i] != '$')
+// 				i++;
+// 			text = gc_mem(MALLOC, i - start + 1, NULL);
+// 			ft_strlcpy(text, token->str + start, i - start + 1);
+// 			result = gc_strjoin(result, text);
+// 			gc_mem(FREE, 0, text);
+// 		}
+// 	}
+// 	gc_mem(FREE, 0, token->str);
+// 	token->str = result;
+// 	token->type = WORD;
+// }
+
+// void	handle_expand(t_fullcmd *token, t_env *env_list)
+// {
+// 	char	*exp_value;
+
+// 	exp_value = expand_token(token->str, env_list);
+// 	gc_mem(FREE, 0, token->str);
+// 	if (exp_value)
+// 	{
+// 		token->str = gc_mem(MALLOC, ft_strlen(exp_value) + 1, NULL);
+// 		ft_strlcpy(token->str, exp_value, ft_strlen(exp_value) + 1);
+// 	}
+// 	else
+// 	{
+// 		token->str = gc_mem(MALLOC, 1, NULL);
+// 		token->str[0] = '\0';
+// 	}
+// 	token->type = WORD;
+// }
 
 void	handle_squote_exp(t_fullcmd *token)
 {

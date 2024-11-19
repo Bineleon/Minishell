@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/18 18:23:42 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:23:33 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_bool	isquote(char c)
 
 t_bool	is_separator(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '$')
+	if (c == '|' || c == '<' || c == '>')
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/13 14:27:03 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:40:02 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ t_fullcmd				*parse_tokens(char *line, t_data *data);
 char					*get_env_value(char *var_name, t_env *env_list);
 char					*expand_token_value(char *str, t_env *env_list);
 void					expand_var(t_data *data);
+char          *expand_token(char *str, t_env *env_list);
 void					handle_expand(t_fullcmd *token, t_env *env_list);
 void					handle_dquote_exp(t_fullcmd *token, t_env *env_list);
 void					handle_squote_exp(t_fullcmd *token);
