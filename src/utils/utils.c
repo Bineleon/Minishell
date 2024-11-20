@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/20 15:39:07 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:58:05 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,29 @@ char	*gc_itoa(int n)
 	ft_nbr_to_str(nb, itoa, size - 1);
 	itoa[size] = '\0';
 	return (itoa);
+}
+
+long long int   ft_atol(const char *nptr)
+{
+	int		i;
+	long	sign;
+	long	res;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while ((nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13)))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while ((nptr[i] >= '0' && nptr[i] <= '9'))
+	{
+		res = res * 10 + nptr[i] - '0';
+		i++;
+	}
+	return (res * sign);
 }

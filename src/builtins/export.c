@@ -111,8 +111,8 @@ int	ft_longest(char *s1, char *s2)
 
 void    sort_env(t_env **arr)
 {
-    int i;
-    int j;
+    int     i;
+    int     j;
 
     i = 0;
     while(arr[i + 1])
@@ -136,15 +136,11 @@ void print_export(t_env **arr)
     while (arr[i])
     {
         if (arr[i]->value)
-        {
             printf("export %s=\"%s\"\n", arr[i]->key, arr[i]->value);
-        }
         else if (arr[i]->equal == false)
             printf("export %s\n", arr[i]->key);
         else if (arr[i]->equal && !arr[i]->value)
-        {
             printf("export %s=\"\"\n", arr[i]->key);
-        }
         i++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/20 16:28:33 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/20 18:42:10 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void					ft_pwd(void);
 void          ft_echo(t_data *data);
 void          ft_export(t_data *data);
 void          ft_unset(t_data *data);
+void          ft_exit(t_data *data);
 t_bool        is_valid_key(char  *key);
 int           ft_longest(char *s1, char *s2);
 
@@ -201,6 +202,7 @@ char					*gc_strjoin(char const *s1, char const *s2);
 char					*gc_strdup(const char *s1);
 char					*gc_itoa(int n);
 void          free_env_node(t_env *node);
+long long int   ft_atol(const char *nptr);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

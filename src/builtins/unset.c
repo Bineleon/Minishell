@@ -4,19 +4,21 @@
 t_env    *is_in_env(t_data *data, t_env **prev, char *key, t_bool *is_head)
 {
     t_env   *curr;
-    int    longest;
+    int    len;
 
+    if (!data->envp_cpy)
+        return (NULL);
     curr = data->envp_cpy;
-    longest = ft_longest(curr->key, key);
-    if (!ft_strncmp(curr->key, key, longest))
+    len = ft_strlen(key);
+    if (!ft_strncmp(curr->key, key, len) && curr->key[ft_strlen(key)] == '\0')
     {
         *is_head = true;
         return (curr);
     }
     while (curr)
     {
-        longest = ft_longest(curr->key, key);
-        if (!ft_strncmp(curr->key, key, longest))
+        len = ft_strlen(key);
+        if (!ft_strncmp(curr->key, key, len) && curr->key[ft_strlen(key)] == '\0')
             return (curr);
         *prev = curr;
         curr = curr->next;
