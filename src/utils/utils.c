@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/19 16:23:33 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:39:07 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ t_bool	is_separator(char c)
 	if (c == '|' || c == '<' || c == '>')
 		return (true);
 	return (false);
+}
+
+void    free_env_node(t_env *node)
+{
+    if (node->key)
+        gc_mem(FREE, 0, node->key);
+    if (node->value)
+        gc_mem(FREE, 0, node->value);
+    node = NULL;
+    gc_mem(FREE, 0, node);
+
 }
 
 char	*gc_strjoin(char const *s1, char const *s2)

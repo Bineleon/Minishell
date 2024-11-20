@@ -6,7 +6,7 @@
 #    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/11/14 16:36:42 by bineleon         ###   ########.fr        #
+#    Updated: 2024/11/20 15:29:32 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ UTILS		= lst_utils.c garbage_collector.c split.c utils.c error_mess.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 BUILTINS_DIR	= src/builtins/
-BUILTINS		= env.c pwd.c echo.c export.c
+BUILTINS		= env.c pwd.c echo.c export.c unset.c
 SRC			+= $(addprefix ${BUILTINS_DIR}, ${BUILTINS})
 
 G_HEADER	= hgenerator

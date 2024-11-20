@@ -1,7 +1,7 @@
 
 #include "../../includes/minishell.h"
 
-static t_bool   is_valid_key(char  *key)
+t_bool   is_valid_key(char  *key)
 {
     int i;
 
@@ -167,9 +167,15 @@ void    sub_export(t_data *data)
         {
             key = data->cmds->args[i];
             if (!is_valid_key(key))
+            {
                 printf("export: `%s': not a valid identifier\n", key);
+                data->exit_status = 1;
+            }
             else
+            {
                 update_env(&data->envp_cpy, key, NULL, 0);
+                data->exit_status = 0;
+            }
         }
         else
         {
@@ -177,9 +183,15 @@ void    sub_export(t_data *data)
             key = data->cmds->args[i];
             value = equal + 1;
             if (!is_valid_key(key))
+            {
                 printf("export: `%s': not a valid identifier\n", key);
+                data->exit_status = 1;
+            }
             else
+            {
                 update_env(&data->envp_cpy, key, value, 1);
+                data->exit_status = 0;
+            }
             *equal = '=';
         }
         i++;
