@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/20 18:42:10 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:11:12 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ char					*gc_strdup(const char *s1);
 char					*gc_itoa(int n);
 void          free_env_node(t_env *node);
 long long int   ft_atol(const char *nptr);
+void          ciao(int exit_status);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

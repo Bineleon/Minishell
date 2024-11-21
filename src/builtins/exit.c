@@ -1,48 +1,60 @@
 
 #include "../../includes/minishell.h"
 
-void    ft_exit(t_data *data)
+static t_bool is_valid_num(char *str)
 {
-    int   i;
+    int i;
 
     i = 0;
-    if (data->cmds->args[1])
+    if (str[i] == '+' || str[i] == '-')
+        i++;
+    while (str[i])
     {
-        while (data->cmds->args[1][i])
-        {
-            if (!ft_isdigit(data->cmds->args[1][i]))
-            {
-                printf("exit : %s : numeric argument required\n", data->cmds->args[1]);
-                gc_mem(FULL_CLEAN, 0, NULL);
-                exit(EXIT_FAILURE);
-            }
-            i++;
-        }
-        if (ft_atol(data->cmds->args[1]) > INT_MAX)
-        {
-            printf("exit : %s : numeric argument required\n", data->cmds->args[1]);
-            gc_mem(FULL_CLEAN, 0, NULL);
-            exit(2);
-        }
+        if (!ft_isdigit(str[i]))
+            return false;
+        i++;
     }
+    return true;
+}
+
+static t_bool    check_args_count(t_data *data)
+{
     if (data->cmds->args[1] && data->cmds->args[2])
     {
         printf("exit: too many arguments\n");
         data->exit_status = 1;
-        return;
+        return (true);
     }
-    if(data->cmds->args[1])
+    return (false);
+}
+
+static void    validate_status(t_data *data, int *status)
+{
+    if (!is_valid_num(data->cmds->args[1]))
     {
-        printf("exit : %lld\n", ft_atol(data->cmds->args[1]));
-        printf(MAGENTA);
-        printf("\e[4mCIAO BABY!\e[0m\n");
-        printf(RESET);
+        printf("exit: %s : numeric argument required\n", data->cmds->args[1]);
         gc_mem(FULL_CLEAN, 0, NULL);
-        exit((int)ft_atol(data->cmds->args[1]));
+        exit(2);
     }
-    printf(MAGENTA);
-    printf("\e[4mCIAO BABY!\e[0m\n");
-    printf(RESET);
-    gc_mem(FULL_CLEAN, 0, NULL);
-    exit(data->exit_status);
+    *status = ft_atol(data->cmds->args[1]);
+    if (*status > INT_MAX || *status < INT_MIN)
+    {
+        printf("exit: %s : numeric argument required\n", data->cmds->args[1]);
+        gc_mem(FULL_CLEAN, 0, NULL);
+        exit(2);
+    }
+}
+
+void    ft_exit(t_data *data)
+{
+    int   status;
+
+    status = 0;
+    if (data->cmds->args[1])
+        validate_status(data, &status);
+    if (check_args_count(data))
+        return;
+    if(data->cmds->args[1])
+        ciao(status);
+    ciao(data->exit_status);
 }

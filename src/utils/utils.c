@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/20 17:58:05 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:10:39 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,15 @@ char	*gc_itoa(int n)
 	ft_nbr_to_str(nb, itoa, size - 1);
 	itoa[size] = '\0';
 	return (itoa);
+}
+
+void    ciao(int exit_status)
+{
+    printf(MAGENTA);
+    printf("\e[4mCIAO BABY!\e[0m\n");
+    printf(RESET);
+    gc_mem(FULL_CLEAN, 0, NULL);
+    exit(exit_status);
 }
 
 long long int   ft_atol(const char *nptr)
