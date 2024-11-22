@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:39:51 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/29 21:13:58 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/22 11:01:12 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void	ft_pwd(void)
 	if (getcwd(buf, 4096))
 		printf("%s\n", buf);
 	else
-		perror("getcwd()");
+		perror("getcwd(): ");
 }
