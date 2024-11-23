@@ -40,6 +40,20 @@ void	print_tokens(t_fullcmd *tokens)
 	}
 }
 
+t_bool    empty_line(char *line)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] != ' ' && line[i] != '\t')
+            return (false);
+        i++;
+    }
+    return (true);
+}
+
 void	ft_prompt(t_data *data)
 {
 	char		*prompt;
@@ -66,6 +80,8 @@ void	ft_prompt(t_data *data)
 		// 	continue ;
 		if (prompt && *prompt)
 		{
+      if (empty_line(prompt))
+          continue;
 			add_history(prompt);
 			check_open_quotes(prompt);
 			tokens = parse_tokens(prompt, data);

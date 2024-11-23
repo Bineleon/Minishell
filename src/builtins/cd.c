@@ -17,13 +17,13 @@ static t_bool  check_args_err(t_data *data)
 {
     if (data->cmds->args[1] && data->cmds->args[2])
     {
-        printf("cd: too many arguments\n");
+        printf("minishell: cd: too many arguments\n");
         data->exit_status = 1;
         return (true);
     }
     if (!data->cmds->args[1])
     {
-        printf("cd: missing argument\n");
+        printf("minishell: cd: missing argument\n");
         data->exit_status = 1;
         return (true);
     }
