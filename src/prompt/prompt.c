@@ -88,10 +88,20 @@ void	ft_prompt(t_data *data)
               init_cmds(data);
               ft_exit(data);
           }
-          else if (ft_strncmp("ft_env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          else if (ft_strncmp("cd", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
           {
               init_cmds(data);
-              ft_env(data->envp_cpy);
+              ft_cd(data);
+          }
+          else if (ft_strncmp("pwd", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          {
+              init_cmds(data);
+              ft_pwd(data);
+          }
+          else if (ft_strncmp("env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
+          {
+              init_cmds(data);
+              ft_env(data);
           }
           else
               exec(data);

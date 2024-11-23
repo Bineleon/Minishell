@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/23 13:24:06 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:57:41 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,14 +108,18 @@ typedef struct s_data
 /* ║              BUILTINS              ║ */
 /* ╚════════════════════════════════════╝ */
 
-void					ft_env(t_env *env_cpy);
-void					ft_pwd(void);
+void					ft_env(t_data *data);
+void					ft_pwd(t_data *data);
 void          ft_echo(t_data *data);
 void          ft_export(t_data *data);
 void          ft_unset(t_data *data);
 void          ft_exit(t_data *data);
+void          ft_cd(t_data *data);
 t_bool        is_valid_key(char  *key);
 int           ft_longest(char *s1, char *s2);
+void          update_env(t_env **env, char *key, char *value, t_bool equal);
+char	        *get_env_value(char *var_name, t_env *env_list);
+
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */

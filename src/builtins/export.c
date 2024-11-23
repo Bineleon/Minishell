@@ -17,7 +17,7 @@ t_bool   is_valid_key(char  *key)
     return (true);
 }
 
-static void    update_env(t_env **env, char *key, char *value, int equal)
+void    update_env(t_env **env, char *key, char *value, t_bool equal)
 {
     t_env   *curr;
     t_env   *new_node;
@@ -174,7 +174,7 @@ void    sub_export(t_data *data)
             }
             else
             {
-                update_env(&data->envp_cpy, key, NULL, 0);
+                update_env(&data->envp_cpy, key, NULL, false);
                 data->exit_status = 0;
             }
         }
@@ -190,7 +190,7 @@ void    sub_export(t_data *data)
             }
             else
             {
-                update_env(&data->envp_cpy, key, value, 1);
+                update_env(&data->envp_cpy, key, value, true);
                 data->exit_status = 0;
             }
             *equal = '=';

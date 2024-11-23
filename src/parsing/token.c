@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/19 16:43:47 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/23 16:46:46 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	to_handle_expand(char *line, int i, t_fullcmd *token)
 	{
       start = i;
       i++;
-      if (!line[i] || !(ft_isalnum(line[i]) || line[i] == '_'))
+      if (!line[i] || !(ft_isalnum(line[i]) || line[i] == '_' || line[i] == '?'))
           tmp = gc_strdup("$");
       else
       {

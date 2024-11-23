@@ -6,17 +6,17 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:23 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/23 13:33:11 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:10:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_env(t_env *env_cpy)
+void	ft_env(t_data *data)
 {
 	t_env	*curr;
 
-	curr = env_cpy;
+	curr = data->envp_cpy;
 	while (curr)
 	{
       if (curr->value)

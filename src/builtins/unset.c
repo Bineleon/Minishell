@@ -26,7 +26,7 @@ t_env    *is_in_env(t_data *data, t_env **prev, char *key, t_bool *is_head)
     return (NULL);
 }
 
-t_bool    rm_var(t_data *data, char *key)
+void    rm_var(t_data *data, char *key)
 {
     t_env   *tmp;
     t_env   *prev;
@@ -47,9 +47,10 @@ t_bool    rm_var(t_data *data, char *key)
             prev->next = tmp->next;
             free_env_node(tmp);
         }
-        return (true);
+        data->exit_status = 0;
+        return;
     }
-    return (false);
+    data->exit_status = 1;
 }
 
 void    ft_unset(t_data *data)
@@ -75,8 +76,7 @@ void    ft_unset(t_data *data)
             i++;
             continue;
         }
-        if (rm_var(data, key))
-            data->exit_status = 0;
+        rm_var(data, key);
         i++;
     }
 }
