@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/11/07 18:34:03 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:33:23 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	init_data(t_data *data, char **envp)
 void	init_env(t_env *env)
 {
 	env->key = NULL;
+  env->equal = true;
 	env->value = NULL;
 	env->next = NULL;
 }

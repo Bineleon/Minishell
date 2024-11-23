@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:39:51 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/22 11:01:12 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/23 13:12:26 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 
 void	ft_pwd(void)
 {
-	char	buf[4096];
+	char	buf[PATH_MAX];
 
-	if (getcwd(buf, 4096))
+	if (getcwd(buf, PATH_MAX))
 		printf("%s\n", buf);
 	else
 		perror("getcwd(): ");

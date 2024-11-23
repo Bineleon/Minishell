@@ -43,7 +43,6 @@ static void    update_env(t_env **env, char *key, char *value, int equal)
         new_node->equal = false;
     new_node->next = *env;
     *env = new_node;
-
 }
 
 static size_t	get_env_size(t_env *env)
@@ -69,6 +68,8 @@ t_env    **lst_to_arr(t_env *env)
     int     i;
 
     i = 0;
+    if (!env)
+        return (NULL);
     env_size = get_env_size(env);
     arr = gc_mem(MALLOC, (env_size * sizeof(t_env)) + 1, NULL);
     curr = env;
@@ -115,6 +116,8 @@ void    sort_env(t_env **arr)
     int     j;
 
     i = 0;
+    if (!arr)
+        return;
     while(arr[i + 1])
     {
         j = i + 1;
@@ -133,6 +136,8 @@ void print_export(t_env **arr)
     int i;
 
     i = 0;
+    if (!arr)
+        return;
     while (arr[i])
     {
         if (arr[i]->value)
