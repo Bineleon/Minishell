@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:57:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/23 17:29:06 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:47:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,28 @@ t_bool	pipe_errors(t_fullcmd *tokens)
 	current = tokens;
 	if (current && current->type == PIPE)
 	{
-      ft_putstr_fd("syntax error near unexpected token newline'\n", 2);
-      return (true);
+		ft_putstr_fd("syntax error near unexpected token newline'\n", 2);
+		return (true);
 	}
 	while (current)
 	{
-      if (current->type == PIPE)
-      {
-          if (!current->next)
-          {
-              ft_putstr_fd("syntax error near unexpected token |'\n", 2);
-              return (true);
-          }
-          else
-          {
-              if (current->next->type != WORD || current->next->type == PIPE)
-              {
-                  ft_putstr_fd("syntax error near unexpected token |'\n", 2);
-                      return (true);
-              }
-          }
-      }
-      current = current->next;
+		if (current->type == PIPE)
+		{
+			if (!current->next)
+			{
+				ft_putstr_fd("syntax error near unexpected token |'\n", 2);
+				return (true);
+			}
+			else
+			{
+				if (current->next->type != WORD || current->next->type == PIPE)
+				{
+					ft_putstr_fd("syntax error near unexpected token |'\n", 2);
+					return (true);
+				}
+			}
+		}
+		current = current->next;
 	}
 	return (false);
 }

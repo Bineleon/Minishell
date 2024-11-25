@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/11/22 10:59:38 by bineleon         ###   ########.fr        #
+#    Updated: 2024/11/25 15:12:51 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ RM			= rm -rf
 
 #Conditionnal flags depending on the building version
 cflags.release	:= -Wall -Wextra -Werror -Ilibft
-cflags.gdb			:= -g3
+cflags.gdb		:= -g3
 cflags.sanitize	:= -g3 -fsanitize=address
 CFLAGS			= ${cflags.release} ${cflags.${build}}
 export			CFLAGS
@@ -65,7 +65,7 @@ export			CFLAGS
 
 ${NAME}:${OBJ}
 		@${MAKE} --no-print-directory -C libft
-		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -o ${NAME} -lreadline
+		@${CC} ${CFLAGS} -lreadline ${OBJ} ${CLIBS} -o ${NAME} 
 		@echo "${GREEN}Minishell   : DONE!${RESET}"
 
 all: ${NAME}
