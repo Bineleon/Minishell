@@ -6,7 +6,7 @@
 #    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/11/25 15:12:51 by neleon           ###   ########.fr        #
+#    Updated: 2024/11/25 16:48:03 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		= parsing.c init_struct.c parse_env.c token_check.c parse_error.c expand.c\
+PARSING		= init_struct.c parse_env.c token_check.c parse_error.c expand.c\
 					token.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
