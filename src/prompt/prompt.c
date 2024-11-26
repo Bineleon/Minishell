@@ -53,7 +53,6 @@ t_bool	empty_line(char *line)
 	}
 	return (true);
 }
-
 void	ft_prompt(t_data *data)
 {
 	char		*prompt;
@@ -67,7 +66,7 @@ void	ft_prompt(t_data *data)
 		// 	printf("OK\n");
 		// else
 		// 	printf("NOT OK\n");
-		// rl_bind_key ('\t', rl_insert); 
+		// rl_bind_key ('\t', rl_insert);
 			// Uncomment to insert "\t" with TAB on prompt
 		prompt = readline("Minishell>\033[0m ");
 		if (!prompt)

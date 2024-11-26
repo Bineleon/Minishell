@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
+#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/11/25 16:48:03 by neleon           ###   ########.fr        #
+#    Updated: 2024/11/26 13:54:47 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ export			CFLAGS
 
 ${NAME}:${OBJ}
 		@${MAKE} --no-print-directory -C libft
-		@${CC} ${CFLAGS} -lreadline ${OBJ} ${CLIBS} -o ${NAME} 
+		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -o ${NAME} -lreadline
 		@echo "${GREEN}Minishell   : DONE!${RESET}"
 
 all: ${NAME}
