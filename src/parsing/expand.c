@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 15:47:14 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:01:09 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 // 			start = i;
 // 			i++;
 // 			while (token->str[i] && (ft_isalnum(token->str[i])
-					|| token->str[i] == '_'))
+					// || token->str[i] == '_'))
 // 				i++;
 // 			if (i > start + 1)
 // 			{
