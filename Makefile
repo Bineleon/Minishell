@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/11/13 17:47:51 by bineleon         ###   ########.fr        #
+#    Updated: 2024/11/25 16:48:03 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ MAIN		= main.c
 SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
-PARSING		= parsing.c init_struct.c parse_env.c token_check.c parse_error.c expand.c\
+PARSING		= init_struct.c parse_env.c token_check.c parse_error.c expand.c\
 					token.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
@@ -42,7 +42,7 @@ UTILS		= lst_utils.c garbage_collector.c split.c utils.c error_mess.c
 SRC			+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 BUILTINS_DIR	= src/builtins/
-BUILTINS		= env.c pwd.c echo.c export.c
+BUILTINS		= env.c pwd.c echo.c export.c unset.c exit.c cd.c
 SRC			+= $(addprefix ${BUILTINS_DIR}, ${BUILTINS})
 
 G_HEADER	= hgenerator
@@ -54,7 +54,7 @@ CC			= cc
 RM			= rm -rf
 
 #Conditionnal flags depending on the building version
-cflags.release	:= -Wall -Wextra -Werror -Isrc -Ilibft
+cflags.release	:= -Wall -Wextra -Werror -Ilibft
 cflags.gdb		:= -g3
 cflags.sanitize	:= -g3 -fsanitize=address
 CFLAGS			= ${cflags.release} ${cflags.${build}}
@@ -65,7 +65,7 @@ export			CFLAGS
 
 ${NAME}:${OBJ}
 		@${MAKE} --no-print-directory -C libft
-		@${CC} ${CFLAGS} ${OBJ} ${CLIBS} -g3 -o ${NAME} -lreadline
+		@${CC} ${CFLAGS} -lreadline ${OBJ} ${CLIBS} -o ${NAME} 
 		@echo "${GREEN}Minishell   : DONE!${RESET}"
 
 all: ${NAME}
@@ -80,7 +80,6 @@ clean:
 
 fclean: clean
 	@${RM} ${NAME}
-	@${RM} $(OUTPUT_LEAKS)
 	@echo "${GREEN}Full clean  : DONE!${RESET}"
 
 re: fclean all

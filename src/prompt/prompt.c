@@ -40,6 +40,20 @@ void	print_tokens(t_fullcmd *tokens)
 	}
 }
 
+t_bool	empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	ft_prompt(t_data *data)
 {
 	char		*prompt;
@@ -53,12 +67,16 @@ void	ft_prompt(t_data *data)
 		// 	printf("OK\n");
 		// else
 		// 	printf("NOT OK\n");
+		// rl_bind_key ('\t', rl_insert); 
+			// Uncomment to insert "\t" with TAB on prompt
 		prompt = readline("Minishell>\033[0m ");
 		if (!prompt)
 		{
 			printf(MAGENTA);
-			printf("    \e[4mCIAO BABY!\e[0m\n");
+			printf("\e[4mCIAO BABY!\e[0m\n");
 			printf(RESET);
+			free(prompt);
+			prompt = NULL;
 			gc_mem(FULL_CLEAN, 0, NULL);
 			exit(EXIT_SUCCESS);
 		}
@@ -66,26 +84,54 @@ void	ft_prompt(t_data *data)
 		// 	continue ;
 		if (prompt && *prompt)
 		{
+			if (empty_line(prompt))
+				continue ;
 			add_history(prompt);
 			check_open_quotes(prompt);
 			tokens = parse_tokens(prompt, data);
-      // print_tokens(tokens);
+			// print_tokens(tokens);
 			if (!check_errors(tokens))
-      {
-          expand_var(data);
-          if (ft_strncmp("ft_export", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
-          {
-              init_cmds(data);
-              ft_export(data);
-          }
-          else if (ft_strncmp("ft_env", data->token_fullcmd->str, ft_strlen(data->token_fullcmd->str)) == 0)
-          {
-              init_cmds(data);
-              ft_env(data->envp_cpy);
-          }
-          else
-              exec(data);
-      }
+			{
+				expand_var(data);
+				if (ft_strncmp("export", data->token_fullcmd->str,
+						ft_strlen(data->token_fullcmd->str)) == 0)
+				{
+					init_cmds(data);
+					ft_export(data);
+				}
+				else if (ft_strncmp("unset", data->token_fullcmd->str,
+						ft_strlen(data->token_fullcmd->str)) == 0)
+				{
+					init_cmds(data);
+					ft_unset(data);
+				}
+				else if (ft_strncmp("exit", data->token_fullcmd->str,
+						ft_strlen(data->token_fullcmd->str)) == 0)
+				{
+					init_cmds(data);
+					ft_exit(data);
+				}
+				else if (ft_strncmp("cd", data->token_fullcmd->str,
+						ft_strlen(data->token_fullcmd->str)) == 0)
+				{
+					init_cmds(data);
+					ft_cd(data);
+				}
+				else if (ft_strncmp("pwd", data->token_fullcmd->str,
+						ft_strlen(data->token_fullcmd->str)) == 0)
+				{
+					init_cmds(data);
+					ft_pwd(data);
+				}
+				else if (ft_strncmp("env", data->token_fullcmd->str,
+						ft_strlen(data->token_fullcmd->str)) == 0)
+				{
+					init_cmds(data);
+					ft_env(data);
+				}
+				else
+					exec(data);
+			}
 		}
 	}
 	free(prompt);

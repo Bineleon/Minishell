@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/25 18:59:25 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/21 15:10:39 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,20 @@ t_bool	isquote(char c)
 
 t_bool	is_separator(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '$')
+	if (c == '|' || c == '<' || c == '>')
 		return (true);
 	return (false);
+}
+
+void    free_env_node(t_env *node)
+{
+    if (node->key)
+        gc_mem(FREE, 0, node->key);
+    if (node->value)
+        gc_mem(FREE, 0, node->value);
+    node = NULL;
+    gc_mem(FREE, 0, node);
+
 }
 
 char	*gc_strjoin(char const *s1, char const *s2)
@@ -122,4 +133,38 @@ char	*gc_itoa(int n)
 	ft_nbr_to_str(nb, itoa, size - 1);
 	itoa[size] = '\0';
 	return (itoa);
+}
+
+void    ciao(int exit_status)
+{
+    printf(MAGENTA);
+    printf("\e[4mCIAO BABY!\e[0m\n");
+    printf(RESET);
+    gc_mem(FULL_CLEAN, 0, NULL);
+    exit(exit_status);
+}
+
+long long int   ft_atol(const char *nptr)
+{
+	int		i;
+	long	sign;
+	long	res;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while ((nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13)))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while ((nptr[i] >= '0' && nptr[i] <= '9'))
+	{
+		res = res * 10 + nptr[i] - '0';
+		i++;
+	}
+	return (res * sign);
 }

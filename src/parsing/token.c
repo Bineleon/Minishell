@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/25 18:58:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/25 15:47:43 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,38 +102,106 @@ void	skip_var_name(char *line, int *i)
 
 int	to_handle_expand(char *line, int i, t_fullcmd *token)
 {
-	int	start;
+	int		start;
+	char	*tmp;
+	char	*expand;
 
 	start = i;
-	i++;
-	skip_var_name(line, &i);
-	if (i == start + 1)
-	{
-		token->type = EXPAND;
-		token->str = gc_mem(MALLOC, 2, NULL);
-		token->str[0] = '$';
-		token->str[1] = '\0';
-		return (i);
-	}
 	token->type = EXPAND;
-	token->str = gc_mem(MALLOC, i - start + 1, NULL);
-	ft_strlcpy(token->str, line + start, i - start + 1);
+	token->str = gc_mem(MALLOC, 1, NULL);
+	token->str[0] = '\0';
+	while (line[i] == '$')
+	{
+		start = i;
+		i++;
+		if (!line[i] || !(ft_isalnum(line[i]) || line[i] == '_'
+				|| line[i] == '?'))
+			tmp = gc_strdup("$");
+		else
+		{
+			skip_var_name(line, &i);
+			tmp = gc_mem(MALLOC, i - start + 1, NULL);
+			ft_strlcpy(tmp, line + start, i - start + 1);
+		}
+		expand = gc_strjoin(token->str, tmp);
+		gc_mem(FREE, 0, token->str);
+		gc_mem(FREE, 0, tmp);
+		token->str = expand;
+		if (start == i)
+			break ;
+	}
 	return (i);
 }
+
+// int	to_handle_expand(char *line, int i, t_fullcmd *token)
+// {
+// 	int	start;
+
+// 	start = i;
+// 	i++;
+// 	skip_var_name(line, &i);
+// 	if (i == start + 1)
+// 	{
+// 		token->type = EXPAND;
+// 		token->str = gc_mem(MALLOC, 2, NULL);
+// 		token->str[0] = '$';
+// 		token->str[1] = '\0';
+// 		return (i);
+// 	}
+// 	token->type = EXPAND;
+// 	token->str = gc_mem(MALLOC, i - start + 1, NULL);
+// 	ft_strlcpy(token->str, line + start, i - start + 1);
+//   start = i;
+//   if (line[i] == EXPAND)
+//   {
+//       skip_var_name(line, &i);
+//       if (i == start + 1)
+//           gc_strjoin(token->str, "$");
+//       else
+//           gc_strjoin(token->str, line + start);
+//   }
+// 	return (i);
+// }
 
 int	to_handle_word(char *line, int i, t_fullcmd *token)
 {
-	int	word_start;
+	int		start;
+	t_bool	dollar_found;
+	char	*token_str;
 
-	word_start = i;
+	start = i;
+	dollar_found = false;
+	token_str = NULL;
 	while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i])
 		&& !isquote(line[i]))
+	{
+		if (line[i] == '$')
+			dollar_found = true;
 		i++;
-	token->str = gc_mem(MALLOC, i - word_start + 1, NULL);
-	ft_strlcpy(token->str, line + word_start, i - word_start + 1);
-	token->type = WORD;
+	}
+	token_str = gc_mem(MALLOC, i - start + 1, NULL);
+	ft_strlcpy(token_str, line + start, i - start + 1);
+	if (dollar_found)
+		token->type = EXPAND;
+	else
+		token->type = WORD;
+	token->str = token_str;
 	return (i);
 }
+
+// int	to_handle_word(char *line, int i, t_fullcmd *token)
+// {
+// 	int	word_start;
+
+// 	word_start = i;
+// 	while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i])
+// 		&& !isquote(line[i]))
+// 		i++;
+// 	token->str = gc_mem(MALLOC, i - word_start + 1, NULL);
+// 	ft_strlcpy(token->str, line + word_start, i - word_start + 1);
+// 	token->type = WORD;
+// 	return (i);
+// }
 
 t_fullcmd	*parse_tokens(char *line, t_data *data)
 {

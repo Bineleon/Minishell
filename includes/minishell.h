@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/13 14:27:03 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/25 15:48:45 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -87,7 +86,7 @@ typedef struct s_garbage_co
 typedef struct s_env
 {
 	char				*key;
-  t_bool      *equal;
+	t_bool				equal;
 	char				*value;
 	struct s_env		*next;
 }						t_env;
@@ -101,17 +100,25 @@ typedef struct s_data
 	int					exit_status;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co		*garbage; // Chained list of all the malloced pointers
+	t_garbage_co *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */
 /* ║              BUILTINS              ║ */
 /* ╚════════════════════════════════════╝ */
 
-void					ft_env(t_env *env_cpy);
-void					ft_pwd(void);
-void          ft_echo(t_data *data);
-void          ft_export(t_data *data);
+void					ft_env(t_data *data);
+void					ft_pwd(t_data *data);
+void					ft_echo(t_data *data);
+void					ft_export(t_data *data);
+void					ft_unset(t_data *data);
+void					ft_exit(t_data *data);
+void					ft_cd(t_data *data);
+t_bool					is_valid_key(char *key);
+int						ft_longest(char *s1, char *s2);
+void					update_env(t_env **env, char *key, char *value,
+							t_bool equal);
+char					*get_env_value(char *var_name, t_env *env_list);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */
@@ -136,6 +143,7 @@ t_fullcmd				*parse_tokens(char *line, t_data *data);
 char					*get_env_value(char *var_name, t_env *env_list);
 char					*expand_token_value(char *str, t_env *env_list);
 void					expand_var(t_data *data);
+char					*expand_token(char *str, t_env *env_list);
 void					handle_expand(t_fullcmd *token, t_env *env_list);
 void					handle_dquote_exp(t_fullcmd *token, t_env *env_list);
 void					handle_squote_exp(t_fullcmd *token);
@@ -196,6 +204,9 @@ void					error_mess(char *input, char *mess);
 char					*gc_strjoin(char const *s1, char const *s2);
 char					*gc_strdup(const char *s1);
 char					*gc_itoa(int n);
+void					free_env_node(t_env *node);
+long long int			ft_atol(const char *nptr);
+void					ciao(int exit_status);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */
