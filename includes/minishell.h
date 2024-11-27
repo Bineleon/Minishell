@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/25 15:48:45 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:40:19 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,12 @@ typedef struct s_data
 
 void					ft_env(t_data *data);
 void					ft_pwd(t_data *data);
-void					ft_echo(t_data *data);
-void					ft_export(t_data *data);
-void					ft_unset(t_data *data);
-void					ft_exit(t_data *data);
-void					ft_cd(t_data *data);
-t_bool					is_valid_key(char *key);
+void	        ft_echo(t_cmd *cmds);
+void	        ft_export(t_data *data, t_cmd *cmds);
+void					ft_unset(t_data *data, t_cmd *cmds);
+void	        ft_exit(t_cmd *cmds);
+void	        ft_cd(t_cmd *cmds);
+t_bool				is_valid_key(char *key);
 int						ft_longest(char *s1, char *s2);
 void					update_env(t_env **env, char *key, char *value,
 							t_bool equal);
@@ -201,6 +201,8 @@ int						not_quoted_arg(char *line, char **args, int i, int *j);
 void					extract_args(char *line, char **args);
 char					**split_args(char *line);
 void					error_mess(char *input, char *mess);
+void	        error_cmd(char *cmd);
+void          error_syntax(char *str);
 char					*gc_strjoin(char const *s1, char const *s2);
 char					*gc_strdup(const char *s1);
 char					*gc_itoa(int n);

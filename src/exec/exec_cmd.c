@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/10/31 16:59:54 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/11/27 19:25:46 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ void	exec_cmd(t_data *data)
 	else
 		path = new_path(data->cmds->args[0], data->envp_cpy);
 	if (!path)
-		error_mess(NULL, NULL);
+  {
+    data->exit_status = 127;
+		error_cmd(data->cmds->args[0]);
+  }
 	newenv = ft_newenv(data);
 	if (!newenv)
 		return ((void)gc_mem(FREE, 0, path));

@@ -6,27 +6,23 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:57:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 15:15:54 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:21:39 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void    print_syntax_error(char *str)
-{
-    ft_putstr_fd("syntax error near unexpected token ", 2);
-    ft_putstr_fd(str, 2);
-}
-
 t_bool	check_open_quotes(char *line)
 {
 	t_bool	dq;
 	t_bool	sq;
+  t_data  *data;
 	int		i;
 
 	i = 0;
 	dq = false;
 	sq = false;
+  data = get_data();
 	while (line[i])
 	{
 		if (line[i] == SQUOTE && !dq)
@@ -37,7 +33,8 @@ t_bool	check_open_quotes(char *line)
 	}
 	if (dq || sq)
 	{
-		ft_putstr_fd("minishell: error: open quote\n", 2);
+		// ft_putstr_fd("minishell: error: open quote\n", 2);
+    data->exit_status = 1;
 		return (true);
 	}
 	return (false);
@@ -49,17 +46,17 @@ t_bool	pipe_errors(t_fullcmd *tokens)
 
 	current = tokens;
 	if (current && current->type == PIPE)
-		return (print_syntax_error("`newline'\n"), true);
+		return (error_syntax("`newline'\n"), true);
 	while (current)
 	{
 		if (current->type == PIPE)
 		{
 			if (!current->next)
-				return (print_syntax_error("`|'\n"), true);
+				return (error_syntax("`|'\n"), true);
 			else
 			{
 				if (current->next->type != WORD || current->next->type == PIPE)
-					return (print_syntax_error("`|'\n"), true);
+					return (error_syntax("`|'\n"), true);
 			}
 		}
 		current = current->next;
@@ -72,11 +69,11 @@ t_bool	sub_redirect_errors(t_fullcmd *tokens)
 	if (!tokens->next || tokens->next->type != WORD)
 	{
 		if (tokens->type == IN || tokens->type == OUT)
-			print_syntax_error("`newline'\n");
+			error_syntax("`newline'\n");
 		if (tokens->type == APPEND)
-			print_syntax_error("`<<'\n");
+			error_syntax("`<<'\n");
 		if (tokens->type == HEREDOC)
-			print_syntax_error("`>>'\n");
+			error_syntax("`>>'\n");
 		return (true);
 	}
 	return (false);
@@ -91,7 +88,7 @@ t_bool	redirect_errors(t_fullcmd *tokens)
 			|| current->type == APPEND || current->type == HEREDOC)
 		&& !current->next)
 	{
-		print_syntax_error("`newline'\n");
+		error_syntax("`newline'\n");
 		return (true);
 	}
 	while (current)
@@ -130,7 +127,7 @@ t_bool	check_errors(t_fullcmd *tokens)
     data->exit_status = 2;
 		return (true);
   }
-  data->exit_status = 0;
+  // data->exit_status = 0;
 	return (false);
 }
 // 		return (i);

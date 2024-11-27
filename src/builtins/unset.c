@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:58 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 15:14:12 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:37:09 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,26 @@ void	rm_var(t_data *data, char *key)
 	data->exit_status = 1;
 }
 
-void	ft_unset(t_data *data)
+void	ft_unset(t_data *data, t_cmd *cmds)
 {
 	int		i;
 	char	*key;
 
 	i = 1;
 	key = NULL;
-	if (!data->cmds->args[i])
+	if (!cmds->args[i])
 	{
-    error_mess("unset", "missing argument(s)\n")
+    error_mess("unset", "missing argument(s)\n");
 		data->exit_status = 1;
 		return ;
 	}
-	while (data->cmds->args[i])
+	while (cmds->args[i])
 	{
-		key = data->cmds->args[i];
+		key = cmds->args[i];
 		if (!is_valid_key(key))
 		{
       error_mess("unset", key);
-      ft_putstr_fd(": not a valid identifier\n");
+      ft_putstr_fd(": not a valid identifier\n", 2);
 			data->exit_status = 1;
 			i++;
 			continue ;

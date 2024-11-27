@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 15:14:57 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:48:38 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_bool	is_in_dquote(t_fullcmd *token)
 {
-	if (token->str[0] == DQUOTE && token->str[ft_strlen(token->str)
-		- 1] == DQUOTE)
+	if (token->str[0] == DQUOTE
+      && token->str[ft_strlen(token->str)- 1] == DQUOTE)
 		return (true);
 	return (false);
 }
 
 t_bool	is_in_squote(t_fullcmd *token)
 {
-	if (token->str[0] == SQUOTE && token->str[ft_strlen(token->str)
-		- 1] == SQUOTE)
+	if (token->str[0] == SQUOTE
+      && token->str[ft_strlen(token->str)- 1] == SQUOTE)
 		return (true);
 	return (false);
 }
@@ -54,7 +54,7 @@ char	*expand_exit_st(char *str, char **result, int i)
 	if (str[i] == '?')
 	{
 		*result = gc_itoa(data->exit_status);
-		printf("minishell: %d: command not found\n", data->exit_status);
+		// printf("%d\n", data->exit_status);
     data->exit_status = 0;
 		return (*result);
 	}

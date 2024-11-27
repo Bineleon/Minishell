@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 15:09:42 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:34:04 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,16 +204,16 @@ void	handle_with_equal(t_data *data, char *arg)
 	}
 }
 
-void	sub_export(t_data *data)
+void	sub_export(t_data *data, t_cmd *cmds)
 {
 	int		i;
 	char	*arg;
 	char	*equal;
 
 	i = 1;
-	while (data->cmds->args[i])
+	while (cmds->args[i])
 	{
-		arg = data->cmds->args[i];
+		arg = cmds->args[i];
 		equal = ft_strchr(arg, '=');
 		if (equal)
 			handle_with_equal(data, arg);
@@ -234,12 +234,12 @@ void	sub_export(t_data *data)
 // 	equal = NULL;
 // 	key = NULL;
 // 	value = NULL;
-// 	while (data->cmds->args[i])
+// 	while (cmds->args[i])
 // 	{
-// 		equal = ft_strchr(data->cmds->args[i], '=');
+// 		equal = ft_strchr(cmds->args[i], '=');
 // 		if (!equal)
 // 		{
-// 			key = data->cmds->args[i];
+// 			key = cmds->args[i];
 // 			if (!is_valid_key(key))
 // 			{
 //         error_mess("export", key);
@@ -255,7 +255,7 @@ void	sub_export(t_data *data)
 // 		else
 // 		{
 // 			*equal = '\0';
-// 			key = data->cmds->args[i];
+// 			key = cmds->args[i];
 // 			value = equal + 1;
 // 			if (!is_valid_key(key))
 // 			{
@@ -274,13 +274,13 @@ void	sub_export(t_data *data)
 // 	}
 // }
 
-void	ft_export(t_data *data)
+void	ft_export(t_data *data, t_cmd *cmds)
 {
 	t_env	**sorted_env;
 
 	sorted_env = lst_to_arr(data->envp_cpy);
 	sort_env(sorted_env);
-	if (!data->cmds->args[1])
+	if (!cmds->args[1])
 		print_export(sorted_env);
-	sub_export(data);
+	sub_export(data, cmds);
 }

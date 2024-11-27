@@ -86,44 +86,43 @@ void	ft_prompt(t_data *data)
 			if (empty_line(prompt))
 				continue ;
 			add_history(prompt);
-			check_open_quotes(prompt);
+			if (check_open_quotes(prompt))
+      {
+        ft_putstr_fd("minishell: error: open quote\n", 2);
+        printf("data->exit = %d\n", data->exit_status);
+        continue;
+      }
 			tokens = parse_tokens(prompt, data);
 			// print_tokens(tokens);
 			if (!check_errors(tokens))
 			{
 				expand_var(data);
-				if (ft_strncmp("export", data->token_fullcmd->str,
-						ft_strlen(data->token_fullcmd->str)) == 0)
+				if (ft_strcmp("export", data->token_fullcmd->str) == 0)
 				{
 					init_cmds(data);
-					ft_export(data);
+					ft_export(data, data->cmds);
 				}
-				else if (ft_strncmp("unset", data->token_fullcmd->str,
-						ft_strlen(data->token_fullcmd->str)) == 0)
+				else if (ft_strcmp("unset", data->token_fullcmd->str) == 0)
 				{
 					init_cmds(data);
-					ft_unset(data);
+					ft_unset(data, data->cmds);
 				}
-				else if (ft_strncmp("exit", data->token_fullcmd->str,
-						ft_strlen(data->token_fullcmd->str)) == 0)
+				else if (ft_strcmp("exit", data->token_fullcmd->str) == 0)
 				{
 					init_cmds(data);
-					ft_exit(data);
+					ft_exit(data->cmds);
 				}
-				else if (ft_strncmp("cd", data->token_fullcmd->str,
-						ft_strlen(data->token_fullcmd->str)) == 0)
+				else if (ft_strcmp("cd", data->token_fullcmd->str) == 0)
 				{
 					init_cmds(data);
-					ft_cd(data);
+					ft_cd(data->cmds);
 				}
-				else if (ft_strncmp("pwd", data->token_fullcmd->str,
-						ft_strlen(data->token_fullcmd->str)) == 0)
+				else if (ft_strcmp("pwd", data->token_fullcmd->str) == 0)
 				{
 					init_cmds(data);
 					ft_pwd(data);
 				}
-				else if (ft_strncmp("env", data->token_fullcmd->str,
-						ft_strlen(data->token_fullcmd->str)) == 0)
+				else if (ft_strcmp("env", data->token_fullcmd->str) == 0)
 				{
 					init_cmds(data);
 					ft_env(data);

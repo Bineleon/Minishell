@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:31 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 14:59:50 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:49:37 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,18 @@ void	update_pwd(t_env *env, char *oldpwd)
   data->exit_status = 0;
 }
 
-static t_bool	check_args_err(t_data *data)
+static t_bool	check_args_err(t_cmd *cmds)
 {
-	if (data->cmds->args[1] && data->cmds->args[2])
+  t_data  *data;
+
+  data = get_data();
+	if (cmds->args[1] && cmds->args[2])
 	{
     error_mess("cd", "too many arguments\n");
 		data->exit_status = 1;
 		return (true);
 	}
-	if (!data->cmds->args[1])
+	if (!cmds->args[1])
 	{
     error_mess("cd", "missing argument\n");
 		data->exit_status = 1;
@@ -46,11 +49,13 @@ static t_bool	check_args_err(t_data *data)
 	return (false);
 }
 
-void	ft_cd(t_data *data)
+void	ft_cd(t_cmd *cmds)
 {
 	char	oldpwd[PATH_MAX];
+  t_data  *data;
 
-	if (check_args_err(data))
+  data = get_data();
+	if (check_args_err(cmds))
 		return ;
 	if (!getcwd(oldpwd, PATH_MAX))
 	{
@@ -58,9 +63,9 @@ void	ft_cd(t_data *data)
 		data->exit_status = 1;
 		return ;
 	}
-	if (chdir(data->cmds->args[1]) == -1)
+	if (chdir(cmds->args[1]) == -1)
 	{
-		perror(data->cmds->args[1]);
+		perror(cmds->args[1]);
 		data->exit_status = 1;
 		return ;
 	}
