@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 16:50:09 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:14:57 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*expand_exit_st(char *str, char **result, int i)
 	{
 		*result = gc_itoa(data->exit_status);
 		printf("minishell: %d: command not found\n", data->exit_status);
+    data->exit_status = 0;
 		return (*result);
 	}
 	return (NULL);
@@ -206,6 +207,44 @@ void	handle_squote_exp(t_fullcmd *token)
 	gc_mem(FREE, 0, tmp);
 }
 
+static void   init_var(int *i, int *j, char **tmp, t_fullcmd *token)
+{
+	*i = 1;
+	*j = 0;
+	*tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+}
+
+static char   *process_exp_dq(char *str, t_env *env_list, int *i)
+{
+	char	*env_value;
+
+	env_value = expand_in_dquote(str + *i, env_list);
+	if (env_value)
+	{
+		*i += 1;
+		while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
+			*i += 1;
+	}
+	return env_value;
+}
+
+void    append_res(char **result, char **tmp, int *j)
+{
+	(*tmp)[*j] = '\0';
+	*result = gc_strjoin(*result, *tmp);
+	*j = 0;
+}
+
+void	handle_chars(char *str, char **tmp, int *i, int *j)
+{
+	while (str[*i] && str[*i] != DQUOTE)
+	{
+		if (str[*i] == EXPAND && str[*i + 1] && ft_isalnum(str[*i + 1]))
+			break;
+		(*tmp)[(*j)++] = str[(*i)++];
+	}
+}
+
 void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 {
 	char	*tmp;
@@ -214,34 +253,61 @@ void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 	int		i;
 	int		j;
 
-	i = 1;
-	j = 0;
-	tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+	init_var(&i, &j, &tmp, token);
 	result = gc_mem(MALLOC, 1, NULL);
 	while (token->str[i] && token->str[i] != DQUOTE)
 	{
+		handle_chars(token->str, &tmp, &i, &j);
 		if (token->str[i] == EXPAND && token->str[i + 1]
 			&& ft_isalnum(token->str[i + 1]))
 		{
-			tmp[j] = '\0';
-			result = gc_strjoin(result, tmp);
-			env_value = expand_in_dquote(token->str + i, env_list);
+			append_res(&result, &tmp, &j);
+			env_value = process_exp_dq(token->str, env_list, &i);
 			if (env_value)
 				result = gc_strjoin(result, env_value);
-			i++;
-			while (token->str[i] && (ft_isalnum(token->str[i])
-					|| token->str[i] == '_'))
-				i++;
-			j = 0;
 		}
-		else
-			tmp[j++] = token->str[i++];
 	}
-	tmp[j] = '\0';
-	result = gc_strjoin(result, tmp);
+	append_res(&result, &tmp, &j);
 	gc_mem(FREE, 0, token->str);
 	token->str = result;
 }
+
+// void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
+// {
+// 	char	*tmp;
+// 	char	*result;
+// 	char	*env_value;
+// 	int		i;
+// 	int		j;
+
+// 	i = 1;
+// 	j = 0;
+// 	tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+// 	result = gc_mem(MALLOC, 1, NULL);
+// 	while (token->str[i] && token->str[i] != DQUOTE)
+// 	{
+// 		if (token->str[i] == EXPAND && token->str[i + 1]
+// 			&& ft_isalnum(token->str[i + 1]))
+// 		{
+// 			tmp[j] = '\0';
+// 			result = gc_strjoin(result, tmp);
+// 			env_value = expand_in_dquote(token->str + i, env_list);
+// 			if (env_value)
+// 				result = gc_strjoin(result, env_value);
+// 			i++;
+// 			while (token->str[i] && (ft_isalnum(token->str[i])
+// 					|| token->str[i] == '_'))
+// 				i++;
+// 			j = 0;
+// 		}
+// 		else
+// 			tmp[j++] = token->str[i++];
+// 	}
+// 	tmp[j] = '\0';
+// 	result = gc_strjoin(result, tmp);
+// 	gc_mem(FREE, 0, token->str);
+// 	token->str = result;
+// }
 
 // void	handle_expand(t_fullcmd *token, t_env *env_list)
 // {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 15:47:22 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/27 14:48:40 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ t_env	*min_node(char *key, char *value)
 t_env	*no_env(void)
 {
 	t_env	*head;
+  t_data  *data;
 	char	buf[PATH_MAX];
 
+  data = get_data();
 	if (!getcwd(buf, PATH_MAX))
 	{
 		perror("getcwd(): ");
+    data->exit_status = 1;
 		return (NULL);
 	}
 	head = min_node("PWD", buf);

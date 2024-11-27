@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:58 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 15:47:03 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:14:12 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_unset(t_data *data)
 	key = NULL;
 	if (!data->cmds->args[i])
 	{
-		printf("unset: missing argument(s)\n");
+    error_mess("unset", "missing argument(s)\n")
 		data->exit_status = 1;
 		return ;
 	}
@@ -83,7 +83,8 @@ void	ft_unset(t_data *data)
 		key = data->cmds->args[i];
 		if (!is_valid_key(key))
 		{
-			printf("unset: `%s': not a valid identifier\n", key);
+      error_mess("unset", key);
+      ft_putstr_fd(": not a valid identifier\n");
 			data->exit_status = 1;
 			i++;
 			continue ;

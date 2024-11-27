@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:13 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 15:46:20 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:04:36 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_bool	check_args_count(t_data *data)
 {
 	if (data->cmds->args[1] && data->cmds->args[2])
 	{
-		printf("exit: too many arguments\n");
+    error_mess("exit", "too many arguments\n");
 		data->exit_status = 1;
 		return (true);
 	}
@@ -43,14 +43,16 @@ static void	validate_status(t_data *data, int *status)
 {
 	if (!is_valid_num(data->cmds->args[1]))
 	{
-		printf("exit: %s : numeric argument required\n", data->cmds->args[1]);
+    error_mess("exit", data->cmds->args[1]);
+		ft_putstr_fd(" : numeric argument required\n", 2);
 		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(2);
 	}
 	*status = ft_atol(data->cmds->args[1]);
 	if (*status > INT_MAX || *status < INT_MIN)
 	{
-		printf("exit: %s : numeric argument required\n", data->cmds->args[1]);
+    error_mess("exit", data->cmds->args[1]);
+		ft_putstr_fd(" : numeric argument required\n", 2);
 		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(2);
 	}

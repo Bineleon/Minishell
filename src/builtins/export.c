@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 15:46:36 by neleon           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:09:42 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,54 +162,117 @@ void	print_export(t_env **arr)
 	}
 }
 
-void	sub_export(t_data *data)
+void	handle_no_equal(t_data *data, char *key)
+{
+	if (!is_valid_key(key))
+	{
+		error_mess("export", key);
+		ft_putstr_fd(" : not a valid identifier\n", 2);
+		data->exit_status = 1;
+	}
+	else
+	{
+		update_env(&data->envp_cpy, key, NULL, false);
+		data->exit_status = 0;
+	}
+}
+
+void	handle_with_equal(t_data *data, char *arg)
 {
 	char	*equal;
 	char	*key;
 	char	*value;
-	int		i;
 
-	i = 1;
-	equal = NULL;
-	key = NULL;
-	value = NULL;
-	while (data->cmds->args[i])
+	equal = ft_strchr(arg, '=');
+	if (equal)
 	{
-		equal = ft_strchr(data->cmds->args[i], '=');
-		if (!equal)
+		*equal = '\0';
+		key = arg;
+		value = equal + 1;
+		if (!is_valid_key(key))
 		{
-			key = data->cmds->args[i];
-			if (!is_valid_key(key))
-			{
-				printf("export: `%s': not a valid identifier\n", key);
-				data->exit_status = 1;
-			}
-			else
-			{
-				update_env(&data->envp_cpy, key, NULL, false);
-				data->exit_status = 0;
-			}
+			error_mess("export", key);
+			ft_putstr_fd(" : not a valid identifier\n", 2);
+			data->exit_status = 1;
 		}
 		else
 		{
-			*equal = '\0';
-			key = data->cmds->args[i];
-			value = equal + 1;
-			if (!is_valid_key(key))
-			{
-				printf("export: `%s': not a valid identifier\n", key);
-				data->exit_status = 1;
-			}
-			else
-			{
-				update_env(&data->envp_cpy, key, value, true);
-				data->exit_status = 0;
-			}
-			*equal = '=';
+			update_env(&data->envp_cpy, key, value, true);
+			data->exit_status = 0;
 		}
+		*equal = '=';
+	}
+}
+
+void	sub_export(t_data *data)
+{
+	int		i;
+	char	*arg;
+	char	*equal;
+
+	i = 1;
+	while (data->cmds->args[i])
+	{
+		arg = data->cmds->args[i];
+		equal = ft_strchr(arg, '=');
+		if (equal)
+			handle_with_equal(data, arg);
+		else
+			handle_no_equal(data, arg);
 		i++;
 	}
 }
+
+// void	sub_export(t_data *data)
+// {
+// 	char	*equal;
+// 	char	*key;
+// 	char	*value;
+// 	int		i;
+
+// 	i = 1;
+// 	equal = NULL;
+// 	key = NULL;
+// 	value = NULL;
+// 	while (data->cmds->args[i])
+// 	{
+// 		equal = ft_strchr(data->cmds->args[i], '=');
+// 		if (!equal)
+// 		{
+// 			key = data->cmds->args[i];
+// 			if (!is_valid_key(key))
+// 			{
+//         error_mess("export", key);
+// 		    ft_putstr_fd(" : not a valid identifier\n", 2);
+// 				data->exit_status = 1;
+// 			}
+// 			else
+// 			{
+// 				update_env(&data->envp_cpy, key, NULL, false);
+// 				data->exit_status = 0;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			*equal = '\0';
+// 			key = data->cmds->args[i];
+// 			value = equal + 1;
+// 			if (!is_valid_key(key))
+// 			{
+//         error_mess("export", key);
+// 		    ft_putstr_fd(" : not a valid identifier\n", 2);
+// 				data->exit_status = 1;
+// 			}
+// 			else
+// 			{
+// 				update_env(&data->envp_cpy, key, value, true);
+// 				data->exit_status = 0;
+// 			}
+// 			*equal = '=';
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	ft_export(t_data *data)
 {
