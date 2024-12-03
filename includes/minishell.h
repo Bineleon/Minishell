@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/27 19:40:19 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/03 22:46:50 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@ typedef struct s_data
 	int					fd[3];
 	int					pid;
 	int					exit_status;
+	t_bool				heredoc;
+	char				*delim;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co *garbage; // Chained list of all the malloced pointers
+	t_garbage_co		*garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 /* ╔════════════════════════════════════╗ */
@@ -109,12 +111,12 @@ typedef struct s_data
 
 void					ft_env(t_data *data);
 void					ft_pwd(t_data *data);
-void	        ft_echo(t_cmd *cmds);
-void	        ft_export(t_data *data, t_cmd *cmds);
+void					ft_echo(t_cmd *cmds);
+void					ft_export(t_data *data, t_cmd *cmds);
 void					ft_unset(t_data *data, t_cmd *cmds);
-void	        ft_exit(t_cmd *cmds);
-void	        ft_cd(t_cmd *cmds);
-t_bool				is_valid_key(char *key);
+void					ft_exit(t_cmd *cmds);
+void					ft_cd(t_cmd *cmds);
+t_bool					is_valid_key(char *key);
 int						ft_longest(char *s1, char *s2);
 void					update_env(t_env **env, char *key, char *value,
 							t_bool equal);
@@ -158,6 +160,7 @@ void					first_child(t_data *data);
 void					middle_child(t_data *data);
 void					last_child(t_data *data);
 void					redir_input(t_data *data);
+void					heredoc(t_data *data);
 void					redir_output(t_data *data);
 void					exec_cmd(t_data *data);
 char					*new_path(char *arg, t_env *env_cpy);
