@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:34:47 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/25 15:47:10 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/04 14:37:14 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 	// }
 	// while (1)
 	// {
-	handle_signals();
+	// handle_signals();
 	ft_prompt(data);
 	// }
 	return (0);

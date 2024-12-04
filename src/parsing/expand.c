@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 20:03:05 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:24:52 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ static char   *process_exp_dq(char *str, t_env *env_list, int *i)
 		while (str[*i] && (ft_isalnum(str[*i]) || str[*i] == '_'))
 			*i += 1;
 	}
-	return env_value;
+	return (NULL);
 }
 
 void    append_res(char **result, char **tmp, int *j)
@@ -263,8 +263,16 @@ void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 		{
 			append_res(&result, &tmp, &j);
 			env_value = process_exp_dq(token->str, env_list, &i);
+      printf("result : %s\n", result);
 			if (env_value)
+      {
 				result = gc_strjoin(result, env_value);
+      }
+      // else
+      // {
+        // skip_var_name(tmp + i, &i);   // ONGOING
+      //   j = 0;
+      // }
 		}
 	}
 	append_res(&result, &tmp, &j);

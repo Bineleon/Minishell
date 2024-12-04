@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:57:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 19:21:39 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:13:35 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,25 @@ t_bool	check_open_quotes(char *line)
 	return (false);
 }
 
+t_bool first_pipe_err(t_fullcmd *token)
+{
+  if (token && token->type == PIPE && token->next)
+  {
+    if(token->next->type == PIPE)
+      return (error_syntax("`||'\n"), true);
+  }
+	if (token && token->type == PIPE)
+		return (error_syntax("`|'\n"), true);
+  return (false);
+}
+
 t_bool	pipe_errors(t_fullcmd *tokens)
 {
 	t_fullcmd	*current;
 
 	current = tokens;
-	if (current && current->type == PIPE)
-		return (error_syntax("`newline'\n"), true);
+  if (first_pipe_err(tokens))
+    return (true);
 	while (current)
 	{
 		if (current->type == PIPE)
@@ -55,8 +67,10 @@ t_bool	pipe_errors(t_fullcmd *tokens)
 				return (error_syntax("`|'\n"), true);
 			else
 			{
-				if (current->next->type != WORD || current->next->type == PIPE)
-					return (error_syntax("`|'\n"), true);
+				if (current->next->type == PIPE)
+					return (error_syntax("`||'\n"), true);
+        if (current->next->type != WORD)
+          return (error_syntax("`|'\n"), true);
 			}
 		}
 		current = current->next;
@@ -66,17 +80,26 @@ t_bool	pipe_errors(t_fullcmd *tokens)
 
 t_bool	sub_redirect_errors(t_fullcmd *tokens)
 {
-	if (!tokens->next || tokens->next->type != WORD)
+	if (is_redi(tokens) && (!tokens->next || tokens->next->type != WORD))
 	{
-		if (tokens->type == IN || tokens->type == OUT)
-			error_syntax("`newline'\n");
-		if (tokens->type == APPEND)
-			error_syntax("`<<'\n");
-		if (tokens->type == HEREDOC)
+    printf("SEGFAULT\n");
+		if (tokens->next->type == APPEND)
 			error_syntax("`>>'\n");
+		else if (tokens->next->type == HEREDOC)
+			error_syntax("`<<'\n");
+		else if (tokens->next->type == IN || tokens->next->type == OUT)
+			error_syntax("`newline'\n");
 		return (true);
 	}
 	return (false);
+}
+
+t_bool  is_redi(t_fullcmd *token)
+{
+  if (token && (token->type == IN || token->type == OUT
+			|| token->type == APPEND || token->type == HEREDOC))
+      return (true);
+  return (false);
 }
 
 t_bool	redirect_errors(t_fullcmd *tokens)
@@ -84,16 +107,15 @@ t_bool	redirect_errors(t_fullcmd *tokens)
 	t_fullcmd	*current;
 
 	current = tokens;
-	if (current && (current->type == IN || current->type == OUT
-			|| current->type == APPEND || current->type == HEREDOC)
-		&& !current->next)
+	if (is_redi(current) && !current->next)
 	{
 		error_syntax("`newline'\n");
 		return (true);
 	}
 	while (current)
 	{
-		sub_redirect_errors(current);
+		if(sub_redirect_errors(current))
+        return (true);
 		current = current->next;
 	}
 	return (false);
