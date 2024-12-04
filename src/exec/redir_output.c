@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:21:16 by elilliu           #+#    #+#             */
-/*   Updated: 2024/11/26 15:35:48 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/11/27 23:51:42 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	redir_output(t_data *data)
 				return ((void)error_mess(NULL, NULL));
 			if (fd)
 				close(fd);
-			fd = new_fd(data->cmds->str[i], data->cds->str[i + 1]);
+			fd = new_fd(data->cmds->str[i], data->cmds->str[i + 1]);
 			if (fd == -1)
 				return ((void)error_mess(NULL, NULL));
 		}
