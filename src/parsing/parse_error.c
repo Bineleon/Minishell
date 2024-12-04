@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:57:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/04 18:18:01 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/04 18:34:39 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_bool	check_open_quotes(char *line)
 	return (false);
 }
 
-t_bool check_unexpected_tok(t_fullcmd *tokens)
+t_bool unexpected_tok_err(t_fullcmd *tokens)
 {
 	t_fullcmd *current;
 
@@ -155,12 +155,12 @@ t_bool	check_errors(t_fullcmd *tokens)
 	t_data	*data;
 
 	data = get_data();
-	if (pipe_errors(tokens) || redirect_errors(tokens))
+	if (pipe_errors(tokens) || redirect_errors(tokens)
+		|| unexpected_tok_err(tokens))
 	{
 		data->exit_status = 2;
 		return (true);
 	}
-	// data->exit_status = 0;
 	return (false);
 }
 // 		return (i);
