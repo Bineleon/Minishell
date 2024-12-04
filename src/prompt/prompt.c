@@ -128,7 +128,9 @@ void	ft_prompt(t_data *data)
 					ft_env(data);
 				}
 				else
+        {
 					exec(data);
+        }
 			}
 		}
 	}

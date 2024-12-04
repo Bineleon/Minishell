@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/03 22:46:50 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/04 16:56:52 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_data
 {
 	t_env				*envp_cpy;
 	size_t				cmds_count;
+  t_bool      heredoc;
 	int					fd[3];
 	int					pid;
 	int					exit_status;
@@ -212,6 +213,8 @@ char					*gc_itoa(int n);
 void					free_env_node(t_env *node);
 long long int			ft_atol(const char *nptr);
 void					ciao(int exit_status);
+t_bool        is_redi(t_fullcmd *token);
+void	skip_var_name(char *line, int *i);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

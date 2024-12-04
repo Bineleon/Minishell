@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:10:08 by elilliu           #+#    #+#             */
-/*   Updated: 2024/11/27 19:21:12 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:14:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	error_cmd(char *cmd)
 
 void    error_syntax(char *str)
 {
+    ft_putstr_fd("minishell: ", 2);
     ft_putstr_fd("syntax error near unexpected token ", 2);
     ft_putstr_fd(str, 2);
 }

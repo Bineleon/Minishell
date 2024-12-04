@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 14:25:44 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:30:57 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ int	to_handle_out(char *line, int i, t_fullcmd *token)
 
 void	skip_var_name(char *line, int *i)
 {
+  if (line[*i] && (line[*i] == '_' || ft_isalpha(line[*i])))
+    *i += 1;
+  else
+      return;
 	while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'
 			|| line[*i] == '?'))
 		*i += 1;
