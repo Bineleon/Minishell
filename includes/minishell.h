@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/04 17:00:06 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/04 17:02:49 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,16 +204,16 @@ int						not_quoted_arg(char *line, char **args, int i, int *j);
 void					extract_args(char *line, char **args);
 char					**split_args(char *line);
 void					error_mess(char *input, char *mess);
-void	        error_cmd(char *cmd);
-void          error_syntax(char *str);
+void					error_cmd(char *cmd);
+void					error_syntax(char *str);
 char					*gc_strjoin(char const *s1, char const *s2);
 char					*gc_strdup(const char *s1);
 char					*gc_itoa(int n);
 void					free_env_node(t_env *node);
 long long int			ft_atol(const char *nptr);
 void					ciao(int exit_status);
-t_bool        is_redi(t_fullcmd *token);
-void	skip_var_name(char *line, int *i);
+t_bool					is_redi(t_fullcmd *token);
+void					skip_var_name(char *line, int *i);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

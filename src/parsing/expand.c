@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/04 15:24:52 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:22:21 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_bool	is_in_dquote(t_fullcmd *token)
 {
-	if (token->str[0] == DQUOTE
-      && token->str[ft_strlen(token->str)- 1] == DQUOTE)
+	if (token->str[0] == DQUOTE && token->str[ft_strlen(token->str)
+		- 1] == DQUOTE)
 		return (true);
 	return (false);
 }
 
 t_bool	is_in_squote(t_fullcmd *token)
 {
-	if (token->str[0] == SQUOTE
-      && token->str[ft_strlen(token->str)- 1] == SQUOTE)
+	if (token->str[0] == SQUOTE && token->str[ft_strlen(token->str)
+		- 1] == SQUOTE)
 		return (true);
 	return (false);
 }
@@ -55,7 +55,7 @@ char	*expand_exit_st(char *str, char **result, int i)
 	{
 		*result = gc_itoa(data->exit_status);
 		// printf("%d\n", data->exit_status);
-    data->exit_status = 0;
+		data->exit_status = 0;
 		return (*result);
 	}
 	return (NULL);
@@ -207,14 +207,14 @@ void	handle_squote_exp(t_fullcmd *token)
 	gc_mem(FREE, 0, tmp);
 }
 
-static void   init_var(int *i, int *j, char **tmp, t_fullcmd *token)
+static void	init_var(int *i, int *j, char **tmp, t_fullcmd *token)
 {
 	*i = 1;
 	*j = 0;
 	*tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
 }
 
-static char   *process_exp_dq(char *str, t_env *env_list, int *i)
+static char	*process_exp_dq(char *str, t_env *env_list, int *i)
 {
 	char	*env_value;
 
@@ -228,7 +228,7 @@ static char   *process_exp_dq(char *str, t_env *env_list, int *i)
 	return (NULL);
 }
 
-void    append_res(char **result, char **tmp, int *j)
+void	append_res(char **result, char **tmp, int *j)
 {
 	(*tmp)[*j] = '\0';
 	*result = gc_strjoin(*result, *tmp);
@@ -240,7 +240,7 @@ void	handle_chars(char *str, char **tmp, int *i, int *j)
 	while (str[*i] && str[*i] != DQUOTE)
 	{
 		if (str[*i] == EXPAND && str[*i + 1] && ft_isalnum(str[*i + 1]))
-			break;
+			break ;
 		(*tmp)[(*j)++] = str[(*i)++];
 	}
 }
@@ -263,16 +263,16 @@ void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 		{
 			append_res(&result, &tmp, &j);
 			env_value = process_exp_dq(token->str, env_list, &i);
-      printf("result : %s\n", result);
+			printf("result : %s\n", result);
 			if (env_value)
-      {
+			{
 				result = gc_strjoin(result, env_value);
-      }
-      // else
-      // {
-        // skip_var_name(tmp + i, &i);   // ONGOING
-      //   j = 0;
-      // }
+			}
+			// else
+			// {
+			// skip_var_name(tmp + i, &i);   // ONGOING
+			//   j = 0;
+			// }
 		}
 	}
 	append_res(&result, &tmp, &j);
@@ -336,7 +336,7 @@ void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 // 			start = i;
 // 			i++;
 // 			while (token->str[i] && (ft_isalnum(token->str[i])
-					// || token->str[i] == '_'))
+// || token->str[i] == '_'))
 // 				i++;
 // 			if (i > start + 1)
 // 			{
