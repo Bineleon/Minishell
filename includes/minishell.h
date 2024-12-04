@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/04 16:56:52 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/04 17:00:06 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ typedef struct s_data
 {
 	t_env				*envp_cpy;
 	size_t				cmds_count;
-  t_bool      heredoc;
 	int					fd[3];
 	int					pid;
 	int					exit_status;
