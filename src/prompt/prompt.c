@@ -94,10 +94,13 @@ void	ft_prompt(t_data *data)
         continue;
       }
 			tokens = parse_tokens(prompt, data);
-			// print_tokens(tokens);
+			print_tokens(tokens);
 			if (!check_errors(tokens))
 			{
-				expand_var(data);
+        expand_var(data);
+			  print_tokens(tokens);
+
+				// expand_var(data);
 				// if (ft_strcmp("export", data->token_fullcmd->str) == 0)
 				// {
 				// 	init_cmds(data);

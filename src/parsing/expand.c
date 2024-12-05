@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/05 15:36:48 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:21:16 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	*expand_exit_st(char *str, char **result, int i)
 	if (str[i] == '?')
 	{
 		*result = gc_itoa(data->exit_status);
-		// printf("%d\n", data->exit_status);
 		data->exit_status = 0;
 		return (*result);
 	}
@@ -88,22 +87,66 @@ char	*expand_in_dquote(char *str, t_env *env_list)
 	return (NULL);
 }
 
-void	expand_var(t_data *data)
+void concatenate_tokens(t_fullcmd *head)
 {
-	t_fullcmd	*current;
+    t_fullcmd *current = head;
+    while (current && current->next)
+    {
+        if (current->concat_next && current->next->type == WORD)
+        {
+            char *new_str = gc_strjoin(current->str, current->next->str);
+            gc_mem(FREE, 0, current->str);
+            current->str = new_str;
 
-	current = data->token_fullcmd;
-	while (current)
-	{
-		if (current->type == EXPAND)
-			handle_expand(current, data->envp_cpy);
-		else if (current->type == WORD && is_in_dquote(current))
-			handle_dquote_exp(current, data->envp_cpy);
-		else if (current->type == WORD && is_in_squote(current))
-			handle_squote_exp(current);
-		current = current->next;
-	}
+            // Supprimer le token suivant
+            t_fullcmd *to_free = current->next;
+            current->next = current->next->next;
+            gc_mem(FREE, 0, to_free->str);
+            gc_mem(FREE, 0, to_free);
+        }
+        else
+        {
+            current = current->next;
+        }
+    }
 }
+
+void expand_var(t_data *data)
+{
+    t_fullcmd *current = data->token_fullcmd;
+
+    while (current)
+    {
+        if (current->type == EXPAND)
+            handle_expand(current, data->envp_cpy);
+        else if (current->type == WORD && is_in_dquote(current))
+            handle_dquote_exp(current, data->envp_cpy);
+        else if (current->type == WORD && is_in_squote(current))
+            handle_squote_exp(current);
+        current = current->next;
+    }
+
+    // Concaténation des tokens après expansion
+    concatenate_tokens(data->token_fullcmd);
+}
+
+
+// void	expand_var(t_data *data)
+// {
+// 	t_fullcmd	*current;
+
+// 	current = data->token_fullcmd;
+// 	while (current)
+// 	{
+// 		if (current->type == EXPAND)
+// 			handle_expand(current, data->envp_cpy);
+// 		else if (current->type == WORD && is_in_dquote(current))
+// 			handle_dquote_exp(current, data->envp_cpy);
+// 		else if (current->type == WORD && is_in_squote(current))
+// 			handle_squote_exp(current);
+// 		current = current->next;
+// 	}
+// }
 
 char	*init_result(void)
 {
@@ -167,24 +210,73 @@ int	process_exp(char *str, int i, t_env *env_list, char **result)
 	return (i);
 }
 
-void	handle_expand(t_fullcmd *token, t_env *env_list)
+void handle_expand(t_fullcmd *token, t_env *env_list)
 {
-	char	*result;
-	int		i;
+    char *result;
+    int i;
 
-	result = init_result();
-	i = 0;
-	while (token->str[i])
-	{
-		if (token->str[i] == '$')
-			i = process_exp(token->str, i, env_list, &result);
-		else
-			i = process_word(token->str, i, &result);
-	}
-	gc_mem(FREE, 0, token->str);
-	token->str = result;
-	token->type = WORD;
+    result = init_result();
+    i = 0;
+
+    while (token->str[i])
+    {
+        if (token->str[i] == '$') // Expansion
+        {
+            if (token->str[i + 1] == '?') // Gère `$?`
+            {
+                char *exit_status = gc_itoa(get_data()->exit_status);
+                result = gc_strjoin(result, exit_status);
+                gc_mem(FREE, 0, exit_status);
+                i += 2;
+            }
+            else
+            {
+                int start = ++i;
+                while (token->str[i] && (ft_isalnum(token->str[i]) || token->str[i] == '_'))
+                    i++;
+                char *var_name = gc_mem(MALLOC, i - start + 1, NULL);
+                ft_strlcpy(var_name, &token->str[start], i - start + 1);
+                char *env_value = get_env_value(var_name, env_list);
+                gc_mem(FREE, 0, var_name);
+                if (env_value)
+                    result = gc_strjoin(result, env_value);
+            }
+        }
+        else // Partie statique
+        {
+            int start = i;
+            while (token->str[i] && token->str[i] != '$')
+                i++;
+            char *static_part = gc_mem(MALLOC, i - start + 1, NULL);
+            ft_strlcpy(static_part, &token->str[start], i - start + 1);
+            result = gc_strjoin(result, static_part);
+            gc_mem(FREE, 0, static_part);
+        }
+    }
+    gc_mem(FREE, 0, token->str);
+    token->str = result; // Remplace le contenu du token
+    token->type = WORD;  // Met à jour le type
 }
+
+
+// void	handle_expand(t_fullcmd *token, t_env *env_list)
+// {
+// 	char	*result;
+// 	int		i;
+
+// 	result = init_result();
+// 	i = 0;
+// 	while (token->str[i])
+// 	{
+// 		if (token->str[i] == '$')
+// 			i = process_exp(token->str, i, env_list, &result);
+// 		else
+// 			i = process_word(token->str, i, &result);
+// 	}
+// 	gc_mem(FREE, 0, token->str);
+// 	token->str = result;
+// 	token->type = WORD;
+// }
 
 void	handle_squote_exp(t_fullcmd *token)
 {
@@ -207,14 +299,14 @@ void	handle_squote_exp(t_fullcmd *token)
 	gc_mem(FREE, 0, tmp);
 }
 
-static void	init_var(int *i, int *j, char **tmp, t_fullcmd *token)
+void	init_var(int *i, int *j, char **tmp, t_fullcmd *token)
 {
 	*i = 1;
 	*j = 0;
 	*tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
 }
 
-static char	*process_exp_dq(char *str, t_env *env_list, int *i)
+char	*process_exp_dq(char *str, t_env *env_list, int *i)
 {
 	char	*env_value;
 
@@ -245,40 +337,88 @@ void	handle_chars(char *str, char **tmp, int *i, int *j)
 	}
 }
 
-void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
+void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 {
-	char	*tmp;
-	char	*result;
-	char	*env_value;
-	int		i;
-	int		j;
+    char *result;
+    int i;
+    int j;
+    char *tmp;
+    char *env_value;
 
-	init_var(&i, &j, &tmp, token);
-	result = gc_mem(MALLOC, 1, NULL);
-	while (token->str[i] && token->str[i] != DQUOTE)
-	{
-		handle_chars(token->str, &tmp, &i, &j);
-		if (token->str[i] == EXPAND && token->str[i + 1]
-			&& ft_isalnum(token->str[i + 1]))
-		{
-			append_res(&result, &tmp, &j);
-			env_value = process_exp_dq(token->str, env_list, &i);
-			printf("result : %s\n", result);
-			if (env_value)
-			{
-				result = gc_strjoin(result, env_value);
-			}
-			// else
-			// {
-			// skip_var_name(tmp + i, &i);   // ONGOING
-			//   j = 0;
-			// }
-		}
-	}
-	append_res(&result, &tmp, &j);
-	gc_mem(FREE, 0, token->str);
-	token->str = result;
+    i = 1; // Ignore le premier DQUOTE
+    result = gc_mem(MALLOC, 1, NULL);
+    result[0] = '\0';
+    tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+
+    while (token->str[i] && token->str[i] != DQUOTE) // Jusqu'à la fin du DQUOTE
+    {
+        j = 0;
+
+        // Accumule les caractères avant une expansion
+        while (token->str[i] && token->str[i] != DQUOTE && token->str[i] != '$')
+            tmp[j++] = token->str[i++];
+
+        tmp[j] = '\0';
+        result = gc_strjoin(result, tmp); // Ajoute la partie statique
+
+        // Traite l'expansion
+        if (token->str[i] == '$')
+        {
+            if (token->str[i + 1] == '?') // Gère le `$?`
+            {
+                char *exit_status = gc_itoa(get_data()->exit_status);
+                result = gc_strjoin(result, exit_status);
+                gc_mem(FREE, 0, exit_status);
+                i += 2;
+            }
+            else
+            {
+                int start = ++i;
+                while (token->str[i] && (ft_isalnum(token->str[i]) || token->str[i] == '_'))
+                    i++;
+                char *var_name = gc_mem(MALLOC, i - start + 1, NULL);
+                ft_strlcpy(var_name, &token->str[start], i - start + 1);
+                env_value = get_env_value(var_name, env_list);
+                gc_mem(FREE, 0, var_name);
+                if (env_value)
+                    result = gc_strjoin(result, env_value);
+            }
+        }
+    }
+    gc_mem(FREE, 0, tmp);
+    gc_mem(FREE, 0, token->str);
+    token->str = result; // Remplace le contenu du token
 }
+
+// void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
+// {
+// 	char	*tmp;
+// 	char	*result;
+// 	char	*env_value;
+// 	int		i;
+// 	int		j;
+
+// 	init_var(&i, &j, &tmp, token);
+// 	result = gc_mem(MALLOC, 1, NULL);
+// 	while (token->str[i] && token->str[i] != DQUOTE)
+// 	{
+// 		handle_chars(token->str, &tmp, &i, &j);
+// 		if (token->str[i] == EXPAND && token->str[i + 1]
+// 			&& ft_isalnum(token->str[i + 1]))
+// 		{
+// 			append_res(&result, &tmp, &j);
+// 			env_value = process_exp_dq(token->str, env_list, &i);
+// 			printf("result : %s\n", result);
+// 			if (env_value)
+// 			{
+// 				result = gc_strjoin(result, env_value);
+// 			}
+// 		}
+// 	}
+// 	append_res(&result, &tmp, &j);
+// 	gc_mem(FREE, 0, token->str);
+// 	token->str = result;
+// }
 
 // void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 // {
