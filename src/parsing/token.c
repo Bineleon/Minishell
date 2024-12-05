@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/04 18:25:10 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/05 18:12:57 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,83 @@ int	to_handle_expand(char *line, int i, t_fullcmd *token)
 	return (i);
 }
 
+int	to_handle_word(char *line, int i, t_fullcmd *token)
+{
+	int		start;
+	t_bool	dollar_found;
+	char	*token_str;
+
+	start = i;
+	dollar_found = false;
+	token_str = NULL;
+	while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i])
+		&& !isquote(line[i]))
+	{
+		if (line[i] == '$')
+			dollar_found = true;
+		i++;
+	}
+	token_str = gc_mem(MALLOC, i - start + 1, NULL);
+	ft_strlcpy(token_str, line + start, i - start + 1);
+	if (dollar_found)
+		token->type = EXPAND;
+	else
+		token->type = WORD;
+	token->str = token_str;
+	return (i);
+}
+
+t_fullcmd	*parse_tokens(char *line, t_data *data)
+{
+	t_fullcmd	*head;
+	t_fullcmd	*current_token;
+	t_fullcmd	*new_token;
+	int			i;
+
+	i = 0;
+	head = NULL;
+	current_token = NULL;
+	while (line[i])
+	{
+		if (is_whitespace(line[i]))
+		{
+			i++;
+			continue ;
+		}
+		new_token = create_new_token(&current_token, &head);
+		if (isquote(line[i]))
+			i = to_handle_quotes(line, i, new_token);
+		else if (line[i] == PIPE)
+			i = to_handle_pipe(line, i, new_token);
+		else if (line[i] == IN)
+			i = to_handle_in(line, i, new_token);
+		else if (line[i] == OUT)
+			i = to_handle_out(line, i, new_token);
+		else if (line[i] == EXPAND)
+			i = to_handle_expand(line, i, new_token);
+		else
+			i = to_handle_word(line, i, new_token);
+		current_token = new_token;
+	}
+	data->token_fullcmd = head;
+	return (head);
+}
+
+
+// int	to_handle_word(char *line, int i, t_fullcmd *token)
+// {
+// 	int	word_start;
+
+// 	word_start = i;
+// 	while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i])
+// 		&& !isquote(line[i]))
+// 		i++;
+// 	token->str = gc_mem(MALLOC, i - word_start + 1, NULL);
+// 	ft_strlcpy(token->str, line + word_start, i - word_start + 1);
+// 	token->type = WORD;
+// 	return (i);
+// }
+
 // int	to_handle_expand(char *line, int i, t_fullcmd *token)
 // {
 // 	int		start;
@@ -223,79 +300,3 @@ int	to_handle_expand(char *line, int i, t_fullcmd *token)
 //   }
 // 	return (i);
 // }
-
-int	to_handle_word(char *line, int i, t_fullcmd *token)
-{
-	int		start;
-	t_bool	dollar_found;
-	char	*token_str;
-
-	start = i;
-	dollar_found = false;
-	token_str = NULL;
-	while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i])
-		&& !isquote(line[i]))
-	{
-		if (line[i] == '$')
-			dollar_found = true;
-		i++;
-	}
-	token_str = gc_mem(MALLOC, i - start + 1, NULL);
-	ft_strlcpy(token_str, line + start, i - start + 1);
-	if (dollar_found)
-		token->type = EXPAND;
-	else
-		token->type = WORD;
-	token->str = token_str;
-	return (i);
-}
-
-// int	to_handle_word(char *line, int i, t_fullcmd *token)
-// {
-// 	int	word_start;
-
-// 	word_start = i;
-// 	while (line[i] && !is_whitespace(line[i]) && !is_separator(line[i])
-// 		&& !isquote(line[i]))
-// 		i++;
-// 	token->str = gc_mem(MALLOC, i - word_start + 1, NULL);
-// 	ft_strlcpy(token->str, line + word_start, i - word_start + 1);
-// 	token->type = WORD;
-// 	return (i);
-// }
-
-t_fullcmd	*parse_tokens(char *line, t_data *data)
-{
-	t_fullcmd	*head;
-	t_fullcmd	*current_token;
-	t_fullcmd	*new_token;
-	int			i;
-
-	i = 0;
-	head = NULL;
-	current_token = NULL;
-	while (line[i])
-	{
-		if (is_whitespace(line[i]))
-		{
-			i++;
-			continue ;
-		}
-		new_token = create_new_token(&current_token, &head);
-		if (isquote(line[i]))
-			i = to_handle_quotes(line, i, new_token);
-		else if (line[i] == PIPE)
-			i = to_handle_pipe(line, i, new_token);
-		else if (line[i] == IN)
-			i = to_handle_in(line, i, new_token);
-		else if (line[i] == OUT)
-			i = to_handle_out(line, i, new_token);
-		else if (line[i] == EXPAND)
-			i = to_handle_expand(line, i, new_token);
-		else
-			i = to_handle_word(line, i, new_token);
-		current_token = new_token;
-	}
-	data->token_fullcmd = head;
-	return (head);
-}

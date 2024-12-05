@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:58 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 19:37:09 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:56:39 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,15 @@ void	rm_var(t_data *data, char *key)
 	data->exit_status = 1;
 }
 
-void	ft_unset(t_data *data, t_cmd *cmds)
+void	ft_unset(t_cmd *cmds)
 {
 	int		i;
 	char	*key;
+  t_data *data;
 
 	i = 1;
 	key = NULL;
+  data = get_data();
 	if (!cmds->args[i])
 	{
     error_mess("unset", "missing argument(s)\n");

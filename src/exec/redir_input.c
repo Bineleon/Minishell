@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/03 23:03:45 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/05 16:55:41 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	heredoc(t_data *data)
 	int		fd[2];
 	char	*prompt;
 
-	printf("bonsoir\n\n");
+	// printf("bonsoir\n\n");
 	i = 0;
 	while (data->cmds->str[i])
 	{
-		printf("ce qu'on regarde: %s\n\n", data->cmds->str[i]);
+		// printf("ce qu'on regarde: %s\n\n", data->cmds->str[i]);
 		if (ft_strncmp(data->cmds->str[i], "<<", 3) == 0)
 		{
 			printf("suprise on a un heredoc\n\n");

@@ -53,6 +53,7 @@ t_bool	empty_line(char *line)
 	}
 	return (true);
 }
+
 void	ft_prompt(t_data *data)
 {
 	char		*prompt;
@@ -97,40 +98,40 @@ void	ft_prompt(t_data *data)
 			if (!check_errors(tokens))
 			{
 				expand_var(data);
-				if (ft_strcmp("export", data->token_fullcmd->str) == 0)
-				{
-					init_cmds(data);
-					ft_export(data, data->cmds);
-				}
-				else if (ft_strcmp("unset", data->token_fullcmd->str) == 0)
-				{
-					init_cmds(data);
-					ft_unset(data, data->cmds);
-				}
-				else if (ft_strcmp("exit", data->token_fullcmd->str) == 0)
-				{
-					init_cmds(data);
-					ft_exit(data->cmds);
-				}
-				else if (ft_strcmp("cd", data->token_fullcmd->str) == 0)
-				{
-					init_cmds(data);
-					ft_cd(data->cmds);
-				}
-				else if (ft_strcmp("pwd", data->token_fullcmd->str) == 0)
-				{
-					init_cmds(data);
-					ft_pwd(data);
-				}
-				else if (ft_strcmp("env", data->token_fullcmd->str) == 0)
-				{
-					init_cmds(data);
-					ft_env(data);
-				}
-				else
-        {
+				// if (ft_strcmp("export", data->token_fullcmd->str) == 0)
+				// {
+				// 	init_cmds(data);
+				// 	ft_export(data->cmds);
+				// }
+				// else if (ft_strcmp("unset", data->token_fullcmd->str) == 0)
+				// {
+				// 	init_cmds(data);
+				// 	ft_unset(data->cmds);
+				// }
+				// else if (ft_strcmp("exit", data->token_fullcmd->str) == 0)
+				// {
+				// 	init_cmds(data);
+				// 	ft_exit(data->cmds);
+				// }
+				// else if (ft_strcmp("cd", data->token_fullcmd->str) == 0)
+				// {
+				// 	init_cmds(data);
+				// 	ft_cd(data->cmds);
+				// }
+				// else if (ft_strcmp("pwd", data->token_fullcmd->str) == 0)
+				// {
+				// 	init_cmds(data);
+				// 	ft_pwd(data);
+				// }
+				// else if (ft_strcmp("env", data->token_fullcmd->str) == 0)
+				// {
+				// 	init_cmds(data);
+				// 	ft_env(data);
+				// }
+				// else
+        // {
 					exec(data);
-        }
+        // }
 			}
 		}
 	}

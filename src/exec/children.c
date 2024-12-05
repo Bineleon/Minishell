@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:17:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/03 22:46:00 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/05 17:21:01 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	first_child(t_data *data)
 {
 	redir_input(data);
 	heredoc(data);
+  // if (is_builtin(data->cmds->args[0]))
+  // {
+  //   exec_builtin(data, data->cmds);  // Exécuter le builtin
+  //   exit(data->exit_status);  // Terminer le processus
+  // }
 	if (data->cmds->next)
 	{
 		dup2(data->fd[1], STDOUT_FILENO);

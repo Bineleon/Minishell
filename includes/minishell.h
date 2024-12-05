@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/04 17:02:49 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/05 16:37:25 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ typedef struct s_data
 void					ft_env(t_data *data);
 void					ft_pwd(t_data *data);
 void					ft_echo(t_cmd *cmds);
-void					ft_export(t_data *data, t_cmd *cmds);
-void					ft_unset(t_data *data, t_cmd *cmds);
+void					ft_export(t_cmd *cmds);
+void					ft_unset(t_cmd *cmds);
 void					ft_exit(t_cmd *cmds);
 void					ft_cd(t_cmd *cmds);
 t_bool					is_valid_key(char *key);
@@ -171,6 +171,8 @@ void					new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
 void					new_str(t_cmd *cmds, t_fullcmd **fullcmd);
 char					*joinequal(char *key, char *value);
 char					**ft_newenv(t_data *data);
+void          exec_builtin(t_data *data, t_cmd *cmds);
+t_bool        is_builtin(char *cmd);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
