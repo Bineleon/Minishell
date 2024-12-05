@@ -1,8 +1,6 @@
 
 #include "../../includes/minishell.h"
 
-// # 00_expand.c 01_expand.c expand_utils.c token.c
-
 t_bool	is_in_dquote(t_fullcmd *token)
 {
 	if (token->str[0] == DQUOTE && token->str[ft_strlen(token->str) - 1] == DQUOTE)
