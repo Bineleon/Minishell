@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/05 22:03:10 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/06 12:41:21 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,19 +125,19 @@ void	skip_var_name(char *line, int *i)
 		*i += 1;
 }
 
-void	init_token_expand(t_fullcmd *token)
-{
-	token->type = EXPAND;
-	token->str = gc_mem(MALLOC, 1, NULL);
-	token->str[0] = '\0';
-}
+// void	init_token_expand(t_fullcmd *token)
+// {
+// 	token->type = EXPAND;
+// 	token->str = gc_mem(MALLOC, 1, NULL);
+// 	token->str[0] = '\0';
+// }
 
 int	is_valid_var_char(char c)
 {
 	return (ft_isalnum(c) || c == '_' || c == '?');
 }
 
-char	*extract_variable(char *line, int *i, int start)
+char	*extract_var(char *line, int *i, int start)
 {
 	char	*tmp;
 
@@ -152,27 +152,32 @@ char	*extract_variable(char *line, int *i, int start)
 	return (tmp);
 }
 
-void	update_token_str(t_fullcmd *token, char *tmp)
-{
-	char	*expand;
+// void	update_token_str(t_fullcmd *token, char *tmp)
+// {
+// 	char	*expand;
 
-	expand = gc_strjoin(token->str, tmp);
-	gc_mem(FREE, 0, token->str);
-	gc_mem(FREE, 0, tmp);
-	token->str = expand;
-}
+// 	expand = gc_strjoin(token->str, tmp);
+// 	gc_mem(FREE, 0, token->str);
+// 	gc_mem(FREE, 0, tmp);
+// 	token->str = expand;
+// }
 
-int	handle_expand_loop(char *line, int i, t_fullcmd *token)
+int	sub_handle_expand(char *line, int i, t_fullcmd *token)
 {
 	int		start;
 	char	*tmp;
+  char	*expand;
 
 	while (line[i] == '$')
 	{
 		start = i;
 		i++;
-		tmp = extract_variable(line, &i, start);
-		update_token_str(token, tmp);
+		tmp = extract_var(line, &i, start);
+		// update_token_str(token, tmp);
+    expand = gc_strjoin(token->str, tmp);
+	  gc_mem(FREE, 0, token->str);
+	  gc_mem(FREE, 0, tmp);
+	  token->str = expand;
 		if (start == i)
 			break ;
 	}
@@ -181,8 +186,10 @@ int	handle_expand_loop(char *line, int i, t_fullcmd *token)
 
 int	to_handle_expand(char *line, int i, t_fullcmd *token)
 {
-	init_token_expand(token);
-	i = handle_expand_loop(line, i, token);
+  token->type = EXPAND;
+	token->str = gc_mem(MALLOC, 1, NULL);
+	token->str[0] = '\0';
+	i = sub_handle_expand(line, i, token);
 	return (i);
 }
 
@@ -262,7 +269,7 @@ int handle_whitespace(char *line, int i)
     return (i);
 }
 
-int process_token_type(char *line, int i, t_fullcmd *new_token)
+int process_type(char *line, int i, t_fullcmd *new_token)
 {
     if (isquote(line[i]))
         i = to_handle_quotes(line, i, new_token);
@@ -293,7 +300,7 @@ t_fullcmd	*parse_tokens(char *line, t_data *data)
 	{
 		i = handle_whitespace(line, i);
 		new_token = create_token(&current_token, &head);
-		i = process_token_type(line, i, new_token);
+		i = process_type(line, i, new_token);
 		current_token = new_token;
 	}
 	data->token_fullcmd = head;
