@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:13 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 19:48:35 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/06 15:11:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static t_bool	is_valid_num(char *str)
 
 static t_bool	check_args_count(t_cmd *cmds)
 {
-  t_data  *data;
+	t_data	*data;
 
-  data = get_data();
+	data = get_data();
 	if (cmds->args[1] && cmds->args[2])
 	{
-    error_mess("exit", "too many arguments\n");
+		error_mess("exit", "too many arguments\n");
 		data->exit_status = 1;
 		return (true);
 	}
@@ -46,7 +46,7 @@ static void	validate_status(t_cmd *cmds, int *status)
 {
 	if (!is_valid_num(cmds->args[1]))
 	{
-    error_mess("exit", cmds->args[1]);
+		error_mess("exit", cmds->args[1]);
 		ft_putstr_fd(" : numeric argument required\n", 2);
 		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(2);
@@ -54,7 +54,7 @@ static void	validate_status(t_cmd *cmds, int *status)
 	*status = ft_atol(cmds->args[1]);
 	if (*status > INT_MAX || *status < INT_MIN)
 	{
-    error_mess("exit", cmds->args[1]);
+		error_mess("exit", cmds->args[1]);
 		ft_putstr_fd(" : numeric argument required\n", 2);
 		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(2);
@@ -63,10 +63,10 @@ static void	validate_status(t_cmd *cmds, int *status)
 
 void	ft_exit(t_cmd *cmds)
 {
-	int	status;
-  t_data *data;
+	int		status;
+	t_data	*data;
 
-  data = get_data();
+	data = get_data();
 	status = 0;
 	if (cmds->args[1])
 		validate_status(cmds, &status);

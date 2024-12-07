@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/11/26 15:37:48 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/06 17:46:26 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	new_str(t_cmd *cmds, t_fullcmd **fullcmd)
 	i = 0;
 	firstcmd = *fullcmd;
 	while (cmds->args[i])
+	{
+		printf("cmd = %s\n", cmds->args[i]);	
 		i++;
+	}
 	while (*fullcmd && (*fullcmd)->type != PIPE)
 	{
 		i++;
@@ -28,6 +31,7 @@ void	new_str(t_cmd *cmds, t_fullcmd **fullcmd)
 	}
 	cmds->str = gc_mem(MALLOC, sizeof(char *) * (i + 1), NULL);
 	i = 0;
+	printf("cmd args [i] = %s\n", cmds->args[i]);
 	cmds->str[i] = gc_strdup(cmds->args[i]);
 	while (cmds->args[++i])
 		cmds->str[i] = gc_strdup(cmds->args[i]);

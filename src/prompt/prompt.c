@@ -67,8 +67,8 @@ void	ft_prompt(t_data *data)
 		// 	printf("OK\n");
 		// else
 		// 	printf("NOT OK\n");
-		// rl_bind_key ('\t', rl_insert);
-			// Uncomment to insert "\t" with TAB on prompt
+		// rl_bind_key('\t', rl_insert);
+		// Uncomment to insert "\t" with TAB on prompt
 		prompt = readline("Minishell>\033[0m ");
 		if (!prompt)
 		{
@@ -77,6 +77,7 @@ void	ft_prompt(t_data *data)
 			printf(RESET);
 			free(prompt);
 			prompt = NULL;
+			rl_clear_history();
 			gc_mem(FULL_CLEAN, 0, NULL);
 			exit(EXIT_SUCCESS);
 		}
@@ -88,18 +89,16 @@ void	ft_prompt(t_data *data)
 				continue ;
 			add_history(prompt);
 			if (check_open_quotes(prompt))
-      {
-        ft_putstr_fd("minishell: error: open quote\n", 2);
-        printf("data->exit = %d\n", data->exit_status);
-        continue;
-      }
+			{
+				error_mess("error", "open quote");
+				continue ;
+			}
 			tokens = parse_tokens(prompt, data);
-			print_tokens(tokens);
+			// print_tokens(tokens);
 			if (!check_errors(tokens))
 			{
-        expand_var(data);
-			  print_tokens(tokens);
-
+				expand_var(data);
+				print_tokens(tokens);
 				// expand_var(data);
 				// if (ft_strcmp("export", data->token_fullcmd->str) == 0)
 				// {
@@ -132,9 +131,9 @@ void	ft_prompt(t_data *data)
 				// 	ft_env(data);
 				// }
 				// else
-        // {
-					exec(data);
-        // }
+				// {
+				exec(data);
+				// }
 			}
 		}
 	}

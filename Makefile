@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: Invalid date        by                   #+#    #+#              #
-#    Updated: 2024/12/05 20:52:51 by bineleon         ###   ########.fr        #
+#    Updated: 2024/12/07 18:18:26 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR	= src/parsing/
 PARSING		= init_struct.c parse_env.c token_check.c parse_error.c\
-						token.c 00_expand.c 01_expand.c 02_expand.c 03_expand.c 04_expand_utils.c
+			00_expand.c 01_expand.c 02_expand.c 03_expand.c 04_expand_utils.c\
+			00_token.c 01_token.c 02_token.c 03_token.c
 
 
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})

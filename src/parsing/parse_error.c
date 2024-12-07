@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:57:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/04 18:34:39 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/07 17:52:31 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_bool	check_open_quotes(char *line)
 	}
 	if (dq || sq)
 	{
-		// ft_putstr_fd("minishell: error: open quote\n", 2);
 		data->exit_status = 1;
 		return (true);
 	}
@@ -91,6 +90,11 @@ t_bool	pipe_errors(t_fullcmd *tokens)
 
 t_bool	sub_redirect_errors(t_fullcmd *tokens)
 {
+	if (is_redi(tokens) && (!tokens->next))
+	{
+		error_syntax("newline");
+		return (true);
+	}
 	if (is_redi(tokens) && (!tokens->next || tokens->next->type != WORD))
 	{
 		if (tokens->next->type == APPEND)
@@ -155,8 +159,7 @@ t_bool	check_errors(t_fullcmd *tokens)
 	t_data	*data;
 
 	data = get_data();
-	if (pipe_errors(tokens) || redirect_errors(tokens)
-		|| unexpected_tok_err(tokens))
+	if (pipe_errors(tokens) || redirect_errors(tokens))
 	{
 		data->exit_status = 2;
 		return (true);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:18 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/06 12:41:21 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:30:49 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ t_fullcmd	*parse_tokens(char *line, t_data *data)
 		new_token = create_token(&current_token, &head);
 		i = process_type(line, i, new_token);
 		current_token = new_token;
+		i = handle_whitespace(line, i);
 	}
 	data->token_fullcmd = head;
 	return (head);

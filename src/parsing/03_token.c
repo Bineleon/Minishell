@@ -73,10 +73,11 @@ t_fullcmd	*parse_tokens(char *line, t_data *data)
 	current_token = NULL;
 	while (line[i])
 	{
-		i = skip_whitespaces(line, i);
+	    i = skip_whitespaces(line, i);
 		new_token = create_token(&current_token, &head);
 		i = process_type(line, i, new_token);
 		current_token = new_token;
+        i = skip_whitespaces(line, i);
 	}
 	data->token_fullcmd = head;
 	return (head);

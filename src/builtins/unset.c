@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:58 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/05 15:56:39 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:41:59 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	ft_unset(t_cmd *cmds)
 {
 	int		i;
 	char	*key;
-  t_data *data;
+	t_data	*data;
 
 	i = 1;
 	key = NULL;
-  data = get_data();
+	data = get_data();
 	if (!cmds->args[i])
 	{
-    error_mess("unset", "missing argument(s)\n");
+		error_mess("unset", "missing argument(s)\n");
 		data->exit_status = 1;
 		return ;
 	}
@@ -85,8 +85,8 @@ void	ft_unset(t_cmd *cmds)
 		key = cmds->args[i];
 		if (!is_valid_key(key))
 		{
-      error_mess("unset", key);
-      ft_putstr_fd(": not a valid identifier\n", 2);
+			error_mess("unset", key);
+			ft_putstr_fd(": not a valid identifier\n", 2);
 			data->exit_status = 1;
 			i++;
 			continue ;

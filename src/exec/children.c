@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:17:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/05 17:21:01 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:50:50 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	first_child(t_data *data)
   // }
 	if (data->cmds->next)
 	{
+		// printf("yes yes yes\n");
 		dup2(data->fd[1], STDOUT_FILENO);
 		if (data->fd[2] != -1)
 			close(data->fd[2]);

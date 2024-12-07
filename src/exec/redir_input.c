@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/05 16:55:41 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:51:29 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	heredoc(t_data *data)
 		}
 		i++;
 	}
-	dup2(fd[0], data->fd[0]);
+	// printf("fd = %d\n", fd[0]);
+	// dup2(fd[0], data->fd[0]);
 }
 
 void	redir_input(t_data *data)

@@ -58,7 +58,7 @@ void handle_expand(t_fullcmd *token, t_env *env_list)
     {
         if (token->str[i] == '$')
         {
-            printf("str[i + 1] : %c", token->str[i + 1]);
+            // printf("str[i + 1] : %c", token->str[i + 1]);
             i = var_expand(token->str, i, &result, env_list);
         }
         else

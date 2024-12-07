@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/04 16:57:53 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/06 18:15:16 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,4 @@ void	redir_output(t_data *data)
 	else if (fd)
 		dup2(fd, STDOUT_FILENO);
 }
+

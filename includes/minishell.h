@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/05 20:10:57 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/07 18:24:38 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_fullcmd
 {
 	char				*str;
 	t_token				type;
-  t_bool        concat_next;
+	t_bool				concat_next;
 	struct s_fullcmd	*next;
 }						t_fullcmd;
 
@@ -74,9 +74,17 @@ typedef struct s_cmd
 	struct s_cmd		*prev;
 	char				**str;
 	char				*cmd;
+	// t_list				*redir;
 	char				**args;
 	struct s_cmd		*next;
 }						t_cmd;
+
+// struct redir
+// {
+// type redir;
+// file;  ou EOF
+// next;
+// }
 
 typedef struct s_garbage_co
 {
@@ -103,11 +111,10 @@ typedef struct s_data
 	char				*delim;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co		*garbage; // Chained list of all the malloced pointers
+	t_garbage_co *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
-
-void expand_var_with_concat(t_data *data);
+void					expand_var_with_concat(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              BUILTINS              ║ */
@@ -145,11 +152,20 @@ t_env					*env_cpy(char **envp);
 t_data					*init_and_alloc_data(char **envp);
 char					**get_cmds_in_pipe(char *prompt);
 t_fullcmd				*parse_tokens(char *line, t_data *data);
-int	process_word(char *str, int i, char **result);
-char	*extract_var_name(char *str, int start, int end);
+int						process_word(char *str, int i, char **result);
+char					*extract_var_name(char *str, int start, int end);
+char					*extract_var(char *line, int *i, int start);
+t_fullcmd				*create_token(t_fullcmd **current_token,
+							t_fullcmd **head);
+int						to_handle_quotes(char *line, int i, t_fullcmd *token);
+int						to_handle_pipe(char *line, int i, t_fullcmd *token);
+int						to_handle_in(char *line, int i, t_fullcmd *token);
+int						to_handle_out(char *line, int i, t_fullcmd *token);
+int						sub_handle_expand(char *line, int i, t_fullcmd *token);
+int						to_handle_expand(char *line, int i, t_fullcmd *token);
 
-t_bool is_in_dquote(t_fullcmd *token);
-t_bool is_in_squote(t_fullcmd *token);
+t_bool					is_in_dquote(t_fullcmd *token);
+t_bool					is_in_squote(t_fullcmd *token);
 char					*get_env_value(char *var_name, t_env *env_list);
 char					*expand_token_value(char *str, t_env *env_list);
 void					expand_var(t_data *data);
@@ -157,8 +173,8 @@ char					*expand_token(char *str, t_env *env_list);
 void					handle_expand(t_fullcmd *token, t_env *env_list);
 void					handle_dquote_exp(t_fullcmd *token, t_env *env_list);
 void					handle_squote_exp(t_fullcmd *token);
-char *init_result(void);
-char *expand_exit_st(char *str, char **result, int i);
+char					*init_result(void);
+char					*expand_exit_st(char *str, char **result, int i);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               EXEC                 ║ */
@@ -181,8 +197,8 @@ void					new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
 void					new_str(t_cmd *cmds, t_fullcmd **fullcmd);
 char					*joinequal(char *key, char *value);
 char					**ft_newenv(t_data *data);
-void          exec_builtin(t_data *data, t_cmd *cmds);
-t_bool        is_builtin(char *cmd);
+void					exec_builtin(t_data *data, t_cmd *cmds);
+t_bool					is_builtin(char *cmd);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
