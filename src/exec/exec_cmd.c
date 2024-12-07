@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/06 17:16:50 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/07 19:50:37 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	exec_cmd(t_data *data)
 	}
 	else
 		path = new_path(data->cmds->args[0], data->envp_cpy);
-	printf("path = %s\n", path);
+	// printf("path = %s\n", path);
 	if (!path)
 	{
 		data->exit_status = 127;

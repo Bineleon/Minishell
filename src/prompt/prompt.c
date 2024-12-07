@@ -14,29 +14,32 @@
 
 void	print_tokens(t_fullcmd *tokens)
 {
-	while (tokens)
+	t_fullcmd *current;
+
+	current = tokens;
+	while (current)
 	{
 		printf("Token: Type = ");
-		if (tokens->type == PIPE)
+		if (current->type == PIPE)
 			printf("PIPE");
-		else if (tokens->type == WORD)
+		else if (current->type == WORD)
 			printf("WORD");
-		else if (tokens->type == IN)
+		else if (current->type == IN)
 			printf("IN");
-		else if (tokens->type == OUT)
+		else if (current->type == OUT)
 			printf("OUT");
-		else if (tokens->type == HEREDOC)
+		else if (current->type == HEREDOC)
 			printf("HEREDOC");
-		else if (tokens->type == APPEND)
+		else if (current->type == APPEND)
 			printf("APPEND");
-		else if (tokens->type == EXPAND)
+		else if (current->type == EXPAND)
 			printf("EXPAND");
-		else if (tokens->type == SQUOTE)
+		else if (current->type == SQUOTE)
 			printf("SQUOTE");
-		else if (tokens->type == DQUOTE)
+		else if (current->type == DQUOTE)
 			printf("DQUOTE");
-		printf(", token = (%s)\n", tokens->str);
-		tokens = tokens->next;
+		printf(", token = (%s)\n", current->str);
+		current = current->next;
 	}
 }
 
@@ -95,10 +98,18 @@ void	ft_prompt(t_data *data)
 			}
 			tokens = parse_tokens(prompt, data);
 			// print_tokens(tokens);
+			// printf("\n");
+
 			if (!check_errors(tokens))
 			{
 				expand_var(data);
-				print_tokens(tokens);
+				// print_tokens(tokens);
+				// printf("\n");
+				reorganize_tokens(data);
+				print_tokens(data->token_fullcmd);
+				printf("\n");
+
+
 				// expand_var(data);
 				// if (ft_strcmp("export", data->token_fullcmd->str) == 0)
 				// {

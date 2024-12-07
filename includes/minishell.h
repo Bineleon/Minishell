@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/07 18:24:38 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/07 19:43:54 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_data
 	t_garbage_co *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
-void					expand_var_with_concat(t_data *data);
+void					reorganize_tokens(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              BUILTINS              ║ */

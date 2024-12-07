@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:35 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/05 21:21:16 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/07 19:37:10 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ void expand_var(t_data *data)
             handle_squote_exp(current);
         current = current->next;
     }
-
-    // Concaténation des tokens après expansion
     concatenate_tokens(data->token_fullcmd);
 }
 
