@@ -1,0 +1,11 @@
+a
+en.subject.pdf
+EOF
+ignore_readline.supp
+includes
+libft
+Makefile
+minishell
+no_rl_leaks
+src
+test.c

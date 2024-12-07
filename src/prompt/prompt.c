@@ -105,7 +105,6 @@ void	ft_prompt(t_data *data)
 				expand_var(data);
 				// print_tokens(tokens);
 				// printf("\n");
-				reorganize_tokens(data);
 				print_tokens(data->token_fullcmd);
 				printf("\n");
 

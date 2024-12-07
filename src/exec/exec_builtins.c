@@ -15,18 +15,18 @@ t_bool is_builtin(char *cmd)
 
 void exec_builtin(t_data *data, t_cmd *cmds)
 {
-    if (ft_strcmp(cmds->args[0], "echo") == 0)
+    if (ft_strcmp(cmds->cmd, "echo") == 0)
         ft_echo(cmds);
-    else if (ft_strcmp(cmds->args[0], "cd") == 0)
+    else if (ft_strcmp(cmds->cmd, "cd") == 0)
         ft_cd(cmds);
-    else if (ft_strcmp(cmds->args[0], "pwd") == 0)
+    else if (ft_strcmp(cmds->cmd, "pwd") == 0)
         ft_pwd(data);
-    else if (ft_strcmp(cmds->args[0], "export") == 0)
+    else if (ft_strcmp(cmds->cmd, "export") == 0)
         ft_export(cmds);
-    else if (ft_strcmp(cmds->args[0], "unset") == 0)
+    else if (ft_strcmp(cmds->cmd, "unset") == 0)
         ft_unset(cmds);
-    else if (ft_strcmp(cmds->args[0], "env") == 0)
+    else if (ft_strcmp(cmds->cmd, "env") == 0)
         ft_env(data);
-    else if (ft_strcmp(cmds->args[0], "exit") == 0)
+    else if (ft_strcmp(cmds->cmd, "exit") == 0)
         ft_exit(cmds);
 }
