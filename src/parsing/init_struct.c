@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/12/07 18:58:55 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/08 21:26:20 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_data(t_data *data, char **envp)
 	data->token_fullcmd = NULL;
 	data->garbage = NULL;
 	data->heredoc = false;
+  data->open_process = false;
 	data->cmds_count = 0;
 	data->exit_status = 0;
 	data->envp_cpy = env_cpy(envp);
@@ -44,5 +45,6 @@ void	init_cmd(t_cmd *cmd)
 	cmd->str = NULL;
 	cmd->args = NULL;
 	cmd->cmd = NULL;
+  cmd->redir = NULL;
 	cmd->prev = NULL;
 }

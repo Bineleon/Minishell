@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/06 18:15:16 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/08 20:51:47 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,68 @@ int	new_fd(char *operator, char *file)
 	return (fd);
 }
 
-void	redir_output(t_data *data)
+void redir_output(t_data *data, t_cmd *cmd)
 {
-	int	i;
-	int	fd;
+    t_redir *current_redir;
+    int fd;
 
-	i = 0;
-	fd = 0;
-	while (data->cmds->str[i])
-	{
-		if (ft_strncmp(data->cmds->str[i], ">", 2) == 0
-			|| ft_strncmp(data->cmds->str[i], ">>", 3) == 0)
-		{
-			if (!data->cmds->str[i + 1])
-				return ((void)error_mess(NULL, NULL));
-			if (fd)
-				close(fd);
-			fd = new_fd(data->cmds->str[i], data->cmds->str[i + 1]);
-			if (fd == -1)
-				return ((void)error_mess(NULL, NULL));
-		}
-		i++;
-	}
-	if (fd && data->cmds->next)
-		dup2(fd, data->fd[1]);
-	else if (fd)
-		dup2(fd, STDOUT_FILENO);
+    if (!cmd || !cmd->redir)
+        return;
+    current_redir = cmd->redir;
+    fd = -1;
+    while (current_redir)
+    {
+        if (current_redir->type == OUT || current_redir->type == APPEND)
+        {
+            if (fd > 0)
+                close(fd);
+            if (current_redir->type == OUT)
+                fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+            else if (current_redir->type == APPEND)
+                fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+            if (fd == -1)
+            {
+                error_mess(NULL, current_redir->file_name);
+                return;
+            }
+        }
+        current_redir = current_redir->next;
+    }
+    if (fd > 0)
+    {
+        if (cmd->next)
+            dup2(fd, data->fd[1]);
+        else
+            dup2(fd, STDOUT_FILENO);
+        close(fd);
+    }
 }
 
+
+// void	redir_output(t_data *data)
+// {
+// 	int	i;
+// 	int	fd;
+
+// 	i = 0;
+// 	fd = 0;
+// 	while (data->cmds->str[i])
+// 	{
+// 		if (ft_strncmp(data->cmds->str[i], ">", 2) == 0
+// 			|| ft_strncmp(data->cmds->str[i], ">>", 3) == 0)
+// 		{
+// 			if (!data->cmds->str[i + 1])
+// 				return ((void)error_mess(NULL, NULL));
+// 			if (fd)
+// 				close(fd);
+// 			fd = new_fd(data->cmds->str[i], data->cmds->str[i + 1]);
+// 			if (fd == -1)
+// 				return ((void)error_mess(NULL, NULL));
+// 		}
+// 		i++;
+// 	}
+// 	if (fd && data->cmds->next)
+// 		dup2(fd, data->fd[1]);
+// 	else if (fd)
+// 		dup2(fd, STDOUT_FILENO);
+// }

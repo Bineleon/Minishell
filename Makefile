@@ -6,7 +6,7 @@
 #    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/07 19:57:25 by neleon            #+#    #+#              #
-#    Updated: 2024/12/08 16:11:28 by bineleon         ###   ########.fr        #
+#    Updated: 2024/12/08 18:13:01 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC			+= $(addprefix ${MAIN_DIR}, ${MAIN})
 PARSING_DIR	= src/parsing/
 PARSING		= init_struct.c parse_env.c token_check.c parse_error.c\
 			04_expand.c 05_expand.c 06_expand.c 07_expand.c 08_expand_utils.c\
-			00_token.c 01_token.c 02_token.c 03_token.c
+			00_token.c 01_token.c 02_token.c 03_token.c last_token.c
 SRC			+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
 PROMPT_DIR	= src/prompt/

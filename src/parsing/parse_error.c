@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:57:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/07 17:52:31 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/08 20:50:30 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ t_bool	pipe_errors(t_fullcmd *tokens)
 			{
 				if (current->next->type == PIPE)
 					return (error_syntax("||"), true);
-				if (current->next->type != WORD)
-					return (error_syntax("|"), true);
+				// if (current->next->type != WORD)
+				// 	return (error_syntax("|"), true);
 			}
 		}
 		current = current->next;

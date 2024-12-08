@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/07 19:50:37 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/08 19:35:25 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**all_paths(t_env *env)
 	{
 		if (ft_strncmp(tmp->key, "PATH", 4) == 0)
 		{
-			paths = ft_split(tmp->value, ':');
+			paths = ft_split(tmp->value, ':'); // a changer pour gc_split
 			if (!paths)
 				return (NULL);
 			return (paths);
@@ -118,22 +118,29 @@ void	exec_cmd(t_data *data)
 	char	*path;
 	char	**newenv;
 
-	if (is_builtin(data->cmds->args[0]))
+  if (!data->cmds->cmd[0])     // in case "" or '' (empty cmd)
+  {
+      error_cmd(data->cmds->cmd);
+      data->exit_status = 127;
+      gc_mem(FULL_CLEAN, 0, NULL);
+      exit(data->exit_status);
+  }
+	if (is_builtin(data->cmds->cmd))
 	{
 		exec_builtin(data, data->cmds);
 		exit(data->exit_status);
 	}
-	if (access(data->cmds->args[0], F_OK | X_OK) == 0)
+	if (access(data->cmds->cmd, F_OK | X_OK) == 0)
 	{
-		path = gc_strdup(data->cmds->args[0]);
+		path = gc_strdup(data->cmds->cmd);
 	}
 	else
-		path = new_path(data->cmds->args[0], data->envp_cpy);
+		path = new_path(data->cmds->cmd, data->envp_cpy);
 	// printf("path = %s\n", path);
 	if (!path)
 	{
 		data->exit_status = 127;
-		error_cmd(data->cmds->args[0]);
+		error_cmd(data->cmds->cmd);
 		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
@@ -143,3 +150,34 @@ void	exec_cmd(t_data *data)
 	if (execve(path, data->cmds->args, newenv) == -1)
 		gc_mem(FREE, 0, path);
 }
+
+// void	exec_cmd(t_data *data)
+// {
+// 	char	*path;
+// 	char	**newenv;
+
+// 	if (is_builtin(data->cmds->cmd))
+// 	{
+// 		exec_builtin(data, data->cmds);
+// 		exit(data->exit_status);
+// 	}
+// 	if (access(data->cmds->args[0], F_OK | X_OK) == 0)
+// 	{
+// 		path = gc_strdup(data->cmds->args[0]);
+// 	}
+// 	else
+// 		path = new_path(data->cmds->args[0], data->envp_cpy);
+// 	// printf("path = %s\n", path);
+// 	if (!path)
+// 	{
+// 		data->exit_status = 127;
+// 		error_cmd(data->cmds->args[0]);
+// 		gc_mem(FULL_CLEAN, 0, NULL);
+// 		exit(data->exit_status);
+// 	}
+// 	newenv = ft_newenv(data);
+// 	if (!newenv)
+// 		return ((void)gc_mem(FREE, 0, path));
+// 	if (execve(path, data->cmds->args, newenv) == -1)
+// 		gc_mem(FREE, 0, path);
+// }

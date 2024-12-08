@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <sys/ioctl.h>
 
 void	print_tokens(t_fullcmd *tokens)
 {
@@ -65,14 +66,14 @@ void	ft_prompt(t_data *data)
 	tokens = NULL;
 	while (1)
 	{
-		printf(CYAN);
+		// printf(CYAN);
 		// if (isatty(STDIN_FILENO) == 1)
 		// 	printf("OK\n");
 		// else
 		// 	printf("NOT OK\n");
 		// rl_bind_key('\t', rl_insert);
 		// Uncomment to insert "\t" with TAB on prompt
-		prompt = readline("Minishell>\033[0m ");
+		prompt = readline("Minishell> ");
 		if (!prompt)
 		{
 			printf(MAGENTA);
@@ -82,7 +83,7 @@ void	ft_prompt(t_data *data)
 			prompt = NULL;
 			rl_clear_history();
 			gc_mem(FULL_CLEAN, 0, NULL);
-			exit(EXIT_SUCCESS);
+			exit(data->exit_status);
 		}
 		// if (*prompt && !prompt[0])
 		// 	continue ;
@@ -99,53 +100,16 @@ void	ft_prompt(t_data *data)
 			tokens = parse_tokens(prompt, data);
 			// print_tokens(tokens);
 			// printf("\n");
-
 			if (!check_errors(tokens))
 			{
 				expand_var(data);
+        find_cmds(data);
 				// print_tokens(tokens);
 				// printf("\n");
 				print_tokens(data->token_fullcmd);
-				printf("\n");
-
-
-				// expand_var(data);
-				// if (ft_strcmp("export", data->token_fullcmd->str) == 0)
-				// {
-				// 	init_cmds(data);
-				// 	ft_export(data->cmds);
-				// }
-				// else if (ft_strcmp("unset", data->token_fullcmd->str) == 0)
-				// {
-				// 	init_cmds(data);
-				// 	ft_unset(data->cmds);
-				// }
-				// else if (ft_strcmp("exit", data->token_fullcmd->str) == 0)
-				// {
-				// 	init_cmds(data);
-				// 	ft_exit(data->cmds);
-				// }
-				// else if (ft_strcmp("cd", data->token_fullcmd->str) == 0)
-				// {
-				// 	init_cmds(data);
-				// 	ft_cd(data->cmds);
-				// }
-				// else if (ft_strcmp("pwd", data->token_fullcmd->str) == 0)
-				// {
-				// 	init_cmds(data);
-				// 	ft_pwd(data);
-				// }
-				// else if (ft_strcmp("env", data->token_fullcmd->str) == 0)
-				// {
-				// 	init_cmds(data);
-				// 	ft_env(data);
-				// }
-				// else
-				// {
 				exec(data);
-				// }
 			}
 		}
+	  free(prompt);
 	}
-	free(prompt);
 }
