@@ -93,6 +93,10 @@ int	sub_handle_expand(char *line, int i, t_fullcmd *token)
 		if (start == i)
 			break ;
 	}
+  if (line[i] && !is_whitespace(line[i]))
+		token->concat_next = true;
+	else
+		token->concat_next = false;
 	return (i);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/07 20:26:19 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/08 15:38:18 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	which_child(t_data *data)
 
 void	exec(t_data *data)
 {
-	printf("ICI\n");
 	init_cmds(data);
 	while (data->cmds != NULL)
 	{
