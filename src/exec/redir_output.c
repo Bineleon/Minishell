@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 15:42:32 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:58:33 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	redir_output(t_data *data, t_cmd *cmd)
 			{
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_TRUNC, 0644);
-				printf("fd : %d\n\n", fd);
+				ft_putstr_fd(gc_itoa(fd), 2);
+				ft_putstr_fd("\n", 2);
 			}
 			else if (current_redir->type == APPEND)
 				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
@@ -99,15 +100,12 @@ void	redir_output(t_data *data, t_cmd *cmd)
 		}
 		current_redir = current_redir->next;
 	}
+	ft_putstr_fd(gc_itoa(data->fd[1]), 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("\n", 2);
 	if (fd > 0)
 	{
-		if (data->cmds->next)
-			dup2(fd, data->fd[1]);
-		else
-		{
-			printf("fd1 : %d\n\n", fd);
-			dup2(fd, STDOUT_FILENO);
-		}
+		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
 }
