@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/09 10:48:19 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/12/09 15:54:46 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ void	exec_cmd(t_data *data)
 	char	*path;
 	char	**newenv;
 
-  if (!data->cmds->cmd[0])     // in case "" or '' (empty cmd)
-  {
-      error_cmd(data->cmds->cmd);
-      data->exit_status = 127;
-      gc_mem(FULL_CLEAN, 0, NULL);
-      exit(data->exit_status);
-  }
+	if (!data->cmds->cmd[0]) // in case "" or '' (empty cmd)
+	{
+		error_cmd(data->cmds->cmd);
+		data->exit_status = 127;
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
 	if (is_builtin(data->cmds->cmd))
 	{
 		exec_builtin(data, data->cmds);
@@ -111,8 +111,16 @@ void	exec_cmd(t_data *data)
 	}
 	if (access(data->cmds->cmd, F_OK | X_OK) == 0)
 		path = gc_strdup(data->cmds->cmd);
+	else if (ft_strchr(data->cmds->cmd, '/') && access(data->cmds->cmd, F_OK | X_OK) != 0)
+	{
+		error_mess(data->cmds->cmd,"No such file or directory");
+		exit(data->exit_status);
+	}
 	else
+	{
 		path = new_path(data->cmds->cmd, data->envp_cpy);
+		printf("path = %s\n", path);
+	}
 	// printf("path = %s\n", path);
 	if (!path)
 	{

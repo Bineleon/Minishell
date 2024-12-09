@@ -16,7 +16,7 @@ t_bool is_builtin(char *cmd)
 void exec_builtin(t_data *data, t_cmd *cmds)
 {
     if (ft_strcmp(cmds->cmd, "echo") == 0)
-        ft_echo(cmds);
+        ft_echo(cmds, data->fd_);
     else if (ft_strcmp(cmds->cmd, "cd") == 0)
         ft_cd(cmds);
     else if (ft_strcmp(cmds->cmd, "pwd") == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/09 11:58:40 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/12/09 15:38:50 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void exec(t_data *data)
     {
         if (is_builtin(data->cmds->cmd) && !data->cmds->prev && !data->cmds->next)
         {
+            // redir_input(data);
+            redir_builtins(data);
             exec_builtin(data, data->cmds);
             return;
         }
@@ -49,7 +51,7 @@ void exec(t_data *data)
             data->open_process = true;
             which_child(data);
         }
-        data->open_process = true;
+        // data->open_process = true;
         if (data->fd[2] != -1)
             close(data->fd[2]);
         data->fd[2] = data->fd[0];

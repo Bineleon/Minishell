@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 11:31:21 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/12/09 15:42:32 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/minishell.h"
 
-int	new_fd(char *operator, char *file)
+int	new_fd(char *operator, char * file)
 {
 	int	fd;
 
@@ -25,42 +24,92 @@ int	new_fd(char *operator, char *file)
 	return (fd);
 }
 
-void redir_output(t_data *data, t_cmd *cmd)
+void	redir_builtins(t_data *data)
 {
-    t_redir *current_redir;
-    int fd;
+	t_redir	*current_redir;
+	int		fd;
 
-    if (!cmd || !cmd->redir)
-        return;
-    current_redir = cmd->redir;
-    fd = -1;
-    while (current_redir)
-    {
-        if (current_redir->type == OUT || current_redir->type == APPEND)
-        {
-            if (fd > 0)
-                close(fd);
-            if (current_redir->type == OUT)
-                fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-            else if (current_redir->type == APPEND)
-                fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
-            if (fd == -1)
-            {
-                error_mess(NULL, current_redir->file_name);
-                data->exit_status = 1;
-                return;
-            }
-        }
-        current_redir = current_redir->next;
-    }
-    if (fd > 0)
-    {
-        if (cmd->next)
-            dup2(fd, data->fd[1]);
-        else
-            dup2(fd, STDOUT_FILENO);
-        close(fd);
-    }
+	if (!data->cmds || !data->cmds->redir)
+		return ;
+	current_redir = data->cmds->redir;
+	fd = -1;
+	while (current_redir)
+	{
+		if (current_redir->type == OUT || current_redir->type == APPEND)
+		{
+			if (fd > 0)
+			{
+				close(fd);
+			}
+			if (current_redir->type == OUT)
+			{
+				fd = open(current_redir->file_name,
+						O_CREAT | O_WRONLY | O_TRUNC, 0644);
+				printf("fd : %d\n\n", fd);
+			}
+			else if (current_redir->type == APPEND)
+				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				error_mess(NULL, current_redir->file_name);
+				data->exit_status = 1;
+				return ;
+			}
+		}
+		current_redir = current_redir->next;
+	}
+	if (fd > 0)
+	{
+		data->fd_ = fd;
+		// close(fd); // A voir
+	}
+}
+
+void	redir_output(t_data *data, t_cmd *cmd)
+{
+	t_redir	*current_redir;
+	int		fd;
+
+	if (!cmd || !cmd->redir)
+		return ;
+	current_redir = cmd->redir;
+	fd = -1;
+	while (current_redir)
+	{
+		if (current_redir->type == OUT || current_redir->type == APPEND)
+		{
+			if (fd > 0)
+			{
+				close(fd);
+			}
+			if (current_redir->type == OUT)
+			{
+				fd = open(current_redir->file_name,
+						O_CREAT | O_WRONLY | O_TRUNC, 0644);
+				printf("fd : %d\n\n", fd);
+			}
+			else if (current_redir->type == APPEND)
+				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				error_mess(NULL, current_redir->file_name);
+				data->exit_status = 1;
+				return ;
+			}
+		}
+		current_redir = current_redir->next;
+	}
+	if (fd > 0)
+	{
+		if (data->cmds->next)
+			dup2(fd, data->fd[1]);
+		else
+		{
+			printf("fd1 : %d\n\n", fd);
+			dup2(fd, STDOUT_FILENO);
+		}
+		close(fd);
+	}
 }
 
 // void	redir_output(t_data *data)

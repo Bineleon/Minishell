@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:09:28 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/07 17:21:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 15:36:26 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_bool	check_other_opt(char *arg)
 		return (true);
 	return (false);
 }
-void	ft_echo(t_cmd *cmds)
+void	ft_echo(t_cmd *cmds, int fd)
 {
 	t_bool	nl_option;
 	int		i;
@@ -50,12 +50,13 @@ void	ft_echo(t_cmd *cmds)
 	}
 	while (cmds->args[i])
 	{
-		printf("%s", cmds->args[i]);
+		ft_putstr_fd(cmds->args[i], fd);
+		// printf("%s", cmds->args[i]);
 		if (cmds->args[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", fd);
 		i++;
 	}
 	if (!nl_option)
-		printf("\n");
+		ft_putstr_fd("\n", fd);
 	data->exit_status = 0;
 }

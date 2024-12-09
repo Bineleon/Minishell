@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 12:00:11 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/12/09 15:38:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ typedef struct s_fullcmd
 {
 	char				*str;
 	t_token				type;
-  t_bool        is_cmd;
+	t_bool				is_cmd;
 	t_bool				concat_next;
 	struct s_fullcmd	*next;
 }						t_fullcmd;
 
 typedef struct s_redir
 {
-  t_token         type;
-  char            *file_name;
-  struct s_redir  *next;
-}               t_redir;
+	t_token				type;
+	char				*file_name;
+	struct s_redir		*next;
+}						t_redir;
 
 typedef struct s_cmd
 {
@@ -106,18 +106,18 @@ typedef struct s_data
 	t_env				*envp_cpy;
 	size_t				cmds_count;
 	int					fd[3];
+	int					fd_;
 	int					pid;
 	int					exit_status;
 	t_bool				heredoc;
-  t_bool      open_process;
+	t_bool				open_process;
 	char				*delim;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
 	t_garbage_co *garbage; // Chained list of all the malloced pointers
 }						t_data;
 
-
-void find_cmds(t_data *data);
+void					find_cmds(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              BUILTINS              ║ */
@@ -125,7 +125,7 @@ void find_cmds(t_data *data);
 
 void					ft_env(t_data *data);
 void					ft_pwd(t_data *data);
-void					ft_echo(t_cmd *cmds);
+void					ft_echo(t_cmd *cmds, int fd);
 void					ft_export(t_cmd *cmds);
 void					ft_unset(t_cmd *cmds);
 void					ft_exit(t_cmd *cmds);
@@ -191,7 +191,7 @@ void					last_child(t_data *data);
 void					redir_input(t_data *data);
 void					heredoc(t_data *data);
 // void					redir_output(t_data *data);
-void          redir_output(t_data *data, t_cmd *cmd);
+void					redir_output(t_data *data, t_cmd *cmd);
 void					exec_cmd(t_data *data);
 char					*new_path(char *arg, t_env *env_cpy);
 char					**all_paths(t_env *env);
@@ -203,6 +203,7 @@ char					*joinequal(char *key, char *value);
 char					**ft_newenv(t_data *data);
 void					exec_builtin(t_data *data, t_cmd *cmds);
 t_bool					is_builtin(char *cmd);
+void					redir_builtins(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
