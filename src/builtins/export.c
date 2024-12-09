@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/05 17:40:50 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/09 18:11:29 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,9 +188,9 @@ void	handle_with_equal(t_data *data, char *arg)
 	{
 		*equal = '\0';
 		key = arg;
-    printf("\n\nkey = %s\n\n", key);
+		printf("\n\nkey = %s\n\n", key);
 		value = equal + 1;
-    printf("\n\nvalue = %s\n\n", value);
+		printf("\n\nvalue = %s\n\n", value);
 		if (!is_valid_key(key))
 		{
 			error_mess("export", key);
@@ -245,7 +245,7 @@ void	sub_export(t_data *data, t_cmd *cmds)
 // 			if (!is_valid_key(key))
 // 			{
 //         error_mess("export", key);
-// 		    ft_putstr_fd(" : not a valid identifier\n", 2);
+// 			 ft_putstr_fd(" : not a valid identifier\n", 2);
 // 				data->exit_status = 1;
 // 			}
 // 			else
@@ -262,7 +262,7 @@ void	sub_export(t_data *data, t_cmd *cmds)
 // 			if (!is_valid_key(key))
 // 			{
 //         error_mess("export", key);
-// 		    ft_putstr_fd(" : not a valid identifier\n", 2);
+// 			 ft_putstr_fd(" : not a valid identifier\n", 2);
 // 				data->exit_status = 1;
 // 			}
 // 			else
@@ -279,9 +279,9 @@ void	sub_export(t_data *data, t_cmd *cmds)
 void	ft_export(t_cmd *cmds)
 {
 	t_env	**sorted_env;
-  t_data *data;
+	t_data	*data;
 
-  data = get_data();
+	data = get_data();
 	sorted_env = lst_to_arr(data->envp_cpy);
 	sort_env(sorted_env);
 	if (!cmds->args[1])

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 15:38:25 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 18:35:52 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ long long int			ft_atol(const char *nptr);
 void					ciao(int exit_status);
 t_bool					is_redi(t_fullcmd *token);
 void					skip_var_name(char *line, int *i);
+char					**gc_split(char const *s, char c);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

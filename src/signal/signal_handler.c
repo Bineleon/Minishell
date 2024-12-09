@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:30:52 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/08 21:59:35 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:59:35 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// void sigint_child(int sig)
-// {
-//   t_data *data;
-//   (void)sig;
+void handle_sigquit2(int sig)
+{
+  (void)sig;
+  t_data *data;
 
-//   data = get_data();
-// }
+  data = get_data();
+  
+}
 
 static void	replace_redisplay(void)
 {
@@ -28,7 +29,7 @@ static void	replace_redisplay(void)
 	rl_redisplay();
 }
 
-static void sigint_parent(void)
+static void sigint_process(void)
 {
   t_data *data;
 
@@ -36,6 +37,7 @@ static void sigint_parent(void)
 	signal(SIGINT, NULL);
 	data->open_process = false;
   printf("\n");
+  // ft_prompt(data);
 }
 
 static void sigint_herdeoc(void)
@@ -65,15 +67,8 @@ void	handle_sigint(int sig)
   }
   else
   {
-    sigint_parent();
+    sigint_process();
   }
-  // printf("\n");
-	// if (rl_on_new_line() != 0)
-	// 	return (perror("rl_on_new_line"));
-  // // printf(CYAN);
-	// rl_replace_line("", 0);
-	// rl_redisplay();
-  // printf(RESET);
 }
 
 void	handle_signals(void)

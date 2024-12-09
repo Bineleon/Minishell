@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/09 16:27:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 19:03:59 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void exec(t_data *data)
     int status;
 
     init_cmds(data);
+
     data->open_process = false;
     while (data->cmds != NULL)
     {
         if (is_builtin(data->cmds->cmd) && !data->cmds->prev && !data->cmds->next)
         {
+            printf("BUILTIN\n\n");
             redir_input(data);
             redir_builtins(data);
             exec_builtin(data, data->cmds);
@@ -55,7 +57,7 @@ void exec(t_data *data)
         if (data->fd[2] != -1)
             close(data->fd[2]);
         data->fd[2] = data->fd[0];
-        close(data->fd[1]);
+        // close(data->fd[1]);   //  Invalid close ?
         data->cmds = data->cmds->next;
     }
     if (data->fd[2] != -1)
@@ -69,8 +71,8 @@ void exec(t_data *data)
             break;
         if (WIFEXITED(status))
             data->exit_status = WEXITSTATUS(status);
-        else if (WIFSIGNALED(status))
-            data->exit_status = 128 + WTERMSIG(status);
+        // else if (WIFSIGNALED(status))
+        //     data->exit_status = 128 + WTERMSIG(status);
     }
     data->open_process = false;
 }
