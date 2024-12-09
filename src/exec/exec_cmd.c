@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/08 19:35:25 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:48:19 by nelbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,27 +92,6 @@ char	**ft_newenv(t_data *data)
 	return (newenv);
 }
 
-// void	exec_cmd(t_data *data)
-// {
-// 	char	*path;
-// 	char	**newenv;
-
-// 	if (access(data->cmds->args[0], F_OK | X_OK) == 0)
-// 		path = ft_strdup(data->cmds->args[0]);
-// 	else
-// 		path = new_path(data->cmds->args[0], data->envp_cpy);
-// 	if (!path)
-//   {
-//     data->exit_status = 127;
-// 		error_cmd(data->cmds->args[0]);
-//   }
-// 	newenv = ft_newenv(data);
-// 	if (!newenv)
-// 		return ((void)gc_mem(FREE, 0, path));
-// 	if (execve(path, data->cmds->args, newenv) == -1)
-// 		gc_mem(FREE, 0, path);
-// }
-
 void	exec_cmd(t_data *data)
 {
 	char	*path;
@@ -131,9 +110,7 @@ void	exec_cmd(t_data *data)
 		exit(data->exit_status);
 	}
 	if (access(data->cmds->cmd, F_OK | X_OK) == 0)
-	{
 		path = gc_strdup(data->cmds->cmd);
-	}
 	else
 		path = new_path(data->cmds->cmd, data->envp_cpy);
 	// printf("path = %s\n", path);

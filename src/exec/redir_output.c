@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/08 20:51:47 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:31:21 by nelbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void redir_output(t_data *data, t_cmd *cmd)
             if (fd == -1)
             {
                 error_mess(NULL, current_redir->file_name);
+                data->exit_status = 1;
                 return;
             }
         }
@@ -61,7 +62,6 @@ void redir_output(t_data *data, t_cmd *cmd)
         close(fd);
     }
 }
-
 
 // void	redir_output(t_data *data)
 // {
