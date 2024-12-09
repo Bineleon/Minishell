@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 16:58:33 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 17:32:15 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	new_fd(char *operator, char * file)
+int	new_fd(char *operator, char *file)
 {
 	int	fd;
 
@@ -79,16 +79,10 @@ void	redir_output(t_data *data, t_cmd *cmd)
 		if (current_redir->type == OUT || current_redir->type == APPEND)
 		{
 			if (fd > 0)
-			{
 				close(fd);
-			}
 			if (current_redir->type == OUT)
-			{
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_TRUNC, 0644);
-				ft_putstr_fd(gc_itoa(fd), 2);
-				ft_putstr_fd("\n", 2);
-			}
 			else if (current_redir->type == APPEND)
 				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
 			if (fd == -1)
@@ -100,14 +94,8 @@ void	redir_output(t_data *data, t_cmd *cmd)
 		}
 		current_redir = current_redir->next;
 	}
-	ft_putstr_fd(gc_itoa(data->fd[1]), 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("\n", 2);
 	if (fd > 0)
-	{
 		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
 }
 
 // void	redir_output(t_data *data)

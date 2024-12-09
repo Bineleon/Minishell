@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 15:38:25 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 18:43:23 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_data
 	char				*delim;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co *garbage; // Chained list of all the malloced pointers
+	t_garbage_co	 	*garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 void					find_cmds(t_data *data);
@@ -189,7 +189,7 @@ void					first_child(t_data *data);
 void					middle_child(t_data *data);
 void					last_child(t_data *data);
 void					redir_input(t_data *data);
-void					heredoc(t_data *data);
+void					heredoc(t_data *data, t_redir *current_redir);
 // void					redir_output(t_data *data);
 void					redir_output(t_data *data, t_cmd *cmd);
 void					exec_cmd(t_data *data);

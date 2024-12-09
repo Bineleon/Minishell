@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:17:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/09 16:32:53 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/09 18:40:35 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	first_child(t_data *data)
 {
 	data->open_process = true;
 	redir_input(data);
-	heredoc(data);
 	if (data->cmds->next)
 	{
 		dup2(data->fd[1], STDOUT_FILENO);
@@ -34,7 +33,6 @@ void	middle_child(t_data *data)
 	data->open_process = true;
 	dup2(data->fd[2], STDIN_FILENO);
 	redir_input(data);
-	heredoc(data);
 	dup2(data->fd[1], STDOUT_FILENO);
 	redir_output(data, data->cmds);
 	close(data->fd[2]);
@@ -48,7 +46,6 @@ void	last_child(t_data *data)
 	data->open_process = true;
 	dup2(data->fd[2], STDIN_FILENO);
 	redir_input(data);
-	heredoc(data);
 	redir_output(data, data->cmds);
 	close(data->fd[2]);
 	close(data->fd[1]);
