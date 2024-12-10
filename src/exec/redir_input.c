@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/09 18:49:15 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:24 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ void	heredoc(t_data *data, t_redir *current_redir)
 {
 	int		fd[2];
 	char	*prompt;
+	char	*fullprompt;
 
 	data->heredoc = true;
 	if (pipe(fd) == -1)
 		return ((void)error_mess(NULL, NULL));
-	ft_putstr_fd("")
+	prompt = NULL;
+	fullprompt = NULL;
 	while (1)
 	{
 		prompt = readline("heredoc> ");
