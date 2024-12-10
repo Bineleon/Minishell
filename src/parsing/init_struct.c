@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/12/09 15:39:32 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/10 11:08:31 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	init_cmd(t_cmd *cmd)
 	cmd->args = NULL;
 	cmd->cmd = NULL;
 	cmd->redir = NULL;
+  cmd->is_first = false;
 	cmd->prev = NULL;
 }

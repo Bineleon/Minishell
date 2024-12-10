@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/09 20:05:33 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/10 13:50:44 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	exec_cmd(t_data *data)
 		redir_builtins(data);
 		exec_builtin(data, data->cmds);
 		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);	
+		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
 	if (access(data->cmds->cmd, F_OK | X_OK) == 0)
@@ -118,6 +118,7 @@ void	exec_cmd(t_data *data)
 	else if (ft_strchr(data->cmds->cmd, '/') && access(data->cmds->cmd, F_OK | X_OK) != 0)
 	{
 		error_mess(data->cmds->cmd,"No such file or directory");
+    data->exit_status = 127;
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
@@ -130,8 +131,8 @@ void	exec_cmd(t_data *data)
 	// printf("path = %s\n", path);
 	if (!path)
 	{
-		data->exit_status = 127;
 		error_cmd(data->cmds->cmd);
+		data->exit_status = 127;
 		gc_mem(FULL_CLEAN, 0, NULL);
 		rl_clear_history();
 		exit(data->exit_status);

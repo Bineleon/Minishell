@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:30:52 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/09 17:59:35 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/10 11:04:46 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void handle_sigquit2(int sig)
-{
-  (void)sig;
-  t_data *data;
+// void handle_sigquit2(int sig)
+// {
+//   (void)sig;
+//   t_data *data;
 
-  data = get_data();
-  
-}
+//   data = get_data();
+
+// }
 
 static void	replace_redisplay(void)
 {
