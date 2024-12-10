@@ -6,9 +6,12 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 21:54:06 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/10 22:04:35 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -84,6 +87,7 @@ typedef struct s_cmd
 	char				*cmd;
 	t_redir				*redir;
 	t_bool				is_first;
+	t_bool				is_first;
 	char				**args;
 	struct s_cmd		*next;
 }						t_cmd;
@@ -102,6 +106,13 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
+typedef struct s_heredoc
+{
+	t_bool	in_process;
+	int		fd[2];
+	char	*fullprompt;
+}			t_heredoc;
+
 typedef struct s_data
 {
 	t_env				*envp_cpy;
@@ -110,12 +121,12 @@ typedef struct s_data
 	int					fd_;
 	int					pid;
 	int					exit_status;
-	t_bool				heredoc;
+	t_heredoc			*heredoc;
 	t_bool				open_process;
 	char				*delim;
 	t_cmd				*cmds;
 	t_fullcmd			*token_fullcmd;
-	t_garbage_co *garbage; // Chained list of all the malloced pointers
+	t_garbage_co	 	*garbage; // Chained list of all the malloced pointers
 }						t_data;
 
 void					find_cmds(t_data *data);
@@ -189,10 +200,12 @@ void					which_child(t_data *data);
 void					first_child(t_data *data);
 void					middle_child(t_data *data);
 void					last_child(t_data *data);
-void					redir_input(t_data *data);
-void					heredoc(t_data *data);
+int						redir_input(t_data *data);
+void					heredoc(t_data *data, t_redir *current_redir);
+void					clean_heredoc(t_data *data);
+void					new_heredoc(t_data *data);
 // void					redir_output(t_data *data);
-void					redir_output(t_data *data, t_cmd *cmd);
+int						redir_output(t_data *data, t_cmd *cmd);
 void					exec_cmd(t_data *data);
 char					*new_path(char *arg, t_env *env_cpy);
 char					**all_paths(t_env *env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/05 18:00:13 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:40:48 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,14 @@ t_bool	is_separator(char c)
 	return (false);
 }
 
-void    free_env_node(t_env *node)
+void	free_env_node(t_env *node)
 {
-    if (node->key)
-        gc_mem(FREE, 0, node->key);
-    if (node->value)
-        gc_mem(FREE, 0, node->value);
-    node = NULL;
-    gc_mem(FREE, 0, node);
-
+	if (node->key)
+		gc_mem(FREE, 0, node->key);
+	if (node->value)
+		gc_mem(FREE, 0, node->value);
+	node = NULL;
+	gc_mem(FREE, 0, node);
 }
 
 char	*gc_strjoin(char const *s1, char const *s2)
@@ -135,16 +134,16 @@ char	*gc_itoa(int n)
 	return (itoa);
 }
 
-void    ciao(int exit_status)
+void	ciao(int exit_status)
 {
-    printf(MAGENTA);
-    printf("\e[4mCIAO BABY!\e[0m\n");
-    printf(RESET);
-    gc_mem(FULL_CLEAN, 0, NULL);
-    exit(exit_status);
+	printf(MAGENTA);
+	printf("\e[4mCIAO BABY!\e[0m\n");
+	printf(RESET);
+	gc_mem(FULL_CLEAN, 0, NULL);
+	exit(exit_status);
 }
 
-long long int   ft_atol(const char *nptr)
+long long int	ft_atol(const char *nptr)
 {
 	int		i;
 	long	sign;
