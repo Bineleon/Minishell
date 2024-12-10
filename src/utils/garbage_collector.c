@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/25 18:58:57 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/10 21:14:20 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ static void	*gc_malloc(t_data *data, size_t size, void *ptr)
 {
 	t_garbage_co	*new;
 
-	new = malloc(sizeof(t_garbage_co));
+	new = ft_calloc(sizeof(t_garbage_co), 1);
 	if (!new)
 		return (perror("malloc"), gc_mem(FULL_CLEAN, 0, NULL),
 			exit(EXIT_FAILURE), NULL);
 	if (ptr)
 		new->ptr = ptr;
 	else
-		new->ptr = malloc(size);
+		new->ptr = ft_calloc(1, size);
 	if (!new->ptr)
 		return (perror("malloc"), gc_mem(FULL_CLEAN, 0, NULL),
 			exit(EXIT_FAILURE), NULL);

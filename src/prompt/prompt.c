@@ -73,6 +73,7 @@ void	ft_prompt(t_data *data)
 		// 	printf("NOT OK\n");
 		// rl_bind_key('\t', rl_insert);
 		// Uncomment to insert "\t" with TAB on prompt
+		handle_signals();
 		prompt = readline("Minishell> ");
 		if (!prompt)
 		{

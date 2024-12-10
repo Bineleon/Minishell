@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 13:59:34 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/10 21:54:06 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	struct s_cmd		*prev;
-	char				**str;
+	// char				**str;
 	char				*cmd;
 	t_redir				*redir;
-  t_bool      is_first;
+	t_bool				is_first;
 	char				**args;
 	struct s_cmd		*next;
 }						t_cmd;
@@ -217,7 +217,8 @@ void					ft_prompt(t_data *data);
 /* ╚════════════════════════════════════╝ */
 
 void					handle_signals(void);
-void          signal_open_process(void);
+void					signal_open_process(void);
+void					sigint_process(void);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
@@ -250,6 +251,7 @@ void					ciao(int exit_status);
 t_bool					is_redi(t_fullcmd *token);
 void					skip_var_name(char *line, int *i);
 char					**gc_split(char const *s, char c);
+void					full_free(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

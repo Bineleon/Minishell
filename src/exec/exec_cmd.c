@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/10 13:50:44 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/10 21:55:28 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,40 +96,50 @@ void	exec_cmd(t_data *data)
 {
 	char	*path;
 	char	**newenv;
+	t_bool	no_cmd;
 
-	if (!data->cmds->cmd[0]) // in case "" or '' (empty cmd)
+	no_cmd = false;
+	path = NULL;
+	if (!data->cmds->cmd && !data->cmds->redir) // in case "" or '' (empty cmd)
 	{
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
 		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);
+		full_free(data);
 		exit(data->exit_status);
 	}
-	if (is_builtin(data->cmds->cmd))
+	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
 	{
 		redir_builtins(data);
 		exec_builtin(data, data->cmds);
 		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);
+		full_free(data);
 		exit(data->exit_status);
 	}
-	if (access(data->cmds->cmd, F_OK | X_OK) == 0)
+	if (data->cmds->cmd && access(data->cmds->cmd, F_OK | X_OK) == 0)
 		path = gc_strdup(data->cmds->cmd);
-	else if (ft_strchr(data->cmds->cmd, '/') && access(data->cmds->cmd, F_OK | X_OK) != 0)
+	else if (data->cmds->cmd && ft_strchr(data->cmds->cmd, '/')
+			&& access(data->cmds->cmd, F_OK | X_OK) != 0)
 	{
-		error_mess(data->cmds->cmd,"No such file or directory");
-    data->exit_status = 127;
+		error_mess(data->cmds->cmd, "No such file or directory");
+		data->exit_status = 127;
 		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);
+		full_free(data);
 		exit(data->exit_status);
 	}
 	else
 	{
-		path = new_path(data->cmds->cmd, data->envp_cpy);
+		if (data->cmds->cmd)
+			path = new_path(data->cmds->cmd, data->envp_cpy);
+		else
+		{
+			rl_clear_history();
+			full_free(data);
+			exit(data->exit_status);
+		}
 		// printf("path = %s\n", path);
 	}
-	// printf("path = %s\n", path);
-	if (!path)
+	if (data->cmds->cmd && !path)
 	{
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
@@ -137,11 +147,14 @@ void	exec_cmd(t_data *data)
 		rl_clear_history();
 		exit(data->exit_status);
 	}
-	newenv = ft_newenv(data);
-	if (!newenv)
-		return ((void)gc_mem(FREE, 0, path));
-	if (execve(path, data->cmds->args, newenv) == -1)
-		gc_mem(FREE, 0, path);
+	if (path)
+	{
+		newenv = ft_newenv(data);
+		if (!newenv)
+			return ((void)gc_mem(FREE, 0, path));
+		if (execve(path, data->cmds->args, newenv) == -1)
+			gc_mem(FREE, 0, path);
+	}
 }
 
 // void	exec_cmd(t_data *data)

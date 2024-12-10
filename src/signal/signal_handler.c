@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:30:52 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/10 14:08:23 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:19:53 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,27 @@ static void	replace_redisplay(void)
 	rl_redisplay();
 }
 
-static void sigint_process(void)
+void sig2(int sig)
 {
   t_data *data;
+  (void) sig; 
 
   data = get_data();
-	signal(SIGINT, NULL);
-	data->open_process = false;
-  printf("\n");
-  // ft_prompt(data);
+  ft_putstr_fd("\n", 2);
+  data->exit_status = 130;
+  data->open_process = false;
+
 }
+
+// void sigint_process(void)
+// {
+//   t_data *data;
+
+//   data = get_data();
+// 	signal(SIGINT, &sig2);
+// 	data->open_process = false;
+//   // ft_prompt(data);
+// }
 
 static void sigint_herdeoc(void)
 {
@@ -51,7 +62,7 @@ static void sigint_herdeoc(void)
   data = get_data();
   data->heredoc = false;
   printf("\n");
-  replace_redisplay();
+  // replace_redisplay();
   ft_prompt(data);
 }
 
@@ -64,15 +75,16 @@ void	handle_sigint(int sig)
   data->exit_status = 130;
   if (data->heredoc)
     sigint_herdeoc();
-  else if (!data->open_process)
+  if (!data->open_process)
   {
     printf("\n");
+    printf("WOOOW\n\n");
     replace_redisplay();
   }
-  else
-  {
-    sigint_process();
-  }
+  // else
+  // {
+  //   // sigint_process();
+  // }
 }
 
 void	handle_signals(void)
@@ -83,12 +95,13 @@ void	handle_signals(void)
   signal(SIGINT, &handle_sigint);
   if (!data->open_process)
   {
-    printf("ICI\n\n");
 	  signal(SIGQUIT, SIG_IGN);
   }
 }
 
 void  signal_open_process(void)
 {
+  // printf("ICI MAIN\n\n");
   signal(SIGQUIT, &handle_sigquit2);
+  signal(SIGINT, &sig2);
 }
