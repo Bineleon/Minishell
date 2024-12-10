@@ -6,9 +6,10 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 14:11:03 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:51:20 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -83,6 +84,7 @@ typedef struct s_cmd
 	char				**str;
 	char				*cmd;
 	t_redir				*redir;
+  t_bool      is_first;
 	char				**args;
 	struct s_cmd		*next;
 }						t_cmd;
@@ -221,6 +223,7 @@ void					ft_prompt(t_data *data);
 /* ╚════════════════════════════════════╝ */
 
 void					handle_signals(void);
+void          signal_open_process(void);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
@@ -252,6 +255,7 @@ long long int			ft_atol(const char *nptr);
 void					ciao(int exit_status);
 t_bool					is_redi(t_fullcmd *token);
 void					skip_var_name(char *line, int *i);
+char					**gc_split(char const *s, char c);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

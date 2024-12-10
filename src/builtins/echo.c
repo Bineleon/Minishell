@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:09:28 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/09 15:36:26 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/10 13:25:05 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_bool	check_other_opt(char *arg)
 		return (true);
 	return (false);
 }
+
 void	ft_echo(t_cmd *cmds, int fd)
 {
 	t_bool	nl_option;
@@ -57,6 +58,8 @@ void	ft_echo(t_cmd *cmds, int fd)
 		i++;
 	}
 	if (!nl_option)
+  {
 		ft_putstr_fd("\n", fd);
+  }
 	data->exit_status = 0;
 }

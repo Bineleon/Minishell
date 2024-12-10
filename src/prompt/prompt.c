@@ -15,7 +15,7 @@
 
 void	print_tokens(t_fullcmd *tokens)
 {
-	t_fullcmd *current;
+	t_fullcmd	*current;
 
 	current = tokens;
 	while (current)
@@ -103,13 +103,13 @@ void	ft_prompt(t_data *data)
 			if (!check_errors(tokens))
 			{
 				expand_var(data);
-        find_cmds(data);
+				find_cmds(data);
 				// print_tokens(tokens);
 				// printf("\n");
-				print_tokens(data->token_fullcmd);
+				// print_tokens(data->token_fullcmd);
 				exec(data);
 			}
 		}
-	  free(prompt);
+		free(prompt);
 	}
 }

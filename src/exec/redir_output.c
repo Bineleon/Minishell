@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/09 17:32:15 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:53:55 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	redir_builtins(t_data *data)
 			{
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_TRUNC, 0644);
-				printf("fd : %d\n\n", fd);
 			}
 			else if (current_redir->type == APPEND)
 				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
@@ -71,7 +70,9 @@ void	redir_output(t_data *data, t_cmd *cmd)
 	int		fd;
 
 	if (!cmd || !cmd->redir)
+  {
 		return ;
+  }
 	current_redir = cmd->redir;
 	fd = -1;
 	while (current_redir)

@@ -3,151 +3,102 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelbi <neleon@student.42.fr>               +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:59:12 by neleon            #+#    #+#             */
-/*   Updated: 2024/10/28 13:14:49 by nelbi            ###   ########.fr       */
+/*   Updated: 2024/12/09 17:14:49 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int count_args(char *line)
-{
-    int i;
-    int arg_count;
 
-    i = 0;
-    arg_count = 0;
-    while (line[i])
-    {
-        if (is_whitespace(line[i]))
-            i++;
-        else if (line[i] == DQUOTE || line[i] == SQUOTE)
-        {
-            i = skip_quotes(line, i, line[i]);
-            arg_count++;
-        }
-        else
-        {
-            while (line[i] && !is_whitespace(line[i]) && line[i] != DQUOTE && line[i] != SQUOTE)
-                i++;
-            arg_count++;
-        }
-    }
-    return arg_count;
+static int	ft_word_len(char const *s, char c)
+{
+	int	len;
+
+	len = 0;
+	while (s[len] && s[len] != c)
+		len++;
+	return (len);
 }
 
-int skip_quotes(char *line, int i, char quote)
+void	free_malloc(char **split, int size)
 {
-    while (line[i] && line[i] != quote)
-        i++;
-    return (i + 1);
+	int	i;
+
+	i = 0;
+	if (split != NULL)
+	{
+		while (i < size)
+		{
+			free(split[i]);
+			i++;
+		}
+		free(split);
+		split = NULL;
+	}
 }
 
-char **allocate_args(int arg_count)
+static char	*ft_word(char const *s, char c)
 {
-    char **args;
+	char	*word;
+	int		i;
 
-    args = gc_mem(MALLOC, sizeof(char *) * arg_count + 1, NULL);
-    if (!args)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
-    return (args);
+	i = 0;
+	word = gc_mem(MALLOC, (ft_word_len(s, c) + 1) * sizeof(char), NULL);
+	// if (!word)
+	// 	return (free(word), NULL);
+	while (s[i] && s[i] != c)
+	{
+		word[i] = s[i];
+		i++;
+	}
+	word[i] = '\0';
+	return (word);
 }
 
-int skip_spaces(char *line, int i)
+static int	ft_count_words(char const *s, char c)
 {
-    while (is_whitespace(line[i]))
-        i++;
-    return (i);
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] != c && (s[i + 1] == c || !s[i + 1]))
+			count++;
+		i++;
+	}
+	return (count);
 }
 
-int in_quote_arg(char *line, char **args, int i, int *j)
+char	**gc_split(char const *s, char c)
 {
-    char quote;
-    int start;
-    int len;
+	char	**words;
+	int		word_count;
+	int		i;
+	int		j;
 
-    quote = line[i];
-    start = i;
-    i++;
-    i = skip_quotes(line, i, quote);
-    len = i - start;
-    args[*j] = gc_mem(MALLOC, len + 1, NULL);
-    ft_strlcpy(args[*j], &line[start], len + 1);
-    args[*j][len] = '\0';
-    (*j)++;
-    return (i);
+	i = 0;
+	j = 0;
+	if (!s)
+		return (NULL);
+	word_count = ft_count_words(s, c);
+	words = gc_mem(MALLOC, (word_count + 1) * sizeof(char *), NULL);
+	if (!words)
+		return (free_malloc(words, i), NULL);
+	while (j < word_count)
+	{
+		while (s[i] == c)
+			i++;
+		words[j] = ft_word(&s[i], c);
+		if (!words[j])
+			free_malloc(words, j);
+		i += ft_word_len(&s[i], c);
+		j++;
+	}
+	words[word_count] = NULL;
+	return (words);
 }
-
-int not_quoted_arg(char *line, char **args, int i, int *j)
-{
-    int start;
-    int len;
-
-    start = i;
-    while (line[i] && line[i] != SPC && line[i] != DQUOTE && line[i] != SQUOTE)
-        i++;
-    len = i - start;
-    args[*j] = gc_mem(MALLOC, len + 1, NULL);
-    ft_strlcpy(args[*j], &line[start], len + 1);
-    args[*j][len] = '\0';
-    (*j)++;
-    return (i);
-}
-
-void extract_args(char *line, char **args)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (line[i])
-    {
-        i = skip_spaces(line, i);
-        if (line[i] == DQUOTE || line[i] == SQUOTE)
-            i = in_quote_arg(line, args, i, &j);
-        else if (line[i])
-            i = not_quoted_arg(line, args, i, &j);
-    }
-    args[j] = NULL;
-}
-
-char **split_args(char *line)
-{
-    int arg_count;
-    char **args;
-
-    arg_count = count_args(line);
-    args = allocate_args(arg_count);
-    extract_args(line, args);
-    return (args);
-}
-
-// int main(void)
-// {
-//     char *line = "echo           \"Hello      you\" > 'output.txt'            ";
-
-//     char **args = split_args(line);
-
-//     int i = 0;
-//     printf("Arguments:\n");
-//     while (args[i] != NULL)
-//     {
-//         printf("args[%d]: %s\n", i, args[i]);
-//         i++;
-//     }
-//     i = 0;
-//     while (args[i] != NULL)
-//     {
-//         free(args[i]);
-//         i++;
-//     }
-//     free(args);
-
-//     return 0;
-// }
