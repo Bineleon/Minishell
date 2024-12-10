@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:17:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/10 13:44:17 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:08 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void first_child(t_data *data)
 {
     data->open_process = true;
+    // signal_open_process();
     // redir_input(data);
     // heredoc(data);
     if (data->cmds->next)
@@ -32,7 +33,7 @@ void first_child(t_data *data)
 void middle_child(t_data *data)
 {
     data->open_process = true;
-
+    // signal_open_process();
     dup2(data->fd[2], STDIN_FILENO);
     dup2(data->fd[1], STDOUT_FILENO);
     close(data->fd[2]);
@@ -47,6 +48,7 @@ void middle_child(t_data *data)
 void last_child(t_data *data)
 {
     data->open_process = true;
+    // signal_open_process();
     dup2(data->fd[2], STDIN_FILENO);
     close(data->fd[2]);
     close(data->fd[1]);
