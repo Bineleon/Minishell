@@ -6,47 +6,69 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/10 14:09:24 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:28:26 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	heredoc(t_data *data, t_redir *current_redir)
+void	new_heredoc(t_data *data)
 {
-	int		fd[2];
-	char	*prompt;
-	char	*fullprompt;
-
-	data->heredoc = true;
-	if (pipe(fd) == -1)
-		return ((void)error_mess(NULL, NULL));
-	prompt = NULL;
-	fullprompt = NULL;
-	while (1)
-	{
-		prompt = readline("heredoc> ");
-		if (!prompt)
-			return ((void)error_mess(NULL, NULL));
-		if (ft_strncmp(current_redir->file_name, prompt,
-				ft_strlen(current_redir->file_name + 1)) == 0)
-		{
-			free(prompt);
-			break ;
-		}
-		free(prompt);
-	}
-	data->heredoc = false;
-	dup2(fd[0], STDIN_FILENO);
+	data->fd[0] = -1;
+	data->fd[1] = -1;
+	data->heredoc = gc_mem(MALLOC, sizeof(t_heredoc), NULL);
+	data->heredoc->fullprompt = NULL;
+	data->heredoc->in_process = true;
 }
 
-void	redir_input(t_data *data)
+void	clean_heredoc(t_data *data)
+{
+	if (data->heredoc->fd[0] != -1)
+		close(data->heredoc->fd[0]);
+	if (data->heredoc->fd[1] != -1)
+		close(data->heredoc->fd[1]);
+	if (data->heredoc->fullprompt)
+		gc_mem(FREE, (size_t) NULL, data->heredoc->fullprompt);
+	gc_mem(FREE, (size_t) NULL, data->heredoc);
+}
+
+void	heredoc(t_data *data, t_redir *current_redir)
+{
+	char	*prompt;
+
+	new_heredoc(data);
+	if (pipe(data->heredoc->fd) == -1)
+		return ((void)clean_heredoc(data), (void)error_mess(NULL, NULL));
+	prompt = NULL;
+	while (1)
+	{
+		prompt = readline("> ");
+		if (!prompt)
+			return ((void)error_mess(NULL, NULL));
+		if (ft_strlen(current_redir->file_name) == ft_strlen(prompt)
+			&& ft_strncmp(current_redir->file_name, prompt,
+				ft_strlen(current_redir->file_name)) == 0)
+		{
+			gc_mem(FREE, (size_t) NULL, prompt);
+			break ;
+		}
+		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt,
+				prompt);
+		gc_mem(FREE, (size_t) NULL, prompt);
+		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt, "\n");
+	}
+	ft_putstr_fd(data->heredoc->fullprompt, data->heredoc->fd[1]);
+	dup2(data->heredoc->fd[0], STDIN_FILENO);
+	clean_heredoc(data);
+}
+
+int	redir_input(t_data *data)
 {
 	t_redir	*current_redir;
 	int		fd;
 
-	if (!data->cmds || data->cmds->redir)
-		return ;
+	if (!data->cmds || !data->cmds->redir)
+		return (0);
 	current_redir = data->cmds->redir;
 	fd = -1;
 	while (current_redir)
@@ -60,7 +82,7 @@ void	redir_input(t_data *data)
 			{
 				error_mess(NULL, current_redir->file_name);
 				data->exit_status = 1;
-				return ;
+				return (1);
 			}
 		}
 		else if (current_redir->type == HEREDOC)
@@ -74,6 +96,7 @@ void	redir_input(t_data *data)
 	}
 	if (fd > 0)
 		dup2(fd, STDIN_FILENO);
+	return (1);
 }
 
 // void	heredoc(t_data *data)

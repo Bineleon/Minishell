@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 14:53:55 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:29:31 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ void	redir_builtins(t_data *data)
 	}
 }
 
-void	redir_output(t_data *data, t_cmd *cmd)
+int	redir_output(t_data *data, t_cmd *cmd)
 {
 	t_redir	*current_redir;
 	int		fd;
 
 	if (!cmd || !cmd->redir)
-  {
-		return ;
-  }
+		return (0);
 	current_redir = cmd->redir;
 	fd = -1;
 	while (current_redir)
@@ -90,13 +88,14 @@ void	redir_output(t_data *data, t_cmd *cmd)
 			{
 				error_mess(NULL, current_redir->file_name);
 				data->exit_status = 1;
-				return ;
+				return (1);
 			}
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
 		dup2(fd, STDOUT_FILENO);
+	return (1);
 }
 
 // void	redir_output(t_data *data)
