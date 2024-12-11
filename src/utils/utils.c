@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/10 16:40:48 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/11 01:03:07 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,4 +166,102 @@ long long int	ft_atol(const char *nptr)
 		i++;
 	}
 	return (res * sign);
+}
+
+
+static void	free_tokens(t_data *data)
+{
+	t_fullcmd	*tmp;
+
+	tmp = NULL;
+	if (!data->token_fullcmd)
+		return ;
+	while (data->token_fullcmd->next)
+	{
+		tmp = data->token_fullcmd;
+		gc_mem(FREE, 0, tmp->str);
+		data->token_fullcmd = data->token_fullcmd->next;
+		free(tmp);
+	}
+	if (data->token_fullcmd)
+	{
+		gc_mem(FREE, 0, data->token_fullcmd->str);
+		gc_mem(FREE, 0, data->token_fullcmd);
+	}
+	return ;
+}
+
+static void	free_redi(t_cmd *cmd)
+{
+	t_redir	*tmp;
+
+	tmp = NULL;
+	if (!cmd->redir)
+		return ;
+	while (cmd->redir->next)
+	{
+		tmp = cmd->redir;
+		gc_mem(FREE, 0, tmp->file_name);
+		cmd->redir = cmd->redir->next;
+		free(tmp);
+	}
+	if (cmd->redir)
+	{
+		gc_mem(FREE, 0, cmd->redir->file_name);
+		gc_mem(FREE, 0, cmd->redir);
+	}
+	return ;
+}
+
+static void	free_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	if (!args)
+		return ;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	gc_mem(FREE, 0, args);
+}
+
+static void	free_cmds(t_data *data)
+{
+	t_cmd	*tmp;
+
+	tmp = NULL;
+	while (data->cmds->next)
+	{
+		tmp = data->cmds;
+		if (data->cmds->redir)
+			free_redi(data->cmds);
+		if (data->cmds->cmd)
+			gc_mem(FREE, 0, data->cmds->cmd);
+		if (data->cmds->args)
+			free_args(data->cmds->args);
+		data->cmds = data->cmds->next;
+		free(tmp);
+	}
+	if (data->cmds->redir)
+		free_redi(data->cmds);
+	if (data->cmds->cmd)
+	{
+		free_args(data->cmds->args);
+		gc_mem(FREE, 0, data->cmds->cmd);
+	}
+	gc_mem(FREE, 0, data->cmds);
+	return ;
+}
+
+void	full_free(t_data *data)
+{
+	if (data->cmds)
+		free_cmds(data);
+	if (data->token_fullcmd)
+		free_tokens(data);
+	if (data->delim)
+		gc_mem(FREE, 0, data->delim);
 }

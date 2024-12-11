@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/10 22:12:45 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 01:04:21 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,27 @@ void	which_child(t_data *data)
 		middle_child(data);
 }
 
-void exec(t_data *data)
+t_bool  check_minishell_cmd(char *cmd)
+{
+    if (cmd && (ft_strcmp(cmd, "./minishell") == 0
+        || ft_strcmp(cmd, "minishell") == 0))
+        return (true);
+    return (false);
+}
+
+void    exec(t_data *data)
 {
     int status;
 
     init_cmds(data);
     data->open_process = false;
+    if (data->cmds->cmd && check_minishell_cmd(data->cmds->cmd)
+        && check_minishell_cmd(data->cmds->next->cmd))
+    {
+        error_cmd("./minishell");
+        data->exit_status = 127;
+        return;
+    }
     while (data->cmds != NULL)
     {
         if (is_builtin(data->cmds->cmd) && data->cmds->is_first && !data->cmds->next)

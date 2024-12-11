@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/12/10 15:57:22 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/11 00:58:40 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ void	init_env(t_env *env)
 void	init_cmd(t_cmd *cmd)
 {
 	cmd->next = NULL;
-	cmd->str = NULL;
 	cmd->args = NULL;
 	cmd->cmd = NULL;
 	cmd->redir = NULL;
-  cmd->is_first = false;
+	cmd->is_first = false;
 	cmd->prev = NULL;
 }

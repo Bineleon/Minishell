@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 22:04:35 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 00:59:29 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_cmd
 	// char				**str;
 	char				*cmd;
 	t_redir				*redir;
-	t_bool				is_first;
 	t_bool				is_first;
 	char				**args;
 	struct s_cmd		*next;
@@ -231,7 +230,6 @@ void					ft_prompt(t_data *data);
 
 void					handle_signals(void);
 void					signal_open_process(void);
-void					sigint_process(void);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
