@@ -6,11 +6,9 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 22:08:13 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:57:32 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../../includes/minishell.h"
 
@@ -38,7 +36,7 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 {
 	int			i;
 	t_fullcmd	*current;
-  t_fullcmd *arg_check;
+	t_fullcmd	*arg_check;
 
 	i = 0;
 	current = *fullcmd;
@@ -67,6 +65,7 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 		i = 0;
 		while (current && current->is_cmd)
 		{
+			// printf("i = %d\n\n", i);
 			cmds->args[i++] = gc_strdup(current->str);
 			current = current->next;
 		}
@@ -89,11 +88,10 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 
 void	sub_init_cmds(t_cmd *cmd, t_fullcmd **fullcmd, t_bool is_first)
 {
-	t_redir		*current_redir;
-  int fd;
+	t_redir	*current_redir;
+	int		fd;
 
 	cmd->is_first = is_first;
-
 	new_cmd(cmd, fullcmd);
 	if (!cmd->cmd && cmd->redir)
 	{
@@ -103,7 +101,7 @@ void	sub_init_cmds(t_cmd *cmd, t_fullcmd **fullcmd, t_bool is_first)
 			if (current_redir->type == OUT)
 				fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			else
-        		fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644); // WRONLY obligatoire pour precicer que l'ecriture est autorise O_APPEN ne suffit pas
+				fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644); // WRONLY obligatoire pour precicer que l'ecriture est autorise O_APPEN ne suffit pas
 			if (fd == -1)
 				error_mess(current_redir->file_name, NULL);
 			else
@@ -195,8 +193,6 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 	*fullcmd = current;
 }
  END LAST*/
-
-
 
 // void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 // {
@@ -293,8 +289,10 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 // 		while (current_redir)
 // 		{
 // 			int fd = (current_redir->type == OUT) ?
-// 				open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644) :
-// 				open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 				open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC,
+					// 0644) :
+// 				open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND,
+					// 0644);
 // 			if (fd == -1)
 // 				error_mess(current_redir->file_name, NULL);
 // 			else
@@ -361,9 +359,12 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 // 			while (current_redir)
 // 			{
 // 				int fd = (current_redir->type == OUT) ?
-// 					open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644) :
-// 					open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 					open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC,
+						// 0644) :
+// 					open(current_redir->file_name,
+						// O_CREAT | O_WRONLY | O_APPEND, 0644);
 // 				if (fd == -1)
+
 // 					error_mess("Redirection error", current_redir->file_name);
 // 				else
 // 					close(fd);

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/11 15:32:00 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 18:50:56 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ void	exec(t_data *data)
 	int	status;
 
 	init_cmds(data);
+    // t_cmd *tmp = data->cmds;
+    // while (tmp)
+    // {
+        
+    //     printf("CMD  = %s\n\n", tmp->cmd);
+    //     tmp = tmp->next;
+    // }
 	data->open_process = false;
 	if (check_minishell_cmd(data))
 	{
@@ -66,11 +73,15 @@ void	exec(t_data *data)
 	}
 	while (data->cmds != NULL)
 	{
+        // printf("current cmd = %s\n", data->cmds->cmd);
 		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
 			&& !data->cmds->next)
 		{
 			redir_builtins(data);
 			exec_builtin(data, data->cmds);
+            // free_post_prompt(data);
+            // gc_mem(FULL_CLEAN, 0, NULL);
+            // exit(data->exit_status);
 			return ;
 		}
 		if (data->cmds->next)

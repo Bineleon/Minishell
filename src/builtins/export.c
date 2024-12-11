@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/09 18:11:29 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:34:48 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	update_env(t_env **env, char *key, char *value, t_bool equal)
 	{
 		if (ft_strncmp(curr->key, key, ft_strlen(key)) == 0)
 		{
-			gc_mem(FREE, 0, curr->value);
-			curr->value = gc_strdup(value);
+			gc_mem_env(FREE, 0, curr->value);
+			curr->value = gc_strdup_env(value);
 			return ;
 		}
 		curr = curr->next;
 	}
-	new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
+	new_node = gc_mem_env(MALLOC, sizeof(t_env), NULL);
 	init_env(new_node);
-	new_node->key = gc_strdup(key);
+	new_node->key = gc_strdup_env(key);
 	if (value)
-		new_node->value = gc_strdup(value);
+		new_node->value = gc_strdup_env(value);
 	if (!equal)
 		new_node->equal = false;
 	new_node->next = *env;
@@ -82,15 +82,15 @@ t_env	**lst_to_arr(t_env *env)
 	if (!env)
 		return (NULL);
 	env_size = get_env_size(env);
-	arr = gc_mem(MALLOC, (env_size * sizeof(t_env)) + 1, NULL);
+	arr = gc_mem_env(MALLOC, (env_size * sizeof(t_env)) + 1, NULL);
 	curr = env;
 	while (curr)
 	{
-		arr[i] = gc_mem(MALLOC, sizeof(t_env), NULL);
+		arr[i] = gc_mem_env(MALLOC, sizeof(t_env), NULL);
 		init_env(arr[i]);
-		arr[i]->key = gc_strdup(curr->key);
+		arr[i]->key = gc_strdup_env(curr->key);
 		if (curr->value)
-			arr[i]->value = gc_strdup(curr->value);
+			arr[i]->value = gc_strdup_env(curr->value);
 		arr[i]->equal = curr->equal;
 		arr[i]->next = NULL;
 		curr = curr->next;

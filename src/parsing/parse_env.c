@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 14:48:40 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:33:54 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ t_env	*min_node(char *key, char *value)
 {
 	t_env	*node;
 
-	node = gc_mem(MALLOC, sizeof(t_env), NULL);
-	node->key = gc_strdup(key);
-	node->value = gc_strdup(value);
+	node = gc_mem_env(MALLOC, sizeof(t_env), NULL);
+	node->key = gc_strdup_env(key);
+	node->value = gc_strdup_env(value);
 	node->equal = true;
 	return (node);
 }
@@ -52,12 +52,12 @@ t_env	*new_env_node(char *line, char *equal)
 		key_size = ft_strlen(line);
 	else
 		key_size = equal - line;
-	new_node = gc_mem(MALLOC, sizeof(t_env), NULL);
-	new_node->key = gc_mem(MALLOC, key_size + 1, NULL);
+	new_node = gc_mem_env(MALLOC, sizeof(t_env), NULL);
+	new_node->key = gc_mem_env(MALLOC, key_size + 1, NULL);
 	ft_strlcpy(new_node->key, line, key_size + 1);
 	if (equal)
 	{
-		new_node->value = gc_strdup(equal + 1);
+		new_node->value = gc_strdup_env(equal + 1);
 		new_node->equal = true;
 	}
 	else

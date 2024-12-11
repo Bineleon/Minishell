@@ -84,6 +84,7 @@ void	ft_prompt(t_data *data)
 			prompt = NULL;
 			rl_clear_history();
 			gc_mem(FULL_CLEAN, 0, NULL);
+			gc_mem_env(FULL_CLEAN, 0, NULL);
 			exit(data->exit_status);
 		}
 		// if (*prompt && !prompt[0])
@@ -110,9 +111,10 @@ void	ft_prompt(t_data *data)
 				// print_tokens(data->token_fullcmd);
 				exec(data);
 			}
+			// gc_mem(FULL_CLEAN, 0, NULL);
 		}
-		// gc_mem(FULL_CLEAN, 0, NULL);
-		free_post_prompt(data);
+		// printf("\n\nOUT\n\n");
 		free(prompt);
 	}
+	gc_mem_env(FULL_CLEAN, 0, NULL);
 }

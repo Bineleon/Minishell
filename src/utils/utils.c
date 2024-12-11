@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 14:12:21 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:33:03 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ t_bool	is_separator(char c)
 void	free_env_node(t_env *node)
 {
 	if (node->key)
-		gc_mem(FREE, 0, node->key);
+		gc_mem_env(FREE, 0, node->key);
 	if (node->value)
-		gc_mem(FREE, 0, node->value);
+		gc_mem_env(FREE, 0, node->value);
 	node = NULL;
-	gc_mem(FREE, 0, node);
+	gc_mem_env(FREE, 0, node);
 }
 
 char	*gc_strjoin(char const *s1, char const *s2)
@@ -70,6 +70,26 @@ char	*gc_strdup(const char *s1)
 	i = 0;
 	len = ft_strlen(s1);
 	str = gc_mem(MALLOC, (len + 1) * sizeof(char), NULL);
+	if (!str)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*gc_strdup_env(const char *s1)
+{
+	size_t	len;
+	char	*str;
+	int		i;
+
+	i = 0;
+	len = ft_strlen(s1);
+	str = gc_mem_env(MALLOC, (len + 1) * sizeof(char), NULL);
 	if (!str)
 		return (NULL);
 	while (s1[i])

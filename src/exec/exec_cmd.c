@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/11 14:58:17 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 18:57:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,15 @@ void	exec_cmd(t_data *data)
 
 	no_cmd = false;
 	path = NULL;
-	printf("dats->cmd : '%s'\n\n", data->cmds->cmd);
+	// printf("dats->cmd : '%s'\n\n", data->cmds->cmd);
 	if (data->cmds->cmd && ft_strlen(data->cmds->cmd) < 1 && !data->cmds->redir)
-		// in case "" or '' (empty cmd)
+	// in case "" or '' (empty cmd)
 	{
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
+		gc_mem_env(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
 	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
@@ -116,6 +117,7 @@ void	exec_cmd(t_data *data)
 		exec_builtin(data, data->cmds);
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
+		gc_mem_env(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
 	if (data->cmds->cmd && access(data->cmds->cmd, F_OK | X_OK) == 0)
@@ -126,7 +128,8 @@ void	exec_cmd(t_data *data)
 		error_mess(data->cmds->cmd, "No such file or directory");
 		data->exit_status = 127;
 		rl_clear_history();
-		free_post_prompt(data);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		gc_mem_env(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
 	else
@@ -146,6 +149,7 @@ void	exec_cmd(t_data *data)
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
 		gc_mem(FULL_CLEAN, 0, NULL);
+		gc_mem_env(FULL_CLEAN, 0, NULL);
 		rl_clear_history();
 		exit(data->exit_status);
 	}
