@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 17:34:01 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:46:11 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,18 @@ void	first_child(t_data *data)
 	if (redir_output(data, data->cmds) == 0)
 	{
 		if (data->cmds->next)
+		{
 			dup2(data->fd[1], STDOUT_FILENO);
+			close(data->fd[1]);
+			// close(data->fd[0]);
+		}
 	}
-	close(data->fd[1]);
-	close(data->fd[0]);
 	if (data->fd[2] != -1)
 		close(data->fd[2]);
+	if (data->fd[0] != -1)
+		close(data->fd[0]);
+	if(data->fd[1] != -1)
+		close(data->fd[1]);
 	exec_cmd(data);
 }
 

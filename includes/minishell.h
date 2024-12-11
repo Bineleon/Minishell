@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/11 00:59:29 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 12:54:34 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void					ciao(int exit_status);
 t_bool					is_redi(t_fullcmd *token);
 void					skip_var_name(char *line, int *i);
 char					**gc_split(char const *s, char c);
-void					full_free(t_data *data);
+void					free_post_prompt(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

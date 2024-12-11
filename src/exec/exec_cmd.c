@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/10 21:55:28 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:58:17 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,14 @@ void	exec_cmd(t_data *data)
 
 	no_cmd = false;
 	path = NULL;
-	if (!data->cmds->cmd && !data->cmds->redir) // in case "" or '' (empty cmd)
+	printf("dats->cmd : '%s'\n\n", data->cmds->cmd);
+	if (data->cmds->cmd && ft_strlen(data->cmds->cmd) < 1 && !data->cmds->redir)
+		// in case "" or '' (empty cmd)
 	{
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
 		rl_clear_history();
-		full_free(data);
+		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
 	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
@@ -113,18 +115,18 @@ void	exec_cmd(t_data *data)
 		redir_builtins(data);
 		exec_builtin(data, data->cmds);
 		rl_clear_history();
-		full_free(data);
+		gc_mem(FULL_CLEAN, 0, NULL);
 		exit(data->exit_status);
 	}
 	if (data->cmds->cmd && access(data->cmds->cmd, F_OK | X_OK) == 0)
 		path = gc_strdup(data->cmds->cmd);
 	else if (data->cmds->cmd && ft_strchr(data->cmds->cmd, '/')
-			&& access(data->cmds->cmd, F_OK | X_OK) != 0)
+		&& access(data->cmds->cmd, F_OK | X_OK) != 0)
 	{
 		error_mess(data->cmds->cmd, "No such file or directory");
 		data->exit_status = 127;
 		rl_clear_history();
-		full_free(data);
+		free_post_prompt(data);
 		exit(data->exit_status);
 	}
 	else
@@ -134,7 +136,7 @@ void	exec_cmd(t_data *data)
 		else
 		{
 			rl_clear_history();
-			full_free(data);
+			gc_mem(FULL_CLEAN, 0, NULL);
 			exit(data->exit_status);
 		}
 		// printf("path = %s\n", path);

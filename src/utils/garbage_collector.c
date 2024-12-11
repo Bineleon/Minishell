@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/10 21:14:20 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 12:52:43 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ static void	*gc_full_clean(t_garbage_co *garbage)
 	while (garbage->next)
 	{
 		tmp = garbage;
-		free(tmp->ptr);
+		if (tmp->ptr)
+			free(tmp->ptr);
 		garbage = garbage->next;
 		free(tmp);
 	}
-	free(garbage->ptr);
+	if (garbage->ptr)
+		free(garbage->ptr);
 	free(garbage);
 	return (NULL);
 }

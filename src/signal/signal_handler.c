@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 22:14:59 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 12:44:40 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	handle_signals(void)
 	signal(SIGINT, &handle_sigint);
 	if (!data->open_process)
 	{
-		printf("ICI\n\n");
 		signal(SIGQUIT, SIG_IGN);
 	}
 }

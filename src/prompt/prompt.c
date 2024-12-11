@@ -111,6 +111,8 @@ void	ft_prompt(t_data *data)
 				exec(data);
 			}
 		}
+		// gc_mem(FULL_CLEAN, 0, NULL);
+		free_post_prompt(data);
 		free(prompt);
 	}
 }

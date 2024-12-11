@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 01:03:07 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:12:21 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,13 +179,16 @@ static void	free_tokens(t_data *data)
 	while (data->token_fullcmd->next)
 	{
 		tmp = data->token_fullcmd;
-		gc_mem(FREE, 0, tmp->str);
+		if (tmp->str) 
+			gc_mem(FREE, 0, tmp->str);
 		data->token_fullcmd = data->token_fullcmd->next;
-		free(tmp);
+		// if (tmp)
+		// 	free(tmp);
 	}
 	if (data->token_fullcmd)
 	{
-		gc_mem(FREE, 0, data->token_fullcmd->str);
+		if (data->token_fullcmd->str)
+			gc_mem(FREE, 0, data->token_fullcmd->str);
 		gc_mem(FREE, 0, data->token_fullcmd);
 	}
 	return ;
@@ -201,13 +204,15 @@ static void	free_redi(t_cmd *cmd)
 	while (cmd->redir->next)
 	{
 		tmp = cmd->redir;
-		gc_mem(FREE, 0, tmp->file_name);
+		if (tmp->file_name)
+			gc_mem(FREE, 0, tmp->file_name);
 		cmd->redir = cmd->redir->next;
 		free(tmp);
 	}
 	if (cmd->redir)
 	{
-		gc_mem(FREE, 0, cmd->redir->file_name);
+		if (cmd->redir->file_name)
+			gc_mem(FREE, 0, cmd->redir->file_name);
 		gc_mem(FREE, 0, cmd->redir);
 	}
 	return ;
@@ -256,7 +261,7 @@ static void	free_cmds(t_data *data)
 	return ;
 }
 
-void	full_free(t_data *data)
+void	free_post_prompt(t_data *data)
 {
 	if (data->cmds)
 		free_cmds(data);

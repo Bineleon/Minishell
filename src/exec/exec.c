@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/11 01:04:21 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:40:24 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void    exec(t_data *data)
         }
         if (data->cmds->next)
         {
-            if (pipe(data->fd) == -1)
+            if (pipe(data->fd) == -1)  // ADD FULL_CLEAN + close + exit
                 return ((void)error_mess(NULL, NULL));
         }
         data->pid = fork();
@@ -70,7 +70,7 @@ void    exec(t_data *data)
             close(data->fd[1]);
         if (data->fd[2] != -1)
             close(data->fd[2]);
-        data->fd[2] = data->fd[0];
+        data->fd[2] = data->fd[0];  // ?
         data->cmds = data->cmds->next;
     }
     if (data->fd[2] != -1)

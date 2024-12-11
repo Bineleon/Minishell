@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/10 17:29:31 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:56:26 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	new_fd(char *operator, char *file)
+int	new_fd(char *operator, char * file)
 {
 	int	fd;
 
@@ -47,7 +47,8 @@ void	redir_builtins(t_data *data)
 						O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			}
 			else if (current_redir->type == APPEND)
-				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
+				fd = open(current_redir->file_name,
+						O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
 			{
 				error_mess(NULL, current_redir->file_name);
@@ -60,7 +61,7 @@ void	redir_builtins(t_data *data)
 	if (fd > 0)
 	{
 		data->fd_ = fd;
-		// close(fd); // A voir
+		close(fd); // OK
 	}
 }
 
@@ -94,7 +95,10 @@ int	redir_output(t_data *data, t_cmd *cmd)
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
+	{
 		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
 	return (1);
 }
 
