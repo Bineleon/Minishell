@@ -23,15 +23,6 @@ int	to_handle_quotes(char *line, int i, t_fullcmd *token)
 	return (i);
 }
 
-int	to_handle_pipe(char *line, int i, t_fullcmd *token)
-{
-	token->type = PIPE;
-	token->str = gc_mem(MALLOC, 2, NULL);
-	token->str[0] = line[i];
-	token->str[1] = '\0';
-	return (i + 1);
-}
-
 int	to_handle_in(char *line, int i, t_fullcmd *token)
 {
 	if (line[i + 1] == '<')
@@ -93,7 +84,7 @@ int	sub_handle_expand(char *line, int i, t_fullcmd *token)
 		if (start == i)
 			break ;
 	}
-  if (line[i] && !is_whitespace(line[i]))
+	if (line[i] && !is_whitespace(line[i]))
 		token->concat_next = true;
 	else
 		token->concat_next = false;

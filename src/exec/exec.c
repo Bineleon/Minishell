@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/11 14:40:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:32:00 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,70 +22,90 @@ void	which_child(t_data *data)
 		middle_child(data);
 }
 
-t_bool  check_minishell_cmd(char *cmd)
+t_bool	check_minishell(char *cmd)
 {
-    if (cmd && (ft_strcmp(cmd, "./minishell") == 0
-        || ft_strcmp(cmd, "minishell") == 0))
-        return (true);
-    return (false);
+	if (cmd && (ft_strcmp(cmd, "./minishell") == 0 || ft_strcmp(cmd,
+				"minishell") == 0))
+		return (true);
+	return (false);
 }
 
-void    exec(t_data *data)
+t_bool	check_minishell_cmd(t_data *data)
 {
-    int status;
+	t_cmd	*current;
 
-    init_cmds(data);
-    data->open_process = false;
-    if (data->cmds->cmd && check_minishell_cmd(data->cmds->cmd)
-        && check_minishell_cmd(data->cmds->next->cmd))
-    {
-        error_cmd("./minishell");
-        data->exit_status = 127;
-        return;
-    }
-    while (data->cmds != NULL)
-    {
-        if (is_builtin(data->cmds->cmd) && data->cmds->is_first && !data->cmds->next)
-        {
-            redir_builtins(data);
-            exec_builtin(data, data->cmds);
-            return;
-        }
-        if (data->cmds->next)
-        {
-            if (pipe(data->fd) == -1)  // ADD FULL_CLEAN + close + exit
-                return ((void)error_mess(NULL, NULL));
-        }
-        data->pid = fork();
-        if (data->pid == -1)
-            return ((void)error_mess(NULL, NULL));
-
-        if (data->pid == 0)
-        {
-            data->open_process = true;
-            signal_open_process();
-            which_child(data);
-        }
-        if (data->cmds->next)
-            close(data->fd[1]);
-        if (data->fd[2] != -1)
-            close(data->fd[2]);
-        data->fd[2] = data->fd[0];  // ?
-        data->cmds = data->cmds->next;
-    }
-    if (data->fd[2] != -1)
-        close(data->fd[2]);
-    while (1)
-    {
-        data->pid = waitpid(-1, &status, 0);
-        if (data->pid == -1)
-            break;
-        if (WIFEXITED(status))
-            data->exit_status = WEXITSTATUS(status);
-    }
-    data->open_process = false;
+	current = data->cmds;
+	if (current->cmd && current->next)
+	{
+		if (check_minishell (current->cmd))
+			return (true);
+	}
+	current = current->next;
+	while (current)
+	{
+		if (check_minishell (current->cmd))
+			return (true);
+		current = current->next;
+	}
+	return (false);
 }
 
+void	exec(t_data *data)
+{
+	int	status;
+
+	init_cmds(data);
+	data->open_process = false;
+	if (check_minishell_cmd(data))
+	{
+        printf(RED);
+        ft_putstr_fd("\033[1;31mminishell : interactive mode not allowed 💩\033[0m\n", 2);
+        printf(RESET);
+		data->exit_status = 127;
+		return ;
+	}
+	while (data->cmds != NULL)
+	{
+		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
+			&& !data->cmds->next)
+		{
+			redir_builtins(data);
+			exec_builtin(data, data->cmds);
+			return ;
+		}
+		if (data->cmds->next)
+		{
+			if (pipe(data->fd) == -1) // ADD FULL_CLEAN + close + exit
+				return ((void)error_mess(NULL, NULL));
+		}
+		data->pid = fork();
+		if (data->pid == -1)
+			return ((void)error_mess(NULL, NULL));
+		if (data->pid == 0)
+		{
+			data->open_process = true;
+			signal_open_process();
+			which_child(data);
+		}
+		if (data->cmds->next)
+			close(data->fd[1]);
+		if (data->fd[2] != -1)
+			close(data->fd[2]);
+		data->fd[2] = data->fd[0]; // ?
+		data->cmds = data->cmds->next;
+	}
+	if (data->fd[2] != -1)
+		close(data->fd[2]);
+	while (1)
+	{
+		data->pid = waitpid(-1, &status, 0);
+		if (data->pid == -1)
+			break ;
+		if (WIFEXITED(status))
+			data->exit_status = WEXITSTATUS(status);
+	}
+	data->open_process = false;
+}
 
 // LAST
 
@@ -99,13 +119,14 @@ void    exec(t_data *data)
 //     while (data->cmds != NULL)
 //     {
 
-//         if (is_builtin(data->cmds->cmd) && data->cmds->is_first && !data->cmds->next)
+//         if (is_builtin(data->cmds->cmd) && data->cmds->is_first
+	// && !data->cmds->next)
 //         {
 //             printf("BUILTIN\n\n");
 //             // redir_input(data);
 //             redir_builtins(data);
 //             exec_builtin(data, data->cmds);
-//             return;
+//             return ;
 //         }
 //         if (data->cmds->next)
 //         {
@@ -130,12 +151,12 @@ void    exec(t_data *data)
 //     if (data->fd[2] != -1)
 //         close(data->fd[2]);
 //     // while (wait(NULL) != -1)
-//     //     continue;
+//     //     continue ;
 //     while (1)
 //     {
 //         data->pid = waitpid(-1, &status, 0);
 //         if (data->pid == -1)
-//             break;
+//             break ;
 //         if (WIFEXITED(status))
 //             data->exit_status = WEXITSTATUS(status);
 //         // else if (WIFSIGNALED(status))
@@ -143,7 +164,6 @@ void    exec(t_data *data)
 //     }
 //     data->open_process = false;
 // }
-
 
 // void	exec(t_data *data)
 // {
