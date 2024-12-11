@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 17:34:48 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 20:11:33 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,13 +188,10 @@ void	handle_with_equal(t_data *data, char *arg)
 	{
 		*equal = '\0';
 		key = arg;
-		printf("\n\nkey = %s\n\n", key);
 		value = equal + 1;
-		printf("\n\nvalue = %s\n\n", value);
 		if (!is_valid_key(key))
 		{
-			error_mess("export", key);
-			ft_putstr_fd(" : not a valid identifier\n", 2);
+			error_export(key);
 			data->exit_status = 1;
 		}
 		else

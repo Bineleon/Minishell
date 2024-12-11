@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:09:28 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/10 13:25:05 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:38:07 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_echo(t_cmd *cmds, int fd)
 	}
 	while (cmds->args[i])
 	{
+		printf("fd = %d\n\n", fd);
 		ft_putstr_fd(cmds->args[i], fd);
 		// printf("%s", cmds->args[i]);
 		if (cmds->args[i + 1])

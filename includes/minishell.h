@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/11 17:35:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 20:10:51 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,7 @@ void						extract_args(char *line, char **args);
 char						**split_args(char *line);
 void						error_mess(char *input, char *mess);
 void						error_cmd(char *cmd);
+void						error_export(char *cmd);
 void						error_syntax(char *str);
 char						*gc_strjoin(char const *s1, char const *s2);
 char						*gc_strdup(const char *s1);

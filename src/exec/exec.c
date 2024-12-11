@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/11 18:50:56 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 21:29:14 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ void	exec(t_data *data)
 	}
 	while (data->cmds != NULL)
 	{
-        // printf("current cmd = %s\n", data->cmds->cmd);
 		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
-			&& !data->cmds->next)
+			&& data->cmds->next == NULL)
 		{
 			redir_builtins(data);
 			exec_builtin(data, data->cmds);
