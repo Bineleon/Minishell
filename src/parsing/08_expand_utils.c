@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:14:42 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:14:44 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:37:50 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 t_bool	is_in_dquote(t_fullcmd *token)
 {
-	if (token->str[0] == DQUOTE && token->str[ft_strlen(token->str) - 1] == DQUOTE)
+	if (token->str[0] == DQUOTE
+		&& token->str[ft_strlen(token->str)- 1] == DQUOTE)
 		return (true);
 	return (false);
 }
 
 t_bool	is_in_squote(t_fullcmd *token)
 {
-	if (token->str[0] == SQUOTE && token->str[ft_strlen(token->str) - 1] == SQUOTE)
+	if (token->str[0] == SQUOTE
+		&& token->str[ft_strlen(token->str)- 1] == SQUOTE)
 		return (true);
 	return (false);
 }

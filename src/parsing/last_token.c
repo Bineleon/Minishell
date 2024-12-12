@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:15:04 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:15:07 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:30:56 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,51 +54,3 @@ void find_cmds(t_data *data)
         }
     }
 }
-
-// void find_cmds(t_data *data)
-// {
-//     t_fullcmd *current = data->token_fullcmd;
-//     t_bool is_file_context = false; // Indique si on attend un fichier après une redirection
-
-//     while (current)
-//     {
-//         // Réinitialiser pour chaque pipeline
-//         t_bool command_found = false;
-
-//         while (current && current->type != PIPE)
-//         {
-//             // Si c'est une redirection, le token suivant est un fichier/opérande
-//             if (current->type == IN || current->type == OUT ||
-//                 current->type == APPEND || current->type == HEREDOC)
-//             {
-//                 is_file_context = true;
-//             }
-//             else if (is_file_context)
-//             {
-//                 // Ce token est un fichier, pas une commande
-//                 is_file_context = false;
-//                 current->is_cmd = false;
-//             }
-//             else if ((current->type == WORD || current->type == EXPAND) && !command_found)
-//             {
-//                 // Le premier mot valide après les redirections est la commande
-//                 current->is_cmd = true;
-//                 command_found = true; // Marquer qu'on a trouvé une commande
-//             }
-//             else
-//             {
-//                 // Tout autre mot valide après une commande est un argument
-//                 current->is_cmd = command_found; // True si une commande a été trouvée
-//             }
-
-//             current = current->next; // Passer au token suivant
-//         }
-
-//         // Si on atteint un pipe, ignorer ce token
-//         if (current && current->type == PIPE)
-//         {
-//             current->is_cmd = false;
-//             current = current->next; // Passer au token suivant après le pipe
-//         }
-//     }
-// }

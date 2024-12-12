@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:11:58 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:12:01 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:36:39 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	sub_handle_expand(char *line, int i, t_fullcmd *token)
 		start = i;
 		i++;
 		tmp = extract_var(line, &i, start);
-		// update_token_str(token, tmp);
 		expand = gc_strjoin(token->str, tmp);
 		gc_mem(FREE, 0, token->str);
 		gc_mem(FREE, 0, tmp);

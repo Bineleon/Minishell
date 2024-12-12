@@ -6,12 +6,11 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:12:07 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:12:10 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:37:01 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	skip_var_name(char *line, int *i)
 {
@@ -39,4 +38,3 @@ char	*extract_var(char *line, int *i, int start)
 	}
 	return (tmp);
 }
-
