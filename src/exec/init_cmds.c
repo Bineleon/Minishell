@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 17:22:29 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 18:28:05 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	new_cmd(t_cmd *cmds, t_fullcmd **fullcmd)
 		current = current->next;
 	}
 	if (current && current->is_cmd)
-		create_new_cmd(cmds, current);
-	adding_new_redirs(cmds, current);
+		create_new_cmd(cmds, &current);
+	adding_new_redirs(cmds, &current);
 	*fullcmd = current;
 }
 

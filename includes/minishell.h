@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 17:31:08 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 18:22:49 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,8 +217,8 @@ t_bool			is_builtin(char *cmd);
 void			redir_builtins(t_data *data);
 int				is_delim(t_redir *current_redir, char *prompt);
 int				new_input_fd(t_data *data, t_redir *current_redir, int *fd);
-void			adding_new_redirs(t_cmd *cmds, t_fullcmd *current);
-void			create_new_cmd(t_cmd *cmds, t_fullcmd *current);
+void			adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
+void			create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void			add_redir(t_redir **redir_list, t_token type, char *file_name);
 
 /* ╔════════════════════════════════════╗ */
