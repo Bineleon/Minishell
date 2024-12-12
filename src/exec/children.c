@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/11 14:46:11 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 14:22:44 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 void	first_child(t_data *data)
 {
-	data->open_process = true;
+	data->open_process = true; 
 	// signal_open_process();
 	redir_input(data);
 	if (redir_output(data, data->cmds) == 0)
 	{
+		printf("FIRST_CHILD\n");
 		if (data->cmds->next)
 		{
 			dup2(data->fd[1], STDOUT_FILENO);

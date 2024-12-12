@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/11 21:44:41 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:21:08 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	redir_builtins(t_data *data)
 	int		fd;
 
 	if (!data->cmds || !data->cmds->redir)
+	{
+		data->fd_ = -1;
 		return ;
+	}
 	current_redir = data->cmds->redir;
 	fd = -1;
 	while (current_redir)
@@ -41,11 +44,12 @@ void	redir_builtins(t_data *data)
 				close(fd);
 			if (current_redir->type == OUT)
 			{
-				fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-				printf("fd redi : %d\n\n", fd);
+				fd = open(current_redir->file_name,
+						O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			}
 			else if (current_redir->type == APPEND)
-				fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+				fd = open(current_redir->file_name,
+						O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
 			{
 				error_mess(NULL, current_redir->file_name);
@@ -58,7 +62,6 @@ void	redir_builtins(t_data *data)
 	if (fd > 0)
 	{
 		data->fd_ = fd;
-		close(fd); // OK
 	}
 }
 
@@ -68,7 +71,9 @@ int	redir_output(t_data *data, t_cmd *cmd)
 	int		fd;
 
 	if (!cmd || !cmd->redir)
+	{
 		return (0);
+	}
 	current_redir = cmd->redir;
 	fd = -1;
 	while (current_redir)
@@ -81,7 +86,7 @@ int	redir_output(t_data *data, t_cmd *cmd)
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			else if (current_redir->type == APPEND)
-				fd = open(current_redir->file_name, O_CREAT | O_APPEND, 0644);
+				fd = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
 			{
 				error_mess(NULL, current_redir->file_name);

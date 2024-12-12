@@ -62,19 +62,22 @@ void	ft_prompt(t_data *data)
 {
 	char		*prompt;
 	t_fullcmd	*tokens;
-
+	// int			i = 0;
 	tokens = NULL;
 	while (1)
 	{
-		// printf(CYAN);
 		// if (isatty(STDIN_FILENO) == 1)
 		// 	printf("OK\n");
 		// else
 		// 	printf("NOT OK\n");
 		// rl_bind_key('\t', rl_insert);
 		// Uncomment to insert "\t" with TAB on prompt
+		// i++;
 		handle_signals();
-		prompt = readline("Minishell> ");
+		printf(CYAN);
+		signal(SIGQUIT, SIG_IGN);
+		prompt = readline("Minishell> \033[0m");
+		signal(SIGQUIT, &handle_sigquit2);
 		if (!prompt)
 		{
 			printf(MAGENTA);
