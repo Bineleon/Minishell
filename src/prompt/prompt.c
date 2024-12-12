@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:23:56 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 21:18:09 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_prompt(t_data *data)
 			add_history(prompt);
 			if (check_open_quotes(prompt))
 			{
-				error_mess("error", "open quote");
+				error_mess("error", "open quote\n");
 				continue ;
 			}
 			tokens = parse_tokens(prompt, data);

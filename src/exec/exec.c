@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 18:27:49 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 19:10:11 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	exec(t_data *data)
 		}
 		data->pid = fork();
 		if (data->pid == -1)
-			return ((void)error_mess(NULL, NULL));
+			return ((void)error_mess(NULL, NULL)); // add full clean
 		if (data->pid == 0)
 		{
 			signal(SIGINT, SIG_DFL);

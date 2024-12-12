@@ -6,58 +6,100 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 17:32:38 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 21:07:38 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+void	fullclose_fd(t_data *data, int a, int b, int c)
+{
+	if (a >= 0 && data->fd[a] != -1)
+		close(data->fd[a]);
+	if (b >= 0 && data->fd[b] != -1)
+		close(data->fd[b]);
+	if (c >= 0 && data->fd[c] != -1)
+		close(data->fd[c]);
+}
+
 void	first_child(t_data *data)
 {
+	int	i;
+
 	data->open_process = true; 
-	// signal_open_process();
-	redir_input(data);
-	if (redir_output(data, data->cmds) == 0)
+	if (redir_input(data) == 2)
+	{
+		fullclose_fd(data, 0, 1, 2);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
+	i = redir_output(data, data->cmds);
+	if (i == 0)
 	{
 		if (data->cmds->next)
 		{
 			dup2(data->fd[1], STDOUT_FILENO);
-			close(data->fd[1]);
-			close(data->fd[0]);
+			fullclose_fd(data, 1, -1, -1);
 		}
 	}
-	if (data->fd[2] != -1)
-		close(data->fd[2]);
-	if (data->fd[1] != -1)
-		close(data->fd[0]);
-	if (data->fd[0] != -1)
-		close(data->fd[1]);
+	else if (i == 2)
+	{
+		fullclose_fd(data, 0, 1, 2);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
+	fullclose_fd(data, 0, 1, 2);
 	exec_cmd(data);
 }
 
 void	middle_child(t_data *data)
 {
+	int	i;
+	int	j;
+
 	data->open_process = true;
-	// signal_open_process();
-	if (redir_input(data) == 0)
+	j = redir_input(data);
+	if (j == 0)
 		dup2(data->fd[2], STDIN_FILENO);
-	if (redir_output(data, data->cmds) == 0)
+	else if (j == 2)
+	{
+		fullclose_fd(data, 0, 1, 2);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
+	i = redir_output(data, data->cmds);
+	if (i == 0)
 		dup2(data->fd[1], STDOUT_FILENO);
-	close(data->fd[2]);
-	close(data->fd[1]);
-	close(data->fd[0]);
+	else if (i == 2)
+	{
+		fullclose_fd(data, 0, 1, 2);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
+	fullclose_fd(data, 0, 1, 2);
 	exec_cmd(data);
 }
 
 void	last_child(t_data *data)
 {
+	int	j;
+
 	data->open_process = true;
-	// signal_open_process();
-	if (redir_input(data) == 0)
+	j = redir_input(data);
+	if (j == 0)
 		dup2(data->fd[2], STDIN_FILENO);
-	close(data->fd[2]);
-	close(data->fd[1]);
-	close(data->fd[0]);
-	redir_output(data, data->cmds);
+	else if (j == 2)
+	{
+		fullclose_fd(data, 0, 1, 2);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
+	fullclose_fd(data, 0, 1, 2);
+	if (redir_output(data, data->cmds) == 2)
+	{
+		fullclose_fd(data, 0, 1, 2);
+		gc_mem(FULL_CLEAN, 0, NULL);
+		exit(data->exit_status);
+	}
 	exec_cmd(data);
 }

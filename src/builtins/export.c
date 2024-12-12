@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:13:52 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 21:17:07 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	update_env(t_env **env, char *key, char *value, t_bool equal)
 	new_node = NULL;
 	while (curr)
 	{
-		if (ft_strncmp(curr->key, key, ft_strlen(key)) == 0)
+		if (ft_strcmp(curr->key, key) == 0)
 		{
 			gc_mem_env(FREE, 0, curr->value);
 			curr->value = gc_strdup_env(value);

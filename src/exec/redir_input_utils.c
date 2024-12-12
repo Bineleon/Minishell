@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:49:57 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 14:43:19 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 20:36:35 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	new_input_fd(t_data *data, t_redir *current_redir, int *fd)
 		(*fd) = open(current_redir->file_name, O_RDONLY);
 		if (*fd == -1)
 		{
-			error_mess(NULL, current_redir->file_name);
+			error_mess(current_redir->file_name, NULL);
 			data->exit_status = 1;
 			return (0);
 		}

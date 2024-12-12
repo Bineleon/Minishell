@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 17:35:27 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 21:53:12 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	redir_input(t_data *data)
 				fd = 0;
 			}
 			if (new_input_fd(data, current_redir, &fd) == 0)
-				return (1);
+				return (2); // ajouter gestion d'erreur en cas de non droits pour le fichier
 		}
 		current_redir = current_redir->next;
 	}
