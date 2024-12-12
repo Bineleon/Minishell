@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:29 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 20:11:33 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:13:52 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,19 @@ void	sub_export(t_data *data, t_cmd *cmds)
 	}
 }
 
+
+void	ft_export(t_cmd *cmds)
+{
+	t_env	**sorted_env;
+	t_data	*data;
+
+	data = get_data();
+	sorted_env = lst_to_arr(data->envp_cpy);
+	sort_env(sorted_env);
+	if (!cmds->args[1])
+		print_export(sorted_env);
+	sub_export(data, cmds);
+}
 // void	sub_export(t_data *data)
 // {
 // 	char	*equal;
@@ -272,16 +285,3 @@ void	sub_export(t_data *data, t_cmd *cmds)
 // 		i++;
 // 	}
 // }
-
-void	ft_export(t_cmd *cmds)
-{
-	t_env	**sorted_env;
-	t_data	*data;
-
-	data = get_data();
-	sorted_env = lst_to_arr(data->envp_cpy);
-	sort_env(sorted_env);
-	if (!cmds->args[1])
-		print_export(sorted_env);
-	sub_export(data, cmds);
-}

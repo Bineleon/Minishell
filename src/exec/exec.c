@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 15:17:56 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:37:01 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,8 @@ void	exec(t_data *data)
 			// printf("fd : %d\n", data->fd_);
 			if (data->fd_ > 0)
 			{
-				
 				close(data->fd_); // OK
 			}
-			printf("HELLO\n");
 			return ;
 		}
 		if (data->cmds->next)

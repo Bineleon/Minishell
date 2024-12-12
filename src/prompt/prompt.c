@@ -1,48 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                    content                       :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/04 17:32:05 by bineleon          #+#    #+#             */
-/*   Updated: 2024/09/19 19:19:58 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/12 16:23:56 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <sys/ioctl.h>
 
-void	print_tokens(t_fullcmd *tokens)
-{
-	t_fullcmd	*current;
+// void	print_tokens(t_fullcmd *tokens)
+// {
+// 	t_fullcmd	*current;
 
-	current = tokens;
-	while (current)
-	{
-		printf("Token: Type = ");
-		if (current->type == PIPE)
-			printf("PIPE");
-		else if (current->type == WORD)
-			printf("WORD");
-		else if (current->type == IN)
-			printf("IN");
-		else if (current->type == OUT)
-			printf("OUT");
-		else if (current->type == HEREDOC)
-			printf("HEREDOC");
-		else if (current->type == APPEND)
-			printf("APPEND");
-		else if (current->type == EXPAND)
-			printf("EXPAND");
-		else if (current->type == SQUOTE)
-			printf("SQUOTE");
-		else if (current->type == DQUOTE)
-			printf("DQUOTE");
-		printf(", token = (%s)\n", current->str);
-		current = current->next;
-	}
-}
+// 	current = tokens;
+// 	while (current)
+// 	{
+// 		printf("Token: Type = ");
+// 		if (current->type == PIPE)
+// 			printf("PIPE");
+// 		else if (current->type == WORD)
+// 			printf("WORD");
+// 		else if (current->type == IN)
+// 			printf("IN");
+// 		else if (current->type == OUT)
+// 			printf("OUT");
+// 		else if (current->type == HEREDOC)
+// 			printf("HEREDOC");
+// 		else if (current->type == APPEND)
+// 			printf("APPEND");
+// 		else if (current->type == EXPAND)
+// 			printf("EXPAND");
+// 		else if (current->type == SQUOTE)
+// 			printf("SQUOTE");
+// 		else if (current->type == DQUOTE)
+// 			printf("DQUOTE");
+// 		printf(", token = (%s)\n", current->str);
+// 		current = current->next;
+// 	}
+// }
 
 t_bool	empty_line(char *line)
 {
@@ -114,9 +113,7 @@ void	ft_prompt(t_data *data)
 				// print_tokens(data->token_fullcmd);
 				exec(data);
 			}
-			// gc_mem(FULL_CLEAN, 0, NULL);
 		}
-		// printf("\n\nOUT\n\n");
 		free(prompt);
 	}
 	gc_mem_env(FULL_CLEAN, 0, NULL);

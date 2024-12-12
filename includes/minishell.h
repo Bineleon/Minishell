@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 14:44:19 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/12 16:17:56 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/12 16:21:47 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	struct s_cmd			*prev;
-	// char				**str;
 	char					*cmd;
 	t_redir					*redir;
 	t_bool					is_first;
@@ -129,7 +128,7 @@ typedef struct s_data
 	t_cmd					*cmds;
 	t_fullcmd				*token_fullcmd;
 	t_garbage_env			*garbage_env;
-	t_garbage_co *garbage; // Chained list of all the malloced pointers
+	t_garbage_co			*garbage;
 }							t_data;
 
 void						find_cmds(t_data *data);
@@ -265,6 +264,7 @@ void						error_mess(char *input, char *mess);
 void						error_cmd(char *cmd);
 void						error_export(char *cmd);
 void						error_syntax(char *str);
+void						error_no_space(char *cmd);
 char						*gc_strjoin(char const *s1, char const *s2);
 char						*gc_strdup(const char *s1);
 char						*gc_strdup_env(const char *s1);
