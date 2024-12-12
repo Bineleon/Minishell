@@ -6,22 +6,24 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 20:03:45 by neleon            #+#    #+#             */
-/*   Updated: 2023/12/05 19:57:32 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:46:10 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
 	if (s)
 	{
 		while (*s)
 		{
-			write(fd, s, 1);
+			if (write(fd, s, 1) == -1)
+				return (-1);
 			s++;
 		}
 	}
+	return (0);
 }
 // int main(void)
 // {

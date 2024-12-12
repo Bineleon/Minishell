@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 17:23:59 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 17:31:08 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ typedef struct s_data
 	t_fullcmd				*token_fullcmd;
 	t_garbage_env			*garbage_env;
 	t_garbage_co			*garbage;
-// Chained list of all the malloced pointers
 }							t_data;
 
 void			find_cmds(t_data *data);
@@ -232,42 +231,47 @@ void			ft_prompt(t_data *data);
 /* ║              SIGNALS               ║ */
 /* ╚════════════════════════════════════╝ */
 
-void			handle_signals(void);
-void			signal_open_process(void);
+void						handle_signals(void);
+void						handle_sigquit2(int sig);
+void						signal_open_process(void);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
 /* ╚════════════════════════════════════╝ */
 
-t_data			*get_data(void);
-void			init_data(t_data *data, char **envp);
-void			init_env(t_env *env);
-void			init_cmd(t_cmd *cmd);
-t_bool			is_whitespace(char c);
-t_bool			is_separator(char c);
-t_bool			isquote(char c);
-int				count_arguments(char *line);
-int				skip_quotes(char *line, int i, char quote);
-char			**allocate_args(int arg_count);
-int				skip_spaces(char *line, int i);
-int				in_quote_arg(char *line, char **args, int i, int *j);
-int				not_quoted_arg(char *line, char **args, int i, int *j);
-void			extract_args(char *line, char **args);
-char			**split_args(char *line);
-void			error_mess(char *input, char *mess);
-void			error_cmd(char *cmd);
-void			error_syntax(char *str);
-char			*gc_strjoin(char const *s1, char const *s2);
-char			*gc_strdup(const char *s1);
-char			*gc_strdup_env(const char *s1);
-char			*gc_itoa(int n);
-void			free_env_node(t_env *node);
-long long int	ft_atol(const char *nptr);
-void			ciao(int exit_status);
-t_bool			is_redi(t_fullcmd *token);
-void			skip_var_name(char *line, int *i);
-char			**gc_split(char const *s, char c);
-void			free_post_prompt(t_data *data);
+t_data						*get_data(void);
+void						init_data(t_data *data, char **envp);
+void						init_env(t_env *env);
+void						init_cmd(t_cmd *cmd);
+t_bool						is_whitespace(char c);
+t_bool						is_separator(char c);
+t_bool						isquote(char c);
+int							count_arguments(char *line);
+int							skip_quotes(char *line, int i, char quote);
+char						**allocate_args(int arg_count);
+int							skip_spaces(char *line, int i);
+int							in_quote_arg(char *line, char **args, int i,
+								int *j);
+int							not_quoted_arg(char *line, char **args, int i,
+								int *j);
+void						extract_args(char *line, char **args);
+char						**split_args(char *line);
+void						error_mess(char *input, char *mess);
+void						error_cmd(char *cmd);
+void						error_export(char *cmd);
+void						error_syntax(char *str);
+void						error_no_space(char *cmd);
+char						*gc_strjoin(char const *s1, char const *s2);
+char						*gc_strdup(const char *s1);
+char						*gc_strdup_env(const char *s1);
+char						*gc_itoa(int n);
+void						free_env_node(t_env *node);
+long long int				ft_atol(const char *nptr);
+void						ciao(int exit_status);
+t_bool						is_redi(t_fullcmd *token);
+void						skip_var_name(char *line, int *i);
+char						**gc_split(char const *s, char c);
+void						free_post_prompt(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

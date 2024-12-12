@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 17:09:33 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 17:35:13 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ t_bool	check_minishell_cmd(t_data *data)
 	current = data->cmds;
 	if (current->cmd && current->next)
 	{
-		if (check_minishell (current->cmd))
+		if (check_minishell(current->cmd))
 			return (true);
 	}
 	current = current->next;
 	while (current)
 	{
-		if (check_minishell (current->cmd))
+		if (check_minishell(current->cmd))
 			return (true);
 		current = current->next;
 	}
@@ -58,17 +58,19 @@ void	exec(t_data *data)
 	data->open_process = false;
 	if (check_minishell_cmd(data))
 	{
-        printf(RED);
-        ft_putstr_fd("\033[1;31mminishell : interactive mode not allowed 💩\033[0m\n", 2);
-        printf(RESET);
+		printf(RED);
+		ft_putstr_fd("\033[1;31mminishell : interactive mode not allowed 💩\033[0m\n",
+			2);
+		printf(RESET);
 		data->exit_status = 127;
 		return ;
 	}
 	while (data->cmds != NULL)
 	{
 		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
-			&& !data->cmds->next)
+			&& data->cmds->next == NULL)
 		{
+			redir_input(data);
 			redir_builtins(data);
 			exec_builtin(data, data->cmds);
 			return ;
@@ -83,10 +85,11 @@ void	exec(t_data *data)
 			return ((void)error_mess(NULL, NULL));
 		if (data->pid == 0)
 		{
-			data->open_process = true;
-			signal_open_process();
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			which_child(data);
 		}
+		data->open_process = true;	
 		if (data->cmds->next)
 			close(data->fd[1]);
 		if (data->fd[2] != -1)

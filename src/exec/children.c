@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 16:28:35 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 17:32:38 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	first_child(t_data *data)
 {
-	data->open_process = true;
+	data->open_process = true; 
 	// signal_open_process();
 	redir_input(data);
 	if (redir_output(data, data->cmds) == 0)

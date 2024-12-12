@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:13 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/06 15:11:25 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 20:49:26 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	validate_status(t_cmd *cmds, int *status)
 		error_mess("exit", cmds->args[1]);
 		ft_putstr_fd(" : numeric argument required\n", 2);
 		gc_mem(FULL_CLEAN, 0, NULL);
+		gc_mem_env(FULL_CLEAN, 0, NULL);
 		exit(2);
 	}
 	*status = ft_atol(cmds->args[1]);
@@ -57,6 +58,7 @@ static void	validate_status(t_cmd *cmds, int *status)
 		error_mess("exit", cmds->args[1]);
 		ft_putstr_fd(" : numeric argument required\n", 2);
 		gc_mem(FULL_CLEAN, 0, NULL);
+		gc_mem_env(FULL_CLEAN, 0, NULL);
 		exit(2);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 21:34:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 17:33:03 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/11 20:42:52 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void	ciao(int exit_status)
 	printf("\e[4mCIAO BABY!\e[0m\n");
 	printf(RESET);
 	gc_mem(FULL_CLEAN, 0, NULL);
+	gc_mem_env(FULL_CLEAN, 0, NULL);
 	exit(exit_status);
 }
 

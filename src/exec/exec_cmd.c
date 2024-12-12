@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/12 17:20:36 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 17:33:03 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ void	exec_cmd(t_data *data)
 	{
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
+		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
 		gc_mem_env(FULL_CLEAN, 0, NULL);
-		rl_clear_history();
 		exit(data->exit_status);
 	}
 	if (path)

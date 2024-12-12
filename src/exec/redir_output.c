@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 17:19:46 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/12 17:37:06 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	redir_builtins(t_data *data)
 	int		fd;
 
 	if (!data->cmds || !data->cmds->redir)
+	{
+		data->fd_ = -1;
 		return ;
+	}
 	current_redir = data->cmds->redir;
 	fd = -1;
 	while (current_redir)
@@ -68,7 +71,9 @@ int	redir_output(t_data *data, t_cmd *cmd)
 	int		fd;
 
 	if (!cmd || !cmd->redir)
+	{
 		return (0);
+	}
 	current_redir = cmd->redir;
 	fd = -1;
 	while (current_redir)

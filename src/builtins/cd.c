@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:31 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/07 18:02:03 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:02:37 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,18 @@ void	ft_cd(t_cmd *cmds)
 
 	data = get_data();
 	if (check_args_err(cmds))
-		return ;
-	if (!getcwd(oldpwd, PATH_MAX))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		perror("getcwd(): ");
-		data->exit_status = 1;
-		return ;
-	}
+		return ;	
 	if (chdir(cmds->args[1]) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		perror(cmds->args[1]);
+		data->exit_status = 1;
+		return ;
+	}
+	if (!getcwd(oldpwd, PATH_MAX))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		perror("getcwd(): ");
 		data->exit_status = 1;
 		return ;
 	}
