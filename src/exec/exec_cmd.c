@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/11 19:04:08 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/12 17:20:36 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**all_paths(t_env *env)
 	tmp = env;
 	if (!tmp->key)
 		return (NULL);
-	while (tmp) // while (tmp) au lieu de while (tmp->key)
+	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, "PATH", 4) == 0)
 		{
@@ -100,9 +100,7 @@ void	exec_cmd(t_data *data)
 
 	no_cmd = false;
 	path = NULL;
-	// printf("dats->cmd : '%s'\n\n", data->cmds->cmd);
 	if (data->cmds->cmd && ft_strlen(data->cmds->cmd) < 1 && !data->cmds->redir)
-	// in case "" or '' (empty cmd)
 	{
 		error_cmd(data->cmds->cmd);
 		data->exit_status = 127;
@@ -143,7 +141,6 @@ void	exec_cmd(t_data *data)
 			gc_mem_env(FULL_CLEAN, 0, NULL);
 			exit(data->exit_status);
 		}
-		// printf("path = %s\n", path);
 	}
 	if (data->cmds->cmd && !path)
 	{
@@ -163,34 +160,3 @@ void	exec_cmd(t_data *data)
 			gc_mem(FREE, 0, path);
 	}
 }
-
-// void	exec_cmd(t_data *data)
-// {
-// 	char	*path;
-// 	char	**newenv;
-
-// 	if (is_builtin(data->cmds->cmd))
-// 	{
-// 		exec_builtin(data, data->cmds);
-// 		exit(data->exit_status);
-// 	}
-// 	if (access(data->cmds->args[0], F_OK | X_OK) == 0)
-// 	{
-// 		path = gc_strdup(data->cmds->args[0]);
-// 	}
-// 	else
-// 		path = new_path(data->cmds->args[0], data->envp_cpy);
-// 	// printf("path = %s\n", path);
-// 	if (!path)
-// 	{
-// 		data->exit_status = 127;
-// 		error_cmd(data->cmds->args[0]);
-// 		gc_mem(FULL_CLEAN, 0, NULL);
-// 		exit(data->exit_status);
-// 	}
-// 	newenv = ft_newenv(data);
-// 	if (!newenv)
-// 		return ((void)gc_mem(FREE, 0, path));
-// 	if (execve(path, data->cmds->args, newenv) == -1)
-// 		gc_mem(FREE, 0, path);
-// }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
+#    By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/07 19:57:25 by neleon            #+#    #+#              #
-#    Updated: 2024/12/11 17:36:19 by neleon           ###   ########.fr        #
+#    Updated: 2024/12/12 17:18:58 by elilliu          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ RESET			= \e[0m\033[0m
 NAME			= minishell
 
 EXEC_DIR	= src/exec/
-EXEC		= children.c exec.c init_cmds.c exec_utils.c redir_input.c redir_output.c\
-				exec_cmd.c exec_builtins.c
+EXEC		= children.c exec.c init_cmds.c exec_utils.c redir_input.c\
+			redir_input_utils.c redir_output.c exec_cmd.c exec_builtins.c\
+			init_cmds_utils.c
 SRC			+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR	= src/main/
