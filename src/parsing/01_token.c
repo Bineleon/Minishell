@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:11:58 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/13 15:08:39 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:53:07 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,12 @@ int	sub_handle_expand(char *line, int i, t_fullcmd *token)
 int	to_handle_expand(char *line, int i, t_fullcmd *token)
 {
 	token->type = EXPAND;
+  if (token->str)
+		gc_mem(FREE, 0, token->str);
 	token->str = gc_mem(MALLOC, 1, NULL);
 	token->str[0] = '\0';
 	i = sub_handle_expand(line, i, token);
+  if (!token->str)
+		gc_mem(FREE, 0, token->str);
 	return (i);
 }

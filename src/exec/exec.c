@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 15:13:52 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:40:32 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	exec(t_data *data)
 	if (check_minishell_cmd(data))
 	{
 		printf(RED);
-		ft_putstr_fd("\033[1;31mminishell : interactive mode not allowed 💩\033[0m\n",
-			2);
+		ft_putstr_fd("\033[1;31mminishell : \033[0m\n",2);
+		ft_putstr_fd("\033[1;31minteractive mode not allowed 💩\033[0m\n",2);
 		printf(RESET);
 		data->exit_status = 127;
 		return ;
@@ -79,12 +79,18 @@ void	exec(t_data *data)
 		}
 		if (data->cmds->next)
 		{
-			if (pipe(data->fd) == -1) // ADD FULL_CLEAN + close + exit
+			if (pipe(data->fd) == -1)
+      {
+        gc_mem(FULL_CLEAN, 0, NULL);
 				return ((void)error_mess(NULL, NULL));
+      } // ADD FULL_CLEAN + close + exit
 		}
 		data->pid = fork();
 		if (data->pid == -1)
+    {
+      gc_mem(FULL_CLEAN, 0, NULL);
 			return ((void)error_mess(NULL, NULL)); // add full clean
+    }
 		if (data->pid == 0)
 		{
 			signal(SIGINT, SIG_DFL);

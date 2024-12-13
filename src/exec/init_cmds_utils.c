@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:17:29 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 18:26:54 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/13 16:44:50 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,51 @@ void	adding_new_redirs(t_cmd *cmds, t_fullcmd **current)
 	}
 }
 
+static int	count_args(t_fullcmd *current)
+{
+	int	count = 0;
+	while (current)
+	{
+		if (current->is_cmd)
+			count++;
+		else if (is_redi(current) && current->next && current->next->type == WORD)
+			current = current->next;
+		else if (current->type == PIPE)
+			break;
+		current = current->next;
+	}
+	return count;
+}
+
+static void	fill_args(t_cmd *cmds, t_fullcmd **current, char **args, int *index)
+{
+	while (*current)
+	{
+		if ((*current)->is_cmd)
+		{
+			args[*index] = gc_strdup((*current)->str);
+			(*index)++;
+		}
+		else if (is_redi(*current) && (*current)->next && (*current)->next->type == WORD)
+		{
+			add_redir(&cmds->redir, (*current)->type, (*current)->next->str);
+			*current = (*current)->next;
+		}
+		else if ((*current)->type == PIPE)
+			break;
+		*current = (*current)->next;
+	}
+	args[*index] = NULL;
+}
+
 void	create_new_cmd(t_cmd *cmds, t_fullcmd **current)
 {
 	int			i;
-	t_fullcmd	*arg_check;
+	int			arg_count;
 
 	i = 0;
 	cmds->cmd = gc_strdup((*current)->str);
-	arg_check = (*current);
-	while (arg_check && arg_check->is_cmd)
-	{
-		i++;
-		arg_check = arg_check->next;
-	}
-	cmds->args = gc_mem(MALLOC, sizeof(char *) * (i + 1), NULL);
-	i = 0;
-	while ((*current) && (*current)->is_cmd)
-	{
-		cmds->args[i] = gc_strdup((*current)->str);
-		i++;
-		(*current) = (*current)->next;
-	}
-	cmds->args[i] = NULL;
+	arg_count = count_args(*current);
+	cmds->args = gc_mem(MALLOC, sizeof(char *) * (arg_count + 1), NULL);
+	fill_args(cmds, current, cmds->args, &i);
 }

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/13 15:21:47 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:43:20 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ void	exec_cmd(t_data *data)
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
 		gc_mem_env(FULL_CLEAN, 0, NULL);
+    printf("\n\n\n\nHELLO \n\n\n\n\n");
 		exit(data->exit_status);
 	}
 	if (path)
