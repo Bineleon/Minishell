@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 18:40:32 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 21:39:26 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	exec(t_data *data)
 		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
 			&& data->cmds->next == NULL)
 		{
-			redir_input(data);
+			if (redir_input(data) == 2)
+          return;
 			redir_builtins(data);
 			exec_builtin(data, data->cmds);
       if (data->fd_ > 0)

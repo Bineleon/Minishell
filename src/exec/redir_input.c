@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 14:55:57 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 21:41:15 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	heredoc(t_data *data, t_redir *current_redir)
 	while (1)
 	{
 		prompt = readline("> ");
+    if (!data->heredoc)
+    {
+      gc_mem(FULL_CLEAN, 0, NULL);
+      gc_mem_env(FULL_CLEAN, 0, NULL);
+    }
 		if (!prompt)
 			return ((void)error_mess(NULL, NULL));
 		if (is_delim(current_redir, prompt) == 1)

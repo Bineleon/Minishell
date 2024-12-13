@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/13 14:02:08 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 21:28:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,8 +233,7 @@ void			ft_prompt(t_data *data);
 
 void						handle_signals(void);
 void						handle_sigquit2(int sig);
-void						signal_open_process(void);
-
+void            handle_signals2(void);
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
 /* ╚════════════════════════════════════╝ */

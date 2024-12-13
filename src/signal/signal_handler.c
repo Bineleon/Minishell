@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/13 13:14:14 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 21:33:38 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_sigquit2(int sig)
 
 	(void)sig;
 	data = get_data();
+  data->exit_status = 131;
 	if (data->open_process)
 	{
 		data->exit_status = 131;
@@ -36,6 +37,16 @@ static void	replace_redisplay(void)
 	printf(RESET);
 }
 
+static void	replace_redisplay2(void)
+{
+	rl_replace_line("", 0);
+	ft_putstr_fd("\n", STDIN_FILENO);
+	if (rl_on_new_line() != 0)
+		return (perror("rl_on_new_line"));
+	rl_redisplay();
+
+}
+
 static void	sigint_process(void)
 {
 	t_data	*data;
@@ -47,27 +58,41 @@ static void	sigint_process(void)
 	// ft_prompt(data);
 }
 
-static void	sigint_herdeoc(void)
-{
-	t_data	*data;
+// static void	sigint_herdeoc(void)
+// {
+// 	t_data	*data;
 
-	data = get_data();
-	clean_heredoc(data);
-	printf("\n");
-	replace_redisplay();
-	ft_prompt(data);
-}
+// 	data = get_data();
+//   signal(SIGQUIT, SIG_IGN);
+//   data->open_process = false;
+//   data->heredoc->in_process = false;
+// 	clean_heredoc(data);
+//   gc_mem(FULL_CLEAN, 0, NULL);
+//   // exit(data->exit_status);
+// 	printf("\n");
+// 	replace_redisplay();
+//   printf("\b\b");
+// 	ft_prompt(data);
+// }
 
-void	handle_sigint(int sig)
+static void	handle_sigint2(int sig)
 {
 	t_data	*data;
 
 	(void)sig;
 	data = get_data();
 	data->exit_status = 130;
-	if (data->heredoc)
-		sigint_herdeoc();
-	else if (!data->open_process)
+	replace_redisplay2();
+}
+
+static void	handle_sigint(int sig)
+{
+	t_data	*data;
+
+	(void)sig;
+	data = get_data();
+	data->exit_status = 130;
+  if (!data->open_process)
 	{
 		replace_redisplay();
 	}
@@ -75,6 +100,12 @@ void	handle_sigint(int sig)
 	{		// ft_putstr_fd("ICI\n", 2);
 		sigint_process();
 	}
+}
+
+void	handle_signals2(void)
+{
+	signal(SIGINT, &handle_sigint2);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	handle_signals(void)
