@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/12 16:17:56 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:21:47 by neleon           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/12/13 14:02:08 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ typedef enum e_token
 	SPC = ' ',
 	HEREDOC = -2,
 	APPEND = -3
-}							t_token;
+}				t_token;
 
 typedef enum e_mem
 {
 	MALLOC,
 	FREE,
 	FULL_CLEAN
-}							t_mem;
+}				t_mem;
 
 typedef enum e_bool
 {
 	false,
 	true
-}							t_bool;
+}				t_bool;
 
 /* ╔════════════════════════════════════╗ */
 /* ║             STRUCTURES             ║ */
@@ -63,29 +63,29 @@ typedef enum e_bool
 
 typedef struct s_fullcmd
 {
-	char					*str;
-	t_token					type;
-	t_bool					is_cmd;
-	t_bool					concat_next;
-	struct s_fullcmd		*next;
-}							t_fullcmd;
+	char				*str;
+	t_token				type;
+	t_bool				is_cmd;
+	t_bool				concat_next;
+	struct s_fullcmd	*next;
+}						t_fullcmd;
 
 typedef struct s_redir
 {
-	t_token					type;
-	char					*file_name;
-	struct s_redir			*next;
-}							t_redir;
+	t_token			type;
+	char			*file_name;
+	struct s_redir	*next;
+}					t_redir;
 
 typedef struct s_cmd
 {
-	struct s_cmd			*prev;
-	char					*cmd;
-	t_redir					*redir;
-	t_bool					is_first;
-	char					**args;
-	struct s_cmd			*next;
-}							t_cmd;
+	struct s_cmd	*prev;
+	char			*cmd;
+	t_redir			*redir;
+	t_bool			is_first;
+	char			**args;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_garbage_co
 {
@@ -101,18 +101,18 @@ typedef struct s_garbage_env
 
 typedef struct s_env
 {
-	char					*key;
-	t_bool					equal;
-	char					*value;
-	struct s_env			*next;
-}							t_env;
+	char			*key;
+	t_bool			equal;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_heredoc
 {
-	t_bool					in_process;
-	int						fd[2];
-	char					*fullprompt;
-}							t_heredoc;
+	t_bool	in_process;
+	int		fd[2];
+	char	*fullprompt;
+}			t_heredoc;
 
 typedef struct s_data
 {
@@ -131,105 +131,101 @@ typedef struct s_data
 	t_garbage_co			*garbage;
 }							t_data;
 
-void						find_cmds(t_data *data);
+void			find_cmds(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              BUILTINS              ║ */
 /* ╚════════════════════════════════════╝ */
 
-void						ft_env(t_data *data);
-void						ft_pwd(t_data *data);
-void						ft_echo(t_cmd *cmds, int fd);
-void						ft_export(t_cmd *cmds);
-void						ft_unset(t_cmd *cmds);
-void						ft_exit(t_cmd *cmds);
-void						ft_cd(t_cmd *cmds);
-t_bool						is_valid_key(char *key);
-int							ft_longest(char *s1, char *s2);
-void						update_env(t_env **env, char *key, char *value,
-								t_bool equal);
-char						*get_env_value(char *var_name, t_env *env_list);
+void			ft_env(t_data *data);
+void			ft_pwd(t_data *data);
+void			ft_echo(t_cmd *cmds, int fd);
+void			ft_export(t_cmd *cmds);
+void			ft_unset(t_cmd *cmds);
+void			ft_exit(t_cmd *cmds);
+void			ft_cd(t_cmd *cmds);
+t_bool			is_valid_key(char *key);
+int				ft_longest(char *s1, char *s2);
+void			update_env(t_env **env, char *key, char *value, t_bool equal);
+char			*get_env_value(char *var_name, t_env *env_list);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               ERROR                ║ */
 /* ╚════════════════════════════════════╝ */
 
-t_bool						check_errors(t_fullcmd *tokens);
-t_bool						check_open_quotes(char *line);
-t_bool						pipe_errors(t_fullcmd *tokens);
-t_bool						redirect_errors(t_fullcmd *tokens);
-t_bool						expand_errors(t_fullcmd *tokens);
+t_bool			check_errors(t_fullcmd *tokens);
+t_bool			check_open_quotes(char *line);
+t_bool			pipe_errors(t_fullcmd *tokens);
+t_bool			redirect_errors(t_fullcmd *tokens);
+t_bool			expand_errors(t_fullcmd *tokens);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PARSING               ║ */
 /* ╚════════════════════════════════════╝ */
 
-char						**cpy_envp(char **envp);
-t_env						*env_cpy(char **envp);
-t_data						*init_and_alloc_data(char **envp);
-char						**get_cmds_in_pipe(char *prompt);
-t_fullcmd					*parse_tokens(char *line, t_data *data);
-int							process_word(char *str, int i, char **result);
-char						*extract_var_name(char *str, int start, int end);
-char						*extract_var(char *line, int *i, int start);
-t_fullcmd					*create_token(t_fullcmd **current_token,
-								t_fullcmd **head);
-int							to_handle_quotes(char *line, int i,
-								t_fullcmd *token);
-int							to_handle_pipe(char *line, int i, t_fullcmd *token);
-int							to_handle_in(char *line, int i, t_fullcmd *token);
-int							to_handle_out(char *line, int i, t_fullcmd *token);
-int							sub_handle_expand(char *line, int i,
-								t_fullcmd *token);
-int							to_handle_expand(char *line, int i,
-								t_fullcmd *token);
-
-t_bool						is_in_dquote(t_fullcmd *token);
-t_bool						is_in_squote(t_fullcmd *token);
-char						*get_env_value(char *var_name, t_env *env_list);
-char						*expand_token_value(char *str, t_env *env_list);
-void						expand_var(t_data *data);
-char						*expand_token(char *str, t_env *env_list);
-void						handle_expand(t_fullcmd *token, t_env *env_list);
-void						handle_dquote_exp(t_fullcmd *token,
-								t_env *env_list);
-void						handle_squote_exp(t_fullcmd *token);
-char						*init_result(void);
-char						*expand_exit_st(char *str, char **result, int i);
+char			**cpy_envp(char **envp);
+t_env			*env_cpy(char **envp);
+t_data			*init_and_alloc_data(char **envp);
+char			**get_cmds_in_pipe(char *prompt);
+t_fullcmd		*parse_tokens(char *line, t_data *data);
+int				process_word(char *str, int i, char **result);
+char			*extract_var_name(char *str, int start, int end);
+char			*extract_var(char *line, int *i, int start);
+t_fullcmd		*create_token(t_fullcmd **current_token, t_fullcmd **head);
+int				to_handle_quotes(char *line, int i, t_fullcmd *token);
+int				to_handle_pipe(char *line, int i, t_fullcmd *token);
+int				to_handle_in(char *line, int i, t_fullcmd *token);
+int				to_handle_out(char *line, int i, t_fullcmd *token);
+int				sub_handle_expand(char *line, int i, t_fullcmd *token);
+int				to_handle_expand(char *line, int i, t_fullcmd *token);
+t_bool			is_in_dquote(t_fullcmd *token);
+t_bool			is_in_squote(t_fullcmd *token);
+char			*get_env_value(char *var_name, t_env *env_list);
+char			*expand_token_value(char *str, t_env *env_list);
+void			expand_var(t_data *data);
+char			*expand_token(char *str, t_env *env_list);
+void			handle_expand(t_fullcmd *token, t_env *env_list);
+void			handle_dquote_exp(t_fullcmd *token, t_env *env_list);
+void			handle_squote_exp(t_fullcmd *token);
+char			*init_result(void);
+char			*expand_exit_st(char *str, char **result, int i);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               EXEC                 ║ */
 /* ╚════════════════════════════════════╝ */
 
-void						exec(t_data *data);
-void						which_child(t_data *data);
-void						first_child(t_data *data);
-void						middle_child(t_data *data);
-void						last_child(t_data *data);
-int							redir_input(t_data *data);
-void						heredoc(t_data *data, t_redir *current_redir);
-void						clean_heredoc(t_data *data);
-void						new_heredoc(t_data *data);
-// void					redir_output(t_data *data);
-int							redir_output(t_data *data, t_cmd *cmd);
-void						exec_cmd(t_data *data);
-char						*new_path(char *arg, t_env *env_cpy);
-char						**all_paths(t_env *env);
-char						*join(char *path, char *cmd);
-void						init_cmds(t_data *data);
-void						new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
-// void					new_str(t_cmd *cmds, t_fullcmd **fullcmd);
-char						*joinequal(char *key, char *value);
-char						**ft_newenv(t_data *data);
-void						exec_builtin(t_data *data, t_cmd *cmds);
-t_bool						is_builtin(char *cmd);
-void						redir_builtins(t_data *data);
+void			exec(t_data *data);
+void			which_child(t_data *data);
+void			first_child(t_data *data);
+void			middle_child(t_data *data);
+void			last_child(t_data *data);
+int				redir_input(t_data *data);
+void			heredoc(t_data *data, t_redir *current_redir);
+void			clean_heredoc(t_data *data);
+void			new_heredoc(t_data *data);
+int				redir_output(t_data *data, t_cmd *cmd);
+void			exec_cmd(t_data *data);
+char			*new_path(char *arg, t_env *env_cpy);
+char			**all_paths(t_env *env);
+char			*join(char *path, char *cmd);
+void			init_cmds(t_data *data);
+void			new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
+char			*joinequal(char *key, char *value);
+char			**ft_newenv(t_data *data);
+void			exec_builtin(t_data *data, t_cmd *cmds);
+t_bool			is_builtin(char *cmd);
+void			redir_builtins(t_data *data);
+int				is_delim(t_redir *current_redir, char *prompt);
+int				new_input_fd(t_data *data, t_redir *current_redir, int *fd);
+void			adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
+void			create_new_cmd(t_cmd *cmds, t_fullcmd **current);
+void			add_redir(t_redir **redir_list, t_token type, char *file_name);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
 /* ╚════════════════════════════════════╝ */
 
-void						ft_prompt(t_data *data);
+void			ft_prompt(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              SIGNALS               ║ */
@@ -281,8 +277,8 @@ void						free_post_prompt(t_data *data);
 /* ║        GARBAGE COLLECTOR           ║ */
 /* ╚════════════════════════════════════╝ */
 
-void						*gc_mem(t_mem type, size_t size, void *ptr);
-void						*gc_mem_env(t_mem type, size_t size, void *ptr);
+void			*gc_mem(t_mem type, size_t size, void *ptr);
+void			*gc_mem_env(t_mem type, size_t size, void *ptr);
 // Exemples :
 // gc_mem(MALLOC, sizeof(char *), NULL) -->
 // gc_mem(FREE, 0, str) ---> free pointer "str"

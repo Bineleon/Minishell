@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:09:28 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 15:53:08 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/13 15:05:45 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_echo(t_cmd *cmds, int fd)
 	}
 	while (cmds->args[i])
 	{
+    // ft_putstr_fd(cmds->args[i], fd);
 		if (ft_putstr_fd(cmds->args[i], fd) == -1)
 		{
 			error_no_space("echo");

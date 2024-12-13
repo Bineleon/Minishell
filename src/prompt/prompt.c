@@ -3,45 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:23:56 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:27:14 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// void	print_tokens(t_fullcmd *tokens)
-// {
-// 	t_fullcmd	*current;
+void	print_tokens(t_fullcmd *tokens)
+{
+	t_fullcmd	*current;
 
-// 	current = tokens;
-// 	while (current)
-// 	{
-// 		printf("Token: Type = ");
-// 		if (current->type == PIPE)
-// 			printf("PIPE");
-// 		else if (current->type == WORD)
-// 			printf("WORD");
-// 		else if (current->type == IN)
-// 			printf("IN");
-// 		else if (current->type == OUT)
-// 			printf("OUT");
-// 		else if (current->type == HEREDOC)
-// 			printf("HEREDOC");
-// 		else if (current->type == APPEND)
-// 			printf("APPEND");
-// 		else if (current->type == EXPAND)
-// 			printf("EXPAND");
-// 		else if (current->type == SQUOTE)
-// 			printf("SQUOTE");
-// 		else if (current->type == DQUOTE)
-// 			printf("DQUOTE");
-// 		printf(", token = (%s)\n", current->str);
-// 		current = current->next;
-// 	}
-// }
+	current = tokens;
+	while (current)
+	{
+		printf("Token: Type = ");
+		if (current->type == PIPE)
+			printf("PIPE");
+		else if (current->type == WORD)
+			printf("WORD");
+		else if (current->type == IN)
+			printf("IN");
+		else if (current->type == OUT)
+			printf("OUT");
+		else if (current->type == HEREDOC)
+			printf("HEREDOC");
+		else if (current->type == APPEND)
+			printf("APPEND");
+		else if (current->type == EXPAND)
+			printf("EXPAND");
+		else if (current->type == SQUOTE)
+			printf("SQUOTE");
+		else if (current->type == DQUOTE)
+			printf("DQUOTE");
+		printf(", token = (%s)\n", current->str);
+		current = current->next;
+	}
+}
 
 t_bool	empty_line(char *line)
 {
@@ -98,16 +98,18 @@ void	ft_prompt(t_data *data)
 			add_history(prompt);
 			if (check_open_quotes(prompt))
 			{
-				error_mess("error", "open quote");
+				error_mess("error", "open quote\n");
 				continue ;
 			}
 			tokens = parse_tokens(prompt, data);
+      // printf("BEFORE\n");
 			// print_tokens(tokens);
 			// printf("\n");
 			if (!check_errors(tokens))
 			{
 				expand_var(data);
 				find_cmds(data);
+        // printf("AFTER\n");
 				// print_tokens(tokens);
 				// printf("\n");
 				// print_tokens(data->token_fullcmd);

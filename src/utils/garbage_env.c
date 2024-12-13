@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:26:22 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 17:37:05 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:31:40 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,23 @@
 
 static void	*gc_free_env(t_garbage_env *garbage, void *ptr)
 {
-	while (garbage)
+	t_garbage_env *prev;
+	t_garbage_env *current;
+
+	current = garbage;
+	prev = NULL;
+	while (current)
 	{
-		if (garbage->ptr == ptr)
+		if (current->ptr == ptr)
 		{
-			free(garbage->ptr);
-			garbage->ptr = NULL;
+      if (prev)
+        prev->next = current->next;
+			free(current->ptr);
+			current->ptr = NULL;
 		}
-		garbage = garbage->next;
-	}
+		prev = current;
+		current = current->next;
+  }
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:39:51 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 19:56:31 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:21:08 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	ft_pwd(t_data *data)
 
 	if (getcwd(buf, PATH_MAX))
   {
-		printf("%s\n", buf);
+    ft_putstr_fd(buf, data->fd_);
+    ft_putstr_fd("\n", data->fd_);
     data->exit_status = 0;
   }
 	else

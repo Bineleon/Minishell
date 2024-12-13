@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 16:24:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:14:14 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	handle_sigint(int sig)
 
 void	handle_signals(void)
 {
-	t_data	*data;
+	// t_data	*data;
 
-	data = get_data();
+	// data = get_data();
 	signal(SIGINT, &handle_sigint);
 	signal(SIGQUIT, &handle_sigquit2);
 

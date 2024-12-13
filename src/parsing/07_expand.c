@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   07_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:14:34 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:37:25 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/13 14:00:04 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int	var_expand(char *str, int i, char **result, t_env *env_list)
 		*result = gc_strjoin(*result, exit_status);
 		gc_mem(FREE, 0, exit_status);
 		return (i + 2);
+	}
+  if (!str[i + 1] || (!ft_isalnum(str[i + 1]) && str[i + 1] != '_'))
+	{
+		*result = gc_strjoin(*result, "$");
+		return (i + 1);
 	}
 	start = ++i;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
@@ -97,7 +102,7 @@ void	handle_expand(t_fullcmd *token, t_env *env_list)
 //             {
 //                 int start = ++i;
 //                 while (token->str[i] && (ft_isalnum(token->str[i])
-		|| token->str[i] == '_'))
+		// || token->str[i] == '_'))
 //                     i++;
 //                 char *var_name = gc_mem(MALLOC, i - start + 1, NULL);
 //                 ft_strlcpy(var_name, &token->str[start], i - start + 1);
