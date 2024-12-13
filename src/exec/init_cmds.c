@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/13 18:32:16 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:58:12 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,19 @@ void	init_cmds(t_data *data)
 			cmdstmp = cmdstmp->next;
 		}
 	}
+	// while (data->token_fullcmd->next)
+	// {
+  //   t_fullcmd *tmp = data->token_fullcmd;
+	// 	tmp = data->token_fullcmd;
+	// 	if (tmp->str)
+	// 	{
+	// 		gc_mem(FREE, 0, tmp->str);
+	// 		tmp->str = NULL;
+	// 	}
+	// 	data->token_fullcmd = data->token_fullcmd->next;
+	// 	gc_mem(FREE, 0, tmp);
+	// }
+	// if (data->token_fullcmd->str)
+	// 	gc_mem(FREE, 0, data->token_fullcmd->str);
+	// gc_mem(FREE, 0, data->token_fullcmd);
 }
