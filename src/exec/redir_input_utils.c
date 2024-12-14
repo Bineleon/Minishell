@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:49:57 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 21:40:44 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:33:50 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	new_input_fd(t_data *data, t_redir *current_redir, int *fd)
 	}
 	else if (current_redir->type == HEREDOC)
 	{
-    data->open_process = false;
+		data->open_process = false;
 		heredoc(data, current_redir);
 		if (*fd > 0)
 			close(*fd);

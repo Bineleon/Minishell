@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 21:41:15 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:36:23 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	clean_heredoc(t_data *data)
 	if (data->heredoc->fd[1] != -1)
 		close(data->heredoc->fd[1]);
 	if (data->heredoc->fullprompt)
-		gc_mem(FREE, (size_t) NULL, data->heredoc->fullprompt);
-	gc_mem(FREE, (size_t) NULL, data->heredoc);
+		gc_mem(FREE, (size_t)NULL, data->heredoc->fullprompt);
+	gc_mem(FREE, (size_t)NULL, data->heredoc);
 }
 
 void	heredoc(t_data *data, t_redir *current_redir)
@@ -43,21 +43,21 @@ void	heredoc(t_data *data, t_redir *current_redir)
 	while (1)
 	{
 		prompt = readline("> ");
-    if (!data->heredoc)
-    {
-      gc_mem(FULL_CLEAN, 0, NULL);
-      gc_mem_env(FULL_CLEAN, 0, NULL);
-    }
+		if (!data->heredoc)
+		{
+			gc_mem(FULL_CLEAN, 0, NULL);
+			gc_mem_env(FULL_CLEAN, 0, NULL);
+		}
 		if (!prompt)
 			return ((void)error_mess(NULL, NULL));
 		if (is_delim(current_redir, prompt) == 1)
 		{
-			gc_mem(FREE, (size_t) NULL, prompt);
+			gc_mem(FREE, (size_t)NULL, prompt);
 			break ;
 		}
 		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt,
 				prompt);
-		gc_mem(FREE, (size_t) NULL, prompt);
+		gc_mem(FREE, (size_t)NULL, prompt);
 		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt, "\n");
 	}
 	ft_putstr_fd(data->heredoc->fullprompt, data->heredoc->fd[1]);
@@ -84,7 +84,8 @@ int	redir_input(t_data *data)
 				fd = 0;
 			}
 			if (new_input_fd(data, current_redir, &fd) == 0)
-				return (2); // ajouter gestion d'erreur en cas de non droits pour le fichier
+				return (2);
+			// ajouter gestion d'erreur en cas de non droits pour le fichier
 		}
 		current_redir = current_redir->next;
 	}

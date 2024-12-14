@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/13 18:34:52 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:33:02 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,20 @@ void	fullclose_fd(t_data *data, int a, int b, int c)
 		close(data->fd[c]);
 }
 
+static void	exit_child(t_data *data, int a, int b, int c)
+{
+	fullclose_fd(data, a, b, c);
+	gc_mem(FULL_CLEAN, 0, NULL);
+	exit(data->exit_status);
+}
+
 void	first_child(t_data *data)
 {
 	int	i;
 
 	data->open_process = true;
 	if (redir_input(data) == 2)
-	{
-		fullclose_fd(data, 0, 1, 2);
-		gc_mem(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
+		exit_child(data, 0, 1, 2);
 	i = redir_output(data, data->cmds);
 	if (i == 0)
 	{
@@ -43,11 +46,7 @@ void	first_child(t_data *data)
 		}
 	}
 	else if (i == 2)
-	{
-		fullclose_fd(data, 0, 1, 2);
-		gc_mem(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
+		exit_child(data, 0, 1, 2);
 	fullclose_fd(data, 0, 1, 2);
 	exec_cmd(data);
 }
@@ -62,20 +61,12 @@ void	middle_child(t_data *data)
 	if (j == 0)
 		dup2(data->fd[2], STDIN_FILENO);
 	else if (j == 2)
-	{
-		fullclose_fd(data, 0, 1, 2);
-		gc_mem(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
+		exit_child(data, 0, 1, 2);
 	i = redir_output(data, data->cmds);
 	if (i == 0)
 		dup2(data->fd[1], STDOUT_FILENO);
 	else if (i == 2)
-	{
-		fullclose_fd(data, 0, 1, 2);
-		gc_mem(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
+		exit_child(data, 0, 1, 2);
 	fullclose_fd(data, 0, 1, 2);
 	exec_cmd(data);
 }
@@ -87,21 +78,11 @@ void	last_child(t_data *data)
 	data->open_process = true;
 	j = redir_input(data);
 	if (j == 0)
-  {
 		dup2(data->fd[2], STDIN_FILENO);
-  }
 	else if (j == 2)
-	{
-		fullclose_fd(data, 0, 1, 2);
-		gc_mem(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
+		exit_child(data, 0, 1, 2);
 	fullclose_fd(data, 0, 1, 2);
 	if (redir_output(data, data->cmds) == 2)
-	{
-		fullclose_fd(data, 0, 1, 2);
-		gc_mem(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
+		exit_child(data, 0, 1, 2);
 	exec_cmd(data);
 }

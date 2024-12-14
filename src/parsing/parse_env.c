@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:56:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 17:33:54 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 00:44:45 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ t_env	*min_node(char *key, char *value)
 t_env	*no_env(void)
 {
 	t_env	*head;
-  t_data  *data;
+	t_data	*data;
 	char	buf[PATH_MAX];
 
-  data = get_data();
+	data = get_data();
 	if (!getcwd(buf, PATH_MAX))
 	{
 		perror("getcwd(): ");
-    data->exit_status = 1;
+		data->exit_status = 1;
 		return (NULL);
 	}
 	head = min_node("PWD", buf);

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:10:08 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 15:51:08 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 01:23:46 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	error_mess(char *input, char *mess)
 		perror(NULL);
 	else
 		ft_putstr_fd(mess, 2);
-	// ft_putstr_fd("\n", 2);	
 }
 
 void	error_no_space(char *cmd)

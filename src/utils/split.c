@@ -6,12 +6,11 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:59:12 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/09 17:14:49 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 01:23:33 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 static int	ft_word_len(char const *s, char c)
 {
@@ -47,8 +46,6 @@ static char	*ft_word(char const *s, char c)
 
 	i = 0;
 	word = gc_mem(MALLOC, (ft_word_len(s, c) + 1) * sizeof(char), NULL);
-	// if (!word)
-	// 	return (free(word), NULL);
 	while (s[i] && s[i] != c)
 	{
 		word[i] = s[i];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/13 15:03:14 by bineleon         ###   ########.fr       */
+/*   Created: 2024/12/14 01:36:36 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/14 01:36:39 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	new_output_fd(t_data *data, t_redir *current_redir, int *fd)
 {
 	if (current_redir->type == OUT)
-		(*fd) = open(current_redir->file_name,
-				O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		(*fd) = open(current_redir->file_name, O_CREAT | O_WRONLY | O_TRUNC,
+				0644);
 	else if (current_redir->type == APPEND)
-		(*fd) = open(current_redir->file_name,
-				O_CREAT | O_WRONLY | O_APPEND, 0644);
+		(*fd) = open(current_redir->file_name, O_CREAT | O_WRONLY | O_APPEND,
+				0644);
 	if (*fd == -1)
 	{
 		error_mess(current_redir->file_name, NULL);
@@ -59,10 +59,7 @@ void	redir_builtins(t_data *data)
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
-	{
 		data->fd_ = fd;
-		// close(fd);
-	}
 }
 
 int	redir_output(t_data *data, t_cmd *cmd)
@@ -71,9 +68,7 @@ int	redir_output(t_data *data, t_cmd *cmd)
 	int		fd;
 
 	if (!cmd || !cmd->redir)
-	{
 		return (0);
-	}
 	current_redir = cmd->redir;
 	fd = -1;
 	while (current_redir)

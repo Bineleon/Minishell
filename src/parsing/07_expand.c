@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   07_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:14:34 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/13 14:00:04 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 00:50:32 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	var_expand(char *str, int i, char **result, t_env *env_list)
 		gc_mem(FREE, 0, exit_status);
 		return (i + 2);
 	}
-  if (!str[i + 1] || (!ft_isalnum(str[i + 1]) && str[i + 1] != '_'))
+	if (!str[i + 1] || (!ft_isalnum(str[i + 1]) && str[i + 1] != '_'))
 	{
 		*result = gc_strjoin(*result, "$");
 		return (i + 1);
@@ -78,46 +78,3 @@ void	handle_expand(t_fullcmd *token, t_env *env_list)
 	}
 	sub_expand(token, result);
 }
-
-// void handle_expand(t_fullcmd *token, t_env *env_list)
-// {
-//     char *result;
-//     int i;
-
-//     result = init_result();
-//     i = 0;
-
-//     while (token->str[i])
-//     {
-//         if (token->str[i] == '$')
-//         {
-//             if (token->str[i + 1] == '?')
-//             {
-//                 char *exit_status = gc_itoa(get_data()->exit_status);
-//                 result = gc_strjoin(result, exit_status);
-//                 gc_mem(FREE, 0, exit_status);
-//                 i += 2;
-//             }
-//             else
-//             {
-//                 int start = ++i;
-//                 while (token->str[i] && (ft_isalnum(token->str[i])
-		// || token->str[i] == '_'))
-//                     i++;
-//                 char *var_name = gc_mem(MALLOC, i - start + 1, NULL);
-//                 ft_strlcpy(var_name, &token->str[start], i - start + 1);
-//                 char *env_value = get_env_value(var_name, env_list);
-//                 gc_mem(FREE, 0, var_name);
-//                 if (env_value)
-//                     result = gc_strjoin(result, env_value);
-//             }
-//         }
-//         else
-//         {
-//             i = process_word(token->str, i, &result);
-//         }
-//     }
-//     gc_mem(FREE, 0, token->str);
-//     token->str = result;
-//     token->type = WORD;
-// }

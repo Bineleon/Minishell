@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:55 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 15:00:37 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 00:54:02 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	ft_env(t_data *data)
 			printf("%s=\n", curr->key);
 		curr = curr->next;
 	}
-  data->exit_status = 0;
+	data->exit_status = 0;
 }

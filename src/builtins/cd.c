@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:31 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/12 16:02:37 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 01:13:42 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_cd(t_cmd *cmds)
 
 	data = get_data();
 	if (check_args_err(cmds))
-		return ;	
+		return ;
 	if (chdir(cmds->args[1]) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);

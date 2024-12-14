@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:17:29 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 16:44:50 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:33:24 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,21 @@ void	adding_new_redirs(t_cmd *cmds, t_fullcmd **current)
 
 static int	count_args(t_fullcmd *current)
 {
-	int	count = 0;
+	int	count;
+
+	count = 0;
 	while (current)
 	{
 		if (current->is_cmd)
 			count++;
-		else if (is_redi(current) && current->next && current->next->type == WORD)
+		else if (is_redi(current) && current->next
+			&& current->next->type == WORD)
 			current = current->next;
 		else if (current->type == PIPE)
-			break;
+			break ;
 		current = current->next;
 	}
-	return count;
+	return (count);
 }
 
 static void	fill_args(t_cmd *cmds, t_fullcmd **current, char **args, int *index)
@@ -54,13 +57,14 @@ static void	fill_args(t_cmd *cmds, t_fullcmd **current, char **args, int *index)
 			args[*index] = gc_strdup((*current)->str);
 			(*index)++;
 		}
-		else if (is_redi(*current) && (*current)->next && (*current)->next->type == WORD)
+		else if (is_redi(*current) && (*current)->next
+			&& (*current)->next->type == WORD)
 		{
 			add_redir(&cmds->redir, (*current)->type, (*current)->next->str);
 			*current = (*current)->next;
 		}
 		else if ((*current)->type == PIPE)
-			break;
+			break ;
 		*current = (*current)->next;
 	}
 	args[*index] = NULL;
@@ -68,8 +72,8 @@ static void	fill_args(t_cmd *cmds, t_fullcmd **current, char **args, int *index)
 
 void	create_new_cmd(t_cmd *cmds, t_fullcmd **current)
 {
-	int			i;
-	int			arg_count;
+	int	i;
+	int	arg_count;
 
 	i = 0;
 	cmds->cmd = gc_strdup((*current)->str);

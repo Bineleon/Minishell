@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   06_expand.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:13:26 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/13 14:10:05 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 00:48:48 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*init_res2(void)
-{
-	char	*result;
-
-	result = gc_mem(MALLOC, 1, NULL);
-	result[0] = '\0';
-	return (result);
-}
 
 int	append_txt(char **result, char *tmp, char *str, int i)
 {
@@ -71,7 +62,7 @@ int	process_env_var(char **result, char *str, int i, t_env *env_list)
 		*result = gc_strjoin(*result, exit_status);
 		return (gc_mem(FREE, 0, exit_status), i + 1);
 	}
-  if (!str[i] || (!ft_isalnum(str[i]) && str[i] != '_'))
+	if (!str[i] || (!ft_isalnum(str[i]) && str[i] != '_'))
 	{
 		*result = gc_strjoin(*result, "$");
 		return (i);
@@ -105,44 +96,3 @@ void	handle_dquote_exp(t_fullcmd *token, t_env *env_list)
 	gc_mem(FREE, 0, token->str);
 	token->str = result;
 }
-
-// void handle_dquote_exp(t_fullcmd *token, t_env *env_list)
-// {
-//     char *result;
-//     int i;
-//     int j;
-//     char *tmp;
-//     char *env_value;
-
-//     i = 1;
-//     result = gc_mem(MALLOC, 1, NULL);
-//     result[0] = '\0';
-//     tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
-
-//     while (token->str[i] && token->str[i] != DQUOTE)
-//     {
-//         j = 0;
-//         while (token->str[i] && token->str[i] != DQUOTE
-	// && token->str[i] != '$')
-//             tmp[j++] = token->str[i++];
-//         tmp[j] = '\0';
-//         result = gc_strjoin(result, tmp);
-
-//         if (token->str[i] == '$')
-//         {
-//             int start = ++i;
-//             while (token->str[i] && (ft_isalnum(token->str[i])
-		// || token->str[i] == '_'))
-//                 i++;
-//             char *var_name = gc_mem(MALLOC, i - start + 1, NULL);
-//             ft_strlcpy(var_name, &token->str[start], i - start + 1);
-//             env_value = get_env_value(var_name, env_list);
-//             gc_mem(FREE, 0, var_name);
-//             if (env_value)
-//                 result = gc_strjoin(result, env_value);
-//         }
-//     }
-//     gc_mem(FREE, 0, tmp);
-//     gc_mem(FREE, 0, token->str);
-//     token->str = result;
-// }

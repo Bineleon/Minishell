@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   expand_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 19:39:51 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:13:05 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/14 00:45:42 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/14 00:50:44 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_pwd(t_data *data)
+char	*init_result(void)
 {
-	char	buf[PATH_MAX];
+	char	*result;
 
-	if (getcwd(buf, PATH_MAX))
-	{
-		ft_putstr_fd(buf, data->fd_);
-		ft_putstr_fd("\n", data->fd_);
-		data->exit_status = 0;
-	}
-	else
-	{
-		perror("getcwd(): ");
-		data->exit_status = 1;
-	}
+	result = gc_mem(MALLOC, 1, NULL);
+	result[0] = '\0';
+	return (result);
+}
+
+void	init_var(int *i, int *j, char **tmp, t_fullcmd *token)
+{
+	*i = 1;
+	*j = 0;
+	*tmp = gc_mem(MALLOC, ft_strlen(token->str) + 1, NULL);
+}
+
+char	*extract_var_name(char *str, int start, int end)
+{
+	char	*var_name;
+
+	var_name = gc_mem(MALLOC, end - start, NULL);
+	ft_strlcpy(var_name, str + start + 1, end - start);
+	return (var_name);
 }
