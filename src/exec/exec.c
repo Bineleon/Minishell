@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/13 21:39:26 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:12:19 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	exec(t_data *data)
 
 	init_cmds(data);
 	data->open_process = false;
+  data->hd_active = true;
 	if (check_minishell_cmd(data))
 	{
 		printf(RED);
@@ -67,6 +68,8 @@ void	exec(t_data *data)
 	}
 	while (data->cmds != NULL)
 	{
+    data->open_process = false;
+    // data->hd_active = true;
 		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
 			&& data->cmds->next == NULL)
 		{
@@ -87,17 +90,22 @@ void	exec(t_data *data)
       } // ADD FULL_CLEAN + close + exit
 		}
 		data->pid = fork();
+    signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (data->pid == -1)
     {
       gc_mem(FULL_CLEAN, 0, NULL);
 			return ((void)error_mess(NULL, NULL)); // add full clean
-    }
+    }  signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (data->pid == 0)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
 			which_child(data);
 		}
+    // data->hd_active = false;
+    signal(SIGQUIT, handle_child_sigquit);
 		data->open_process = true;
 		if (data->cmds->next)
 			close(data->fd[1]);

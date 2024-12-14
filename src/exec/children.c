@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/14 01:33:02 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 16:44:55 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,18 @@ static void	exit_child(t_data *data, int a, int b, int c)
 	exit(data->exit_status);
 }
 
+void	config_child_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
 void	first_child(t_data *data)
 {
 	int	i;
 
-	data->open_process = true;
+	data->open_process = false;
+  config_child_signals();
 	if (redir_input(data) == 2)
 		exit_child(data, 0, 1, 2);
 	i = redir_output(data, data->cmds);
@@ -56,7 +63,8 @@ void	middle_child(t_data *data)
 	int	i;
 	int	j;
 
-	data->open_process = true;
+	data->open_process = false;
+  config_child_signals();
 	j = redir_input(data);
 	if (j == 0)
 		dup2(data->fd[2], STDIN_FILENO);
@@ -75,7 +83,8 @@ void	last_child(t_data *data)
 {
 	int	j;
 
-	data->open_process = true;
+	data->open_process = false;
+  config_child_signals();
 	j = redir_input(data);
 	if (j == 0)
 		dup2(data->fd[2], STDIN_FILENO);

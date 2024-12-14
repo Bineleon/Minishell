@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:43:23 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 15:01:26 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <termios.h>
 
 /* ╔════════════════════════════════════╗ */
 /* ║                ENUM                ║ */
@@ -123,6 +124,7 @@ typedef struct s_data
 	int						pid;
 	int						exit_status;
 	t_heredoc				*heredoc;
+  t_bool         hd_active;
 	t_bool					open_process;
 	char					*delim;
 	t_cmd					*cmds;
@@ -248,6 +250,8 @@ void						ft_prompt(t_data *data);
 void						handle_signals(void);
 void						handle_sigquit2(int sig);
 void						handle_signals2(void);
+void	handle_child_sigquit(int sig);
+
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */
 /* ╚════════════════════════════════════╝ */

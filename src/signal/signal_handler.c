@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:56:59 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:57:02 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 16:14:27 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	handle_child_sigquit(int sig)
+{
+	t_data	*data;
+
+	(void)sig;
+	data = get_data();
+	if (!data->open_process)
+		return;
+	data->exit_status = 131;
+	ft_putstr_fd("\033[1;31mQuit (core dumped)\033[0m\n", 2);
+}
 
 void	handle_sigquit2(int sig)
 {
@@ -18,11 +30,14 @@ void	handle_sigquit2(int sig)
 
 	(void)sig;
 	data = get_data();
-	if (data->open_process)
+
+	if (data->hd_active)
 	{
-		data->exit_status = 131;
-		ft_putstr_fd("\033[1;31mQuit (core dumped)\033[0m\n", 2);
+		signal(SIGQUIT, SIG_IGN);
+		return;
 	}
+	if (!data->open_process)
+		return;
 }
 
 static void	replace_redisplay(void)
@@ -36,27 +51,15 @@ static void	replace_redisplay(void)
 	printf(RESET);
 }
 
-static void	sigint_process(void)
-{
-	t_data	*data;
+// static void	sigint_process(void)
+// {
+// 	t_data	*data;
 
-	data = get_data();
-	signal(SIGINT, NULL);
-	data->open_process = false;
-	printf("\n");
-	// ft_prompt(data);
-}
-
-static void	sigint_herdeoc(void)
-{
-	t_data	*data;
-
-	data = get_data();
-	clean_heredoc(data);
-	printf("\n");
-	replace_redisplay();
-	ft_prompt(data);
-}
+// 	data = get_data();
+// 	signal(SIGINT, NULL);
+// 	data->open_process = false;
+// 	printf("\n");
+// }
 
 void	handle_sigint(int sig)
 {
@@ -65,26 +68,28 @@ void	handle_sigint(int sig)
 	(void)sig;
 	data = get_data();
 	data->exit_status = 130;
-	if (data->heredoc)
-		sigint_herdeoc();
-	else if (!data->open_process)
+  if (!data->open_process)
 	{
 		replace_redisplay();
 	}
-	else
-	{		// ft_putstr_fd("ICI\n", 2);
-		sigint_process();
-	}
+	// else if (data->open_process)
+	// {
+	// 	sigint_process();
+	// }
 }
 
 void	handle_signals(void)
 {
-	t_data	*data;
+	struct sigaction act;
 
-	data = get_data();
-	signal(SIGINT, &handle_sigint);
-	signal(SIGQUIT, &handle_sigquit2);
-
+	ft_bzero(&act, sizeof(act));
+	act.sa_handler = handle_sigint;
+	act.sa_flags = SA_RESTART;
+	if (sigaction(SIGINT, &act, NULL) == -1)
+		perror("sigaction");
+	act.sa_handler = handle_sigquit2;
+	if (sigaction(SIGQUIT, &act, NULL) == -1)
+		perror("sigaction");
 }
 
 // void	signal_open_process(void)
