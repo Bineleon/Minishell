@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 01:56:59 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/14 01:57:02 by neleon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	handle_sigquit2(int sig)
@@ -50,13 +62,9 @@ void	handle_sigint(int sig)
 {
 	t_data	*data;
 
-	// ft_putstr_fd("NOT open_proc\n\n", 2);
 	(void)sig;
 	data = get_data();
 	data->exit_status = 130;
-	// if (data->open_process)
-	// 	ft_putstr_fd("open_proc\n\n", 2);
-	// else
 	if (data->heredoc)
 		sigint_herdeoc();
 	else if (!data->open_process)
@@ -76,12 +84,10 @@ void	handle_signals(void)
 	data = get_data();
 	signal(SIGINT, &handle_sigint);
 	signal(SIGQUIT, &handle_sigquit2);
-	// if (!data->open_process)
-	// {
-	// 	signal(SIGQUIT, SIG_IGN);
-	// }
-	// else
-	// {
-	// 	printf("\n");
-	// }
+
 }
+
+// void	signal_open_process(void)
+// {
+// 	signal(SIGQUIT, &handle_sigquit2);
+// }
