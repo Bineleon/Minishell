@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 21:38:10 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/14 18:06:01 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ void	init_cmds(t_data *data)
 	while (fullcmdtmp)
 	{
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
+		init_pipe(data, cmdstmp, is_first);
 		is_first = false;
+		redir_input(data, cmdstmp);
+		redir_output(data, cmdstmp);
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{
 			fullcmdtmp = fullcmdtmp->next;
@@ -112,10 +115,10 @@ void	init_cmds(t_data *data)
 			cmdstmp = cmdstmp->next;
 		}
 	}
-	int i = 0;
-	while (data->cmds->args[i])
-	{
-		printf("ARGS[i] : %s\n", data->cmds->args[i]);
-		i++;
-	}
+	// int i = 0;
+	// while (data->cmds->args[i])
+	// {
+	// 	printf("ARGS[i] : %s\n", data->cmds->args[i]);
+	// 	i++;
+	// }
 }

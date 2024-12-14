@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:49:57 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 20:36:35 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:07:15 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_delim(t_redir *current_redir, char *prompt)
 	return (0);
 }
 
-int	new_input_fd(t_data *data, t_redir *current_redir, int *fd)
+int	new_input_fd(t_data *data, t_cmd *cmd, t_redir *current_redir, int *fd)
 {
 	if (current_redir->type == IN)
 	{
@@ -35,7 +35,7 @@ int	new_input_fd(t_data *data, t_redir *current_redir, int *fd)
 	}
 	else if (current_redir->type == HEREDOC)
 	{
-		heredoc(data, current_redir);
+		heredoc(data, cmd, current_redir);
 		if (*fd > 0)
 			close(*fd);
 		(*fd) = 0;

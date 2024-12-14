@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/12 18:22:49 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/14 18:32:39 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_cmd
 	t_redir			*redir;
 	t_bool			is_first;
 	char			**args;
+	int				fd_redir[2];
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -199,8 +200,8 @@ void			which_child(t_data *data);
 void			first_child(t_data *data);
 void			middle_child(t_data *data);
 void			last_child(t_data *data);
-int				redir_input(t_data *data);
-void			heredoc(t_data *data, t_redir *current_redir);
+int				redir_input(t_data *data, t_cmd *cmd);
+void			heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir);
 void			clean_heredoc(t_data *data);
 void			new_heredoc(t_data *data);
 int				redir_output(t_data *data, t_cmd *cmd);
@@ -216,10 +217,11 @@ void			exec_builtin(t_data *data, t_cmd *cmds);
 t_bool			is_builtin(char *cmd);
 void			redir_builtins(t_data *data);
 int				is_delim(t_redir *current_redir, char *prompt);
-int				new_input_fd(t_data *data, t_redir *current_redir, int *fd);
+int				new_input_fd(t_data *data, t_cmd *cmd, t_redir *current_redir, int *fd);
 void			adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
 void			create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void			add_redir(t_redir **redir_list, t_token type, char *file_name);
+void			init_pipe(t_data *data, t_cmd *cmd, t_bool(is_first));
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */

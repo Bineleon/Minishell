@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/12 21:53:12 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:21:42 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	clean_heredoc(t_data *data)
 	gc_mem(FREE, (size_t) NULL, data->heredoc);
 }
 
-void	heredoc(t_data *data, t_redir *current_redir)
+void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 {
 	char	*prompt;
 
@@ -56,20 +56,20 @@ void	heredoc(t_data *data, t_redir *current_redir)
 		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt, "\n");
 	}
 	ft_putstr_fd(data->heredoc->fullprompt, data->heredoc->fd[1]);
-	dup2(data->heredoc->fd[0], STDIN_FILENO);
+	dup2(data->heredoc->fd[0], cmd->fd_redir[0]);
 	clean_heredoc(data);
 }
 
-int	redir_input(t_data *data)
+int	redir_input(t_data *data, t_cmd *cmd)
 {
-	t_redir	*current_redir;
+	t_redir *current_redir;
 	int		fd;
 
-	if (!data->cmds || !data->cmds->redir)
-		return (0);
-	current_redir = data->cmds->redir;
+	if (!cmd || !cmd->redir)
+		return (1);
+	current_redir = cmd->redir;
 	fd = 0;
-	while (current_redir)
+	while(current_redir)
 	{
 		if (current_redir->type == IN || current_redir->type == HEREDOC)
 		{
@@ -78,12 +78,40 @@ int	redir_input(t_data *data)
 				close(fd);
 				fd = 0;
 			}
-			if (new_input_fd(data, current_redir, &fd) == 0)
-				return (2); // ajouter gestion d'erreur en cas de non droits pour le fichier
+			if (new_input_fd(data, cmd, current_redir, &fd) == 0)
+				return (0);
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
-		return (dup2(fd, STDIN_FILENO), close(fd), 1);
-	return (0);
+		dup2(fd, cmd->fd_redir[0]);
+	return (1);
 }
+
+// int	redir_input(t_data *data)
+// {
+// 	t_redir	*current_redir;
+// 	int		fd;
+
+// 	if (!data->cmds || !data->cmds->redir)
+// 		return (0);
+// 	current_redir = data->cmds->redir;
+// 	fd = 0;
+// 	while (current_redir)
+// 	{
+// 		if (current_redir->type == IN || current_redir->type == HEREDOC)
+// 		{
+// 			if (fd > 0)
+// 			{
+// 				close(fd);
+// 				fd = 0;
+// 			}
+// 			if (new_input_fd(data, current_redir, &fd) == 0)
+// 				return (2); // ajouter gestion d'erreur en cas de non droits pour le fichier
+// 		}
+// 		current_redir = current_redir->next;
+// 	}
+// 	if (fd > 0)
+// 		return (dup2(fd, STDIN_FILENO), close(fd), 1);
+// 	return (0);
+// }

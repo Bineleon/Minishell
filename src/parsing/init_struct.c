@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/12/12 16:14:55 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/14 18:02:42 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,11 @@ void	init_cmd(t_cmd *cmd)
 	cmd->redir = NULL;
 	cmd->is_first = false;
 	cmd->prev = NULL;
+	if (pipe(cmd->fd_redir) == -1)
+	{
+		error_mess(NULL, NULL);
+		return ;
+	}
+	dup2(STDIN_FILENO, cmd->fd_redir[0]);
+	dup2(STDOUT_FILENO, cmd->fd_redir[1]);
 }
