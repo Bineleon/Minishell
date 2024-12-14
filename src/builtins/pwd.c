@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:39:51 by neleon            #+#    #+#             */
-/*   Updated: 2024/11/27 19:56:31 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 00:38:46 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@
 // 	return (NULL);
 // }
 
-void	ft_pwd(t_data *data)
+void ft_pwd(t_data *data)
 {
-	char	buf[PATH_MAX];
+	char buf[PATH_MAX];
 
 	if (getcwd(buf, PATH_MAX))
-  {
-		printf("%s\n", buf);
-    data->exit_status = 0;
-  }
+	{
+		ft_putstr_fd(buf, data->fd_);
+		ft_putstr_fd("\n", data->fd_);
+		close(data->fd_);
+		data->exit_status = 0;
+	}
 	else
 	{
 		perror("getcwd(): ");

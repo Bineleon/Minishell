@@ -6,7 +6,7 @@
 /*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/13 19:16:44 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 00:10:18 by elilliu@stu      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	exec_cmd(t_data *data)
 	}
 	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
 	{
-		redir_builtins(data);
+		// redir_builtins(data);
 		exec_builtin(data, data->cmds);
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
