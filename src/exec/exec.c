@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 15:26:12 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:21:03 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	exec(t_data *data)
 {
 	int	status;
 
-  data->sig = 0;
+	data->sig = 0;
 	init_cmds(data);
-  if (data->sig == 130)
-    return;
+	if (data->sig == 130)
+		return ;
 	data->open_process = false;
 	if (check_minishell_cmd(data))
 	{

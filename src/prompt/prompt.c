@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 16:34:02 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:21:40 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@
 // 	}
 // }
 
-
 void	handle_ctrl_d(t_data *data, char *prompt)
 {
 	printf(MAGENTA);
@@ -57,61 +56,62 @@ void	handle_ctrl_d(t_data *data, char *prompt)
 	exit(data->exit_status);
 }
 
-void handle_prompt_signals()
+void	handle_prompt_signals(void)
 {
-    handle_signals();
-    signal(SIGQUIT, SIG_IGN);
+	handle_signals();
+	signal(SIGQUIT, SIG_IGN);
 }
 
-char *read_prompt()
+char	*read_prompt(void)
 {
-    char *prompt;
+	char	*prompt;
 
-    printf(CYAN);
-    prompt = readline("Minishell> \033[0m");
-    signal(SIGQUIT, &handle_sigquit2);
-    return (prompt);
+	printf(CYAN);
+	prompt = readline("Minishell> \033[0m");
+	signal(SIGQUIT, &handle_sigquit2);
+	return (prompt);
 }
 
-void process_prompt(char *prompt, t_data *data)
+void	process_prompt(char *prompt, t_data *data)
 {
-    t_fullcmd *tokens = parse_tokens(prompt, data);
-    if (!check_errors(tokens))
-    {
-        expand_var(data);
-        find_cmds(data);
-    }
+	t_fullcmd	*tokens;
+
+	tokens = parse_tokens(prompt, data);
+	if (!check_errors(tokens))
+	{
+		expand_var(data);
+		find_cmds(data);
+	}
 }
 
-void ft_prompt(t_data *data)
+void	ft_prompt(t_data *data)
 {
-    char *prompt;
+	char	*prompt;
 
-    while (1)
-    {
-        handle_prompt_signals();
-        prompt = read_prompt();
-        if (!prompt)
-        {
-            handle_ctrl_d(data, prompt);
-            continue;
-        }
-        if (*prompt && !empty_line(prompt))
-        {
-            add_history(prompt);
-            if (check_open_quotes(prompt))
-                error_mess("error", "open quote\n");
-            else
-            {
-                process_prompt(prompt, data);
-                exec(data);
-            }
-        }
-        free(prompt);
-    }
-    gc_mem_env(FULL_CLEAN, 0, NULL);
+	while (1)
+	{
+		handle_prompt_signals();
+		prompt = read_prompt();
+		if (!prompt)
+		{
+			handle_ctrl_d(data, prompt);
+			continue ;
+		}
+		if (*prompt && !empty_line(prompt))
+		{
+			add_history(prompt);
+			if (check_open_quotes(prompt))
+				error_mess("error", "open quote\n");
+			else
+			{
+				process_prompt(prompt, data);
+				exec(data);
+			}
+		}
+		free(prompt);
+	}
+	gc_mem_env(FULL_CLEAN, 0, NULL);
 }
-
 
 // void	ft_prompt(t_data *data)
 // {

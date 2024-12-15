@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 14:51:44 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:40:09 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 	data->sig = 0;
 	new_heredoc(data);
 	data->heredoc->in_process = true;
-	// signal(SIGQUIT, SIG_IGN);
 	handle_signals();
 	if (pipe(data->heredoc->fd) == -1)
 		return ((void)clean_heredoc(data), (void)error_mess(NULL, NULL));
@@ -63,15 +62,9 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 	while (data->sig != 130)
 	{
 		signal(SIGQUIT, SIG_IGN);
-		// handle_signals();
 		prompt = readline("> ");
 		if (!prompt && data->sig == 130)
-		{
-			// data->heredoc->in_process = false;
-			// clean_heredoc(data);
-      printf("\nTEST0\n");
 			return (restore_stdin(&stdi));
-		}
 		else if (!prompt && data->sig != 130)
 		{
 			clean_heredoc(data);
@@ -97,15 +90,15 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 
 int	redir_input(t_data *data, t_cmd *cmd)
 {
-	t_redir *current_redir;
+	t_redir	*current_redir;
 	int		fd;
-  int   res;
+	int		res;
 
 	if (!cmd || !cmd->redir)
 		return (1);
 	current_redir = cmd->redir;
 	fd = 0;
-	while(current_redir)
+	while (current_redir)
 	{
 		if (current_redir->type == IN || current_redir->type == HEREDOC)
 		{
@@ -114,22 +107,18 @@ int	redir_input(t_data *data, t_cmd *cmd)
 				close(fd);
 				fd = 0;
 			}
-      res = new_input_fd(data, cmd, current_redir, &fd) == 0;
-      printf("\nRES %d\n", res);
-      if (res == 0 || res == 130)
-      {
-          printf("\nTEST2\n");
-          return (res);
-      }
-				return (0);
+			res = new_input_fd(data, cmd, current_redir, &fd) == 0;
+			if (res == 0 || res == 130)
+				return (res);
+			return (0);
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
-  {
+	{
 		dup2(fd, cmd->fd_redir[0]);
-    close(fd);
-  }
+		close(fd);
+	}
 	return (1);
 }
 

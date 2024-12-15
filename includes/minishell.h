@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 16:23:57 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 17:23:13 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	struct s_cmd	*prev;
-	char			*cmd;
-	t_redir			*redir;
-	t_bool			is_first;
-	char			**args;
-	int				fd_redir[2];
-	struct s_cmd	*next;
-}					t_cmd;
+	struct s_cmd			*prev;
+	char					*cmd;
+	t_redir					*redir;
+	t_bool					is_first;
+	char					**args;
+	int						fd_redir[2];
+	struct s_cmd			*next;
+}							t_cmd;
 
 typedef struct s_garbage_co
 {
@@ -292,7 +292,7 @@ t_bool						is_redi(t_fullcmd *token);
 void						skip_var_name(char *line, int *i);
 char						**gc_split(char const *s, char c);
 void						free_post_prompt(t_data *data);
-t_bool	        empty_line(char *line);
+t_bool						empty_line(char *line);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

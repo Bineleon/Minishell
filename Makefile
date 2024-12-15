@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
+#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/07 19:57:25 by neleon            #+#    #+#              #
-#    Updated: 2024/12/15 13:53:47 by bineleon         ###   ########.fr        #
+#    Updated: 2024/12/15 17:31:44 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ PROMPT			= prompt.c
 SRC				+= $(addprefix ${PROMPT_DIR}, ${PROMPT})
 
 SIGNAL_DIR		= src/signal/
-SIGNAL			= signal_handler.c
+SIGNAL			= signal_handler.c signal_handler2.c
 SRC				+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR		= src/utils/

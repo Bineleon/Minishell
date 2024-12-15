@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 14:50:48 by bineleon         ###   ########.fr       */
+/*   Created: 2024/12/15 17:27:19 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 17:27:21 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,11 @@ void	init_cmds(t_data *data)
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
 		init_pipe(data, cmdstmp, is_first);
 		is_first = false;
-    if (redir_input(data, cmdstmp) == 130)
-    {
-        printf("\nTEST4\n");
-        return ;
-    }
+		if (redir_input(data, cmdstmp) == 130)
+		{
+			printf("\nTEST4\n");
+			return ;
+		}
 		redir_output(data, cmdstmp);
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{

@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 14:50:05 by bineleon         ###   ########.fr       */
+/*   Created: 2024/12/15 17:28:53 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 17:30:40 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	handle_sigquit2(int sig)
-{
-	t_data	*data;
-
-	(void)sig;
-	data = get_data();
-	if (data->open_process)
-	{
-		data->exit_status = 131;
-		ft_putstr_fd("\033[1;31mQuit (core dumped)\033[0m\n", 2);
-	}
-}
 
 static void	replace_redisplay(void)
 {
@@ -66,7 +53,7 @@ void	handle_sigint(int sig)
 
 	(void)sig;
 	data = get_data();
-  data->sig = 130;
+	data->sig = 130;
 	data->exit_status = data->sig;
 	if (data->heredoc && data->heredoc->in_process)
 	{
