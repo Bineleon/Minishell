@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:55 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 00:54:02 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 15:12:18 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	ft_env(t_data *data)
 	while (curr)
 	{
 		if (curr->value)
+    {
+      
 			printf("%s=%s\n", curr->key, curr->value);
+    }
 		else if (curr->equal && !curr->value)
 			printf("%s=\n", curr->key);
 		curr = curr->next;
