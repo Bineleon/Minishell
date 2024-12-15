@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:17:29 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 02:34:12 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:57:27 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,15 @@ void	create_new_cmd(t_cmd *cmds, t_fullcmd **current)
 
 int	is_last(t_fullcmd **fullcmd, t_cmd *cmd)
 {
-	t_fullcmd	*current;
+	t_fullcmd *current;
 
 	current = *fullcmd;
-	while (current && cmd->cmd && ft_strncmp(cmd->cmd, current->str,
-			ft_strlen(cmd->cmd)) != 0)
+	while (current && ft_strncmp(cmd->cmd, current->str, ft_strlen(cmd->cmd)) != 0)
 		current = current->next;
 	while (current)
 	{
 		if (current->type == PIPE)
-			return (0);
+			return(0);
 		current = current->next;
 	}
 	return (1);

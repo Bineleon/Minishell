@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:49:57 by elilliu           #+#    #+#             */
 /*   Updated: 2024/12/15 02:21:20 by neleon           ###   ########.fr       */
+=======
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 11:49:57 by elilliu           #+#    #+#             */
+/*   Updated: 2024/12/14 17:07:15 by elilliu@stu      ###   ########.fr       */
+>>>>>>> exec
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +42,14 @@ int	new_input_fd(t_data *data, t_cmd *cmd, t_redir *current_redir, int *fd)
 	}
 	else if (current_redir->type == HEREDOC)
 	{
+<<<<<<< HEAD
 		// signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_IGN);
 		heredoc(data, cmd, current_redir);
 		handle_signals();
+=======
+		heredoc(data, cmd, current_redir);
+>>>>>>> exec
 		if (*fd > 0)
 			close(*fd);
 		(*fd) = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 02:11:20 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:56:25 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,12 @@ void	exec(t_data *data)
 		if (is_builtin(data->cmds->cmd) && data->cmds->is_first
 			&& data->cmds->next == NULL)
 		{
-			// redir_input(data);
-			// redir_builtins(data);
+			dup2(data->cmds->fd_redir[0], STDIN_FILENO);
+			close(data->cmds->fd_redir[0]);
+			redir_builtins(data);
 			exec_builtin(data, data->cmds);
 			return ;
 		}
-		// if (data->cmds->next)
-		// {
-		// 	if (pipe(data->fd) == -1) // ADD FULL_CLEAN + close + exit
-		// 		return ((void)error_mess(NULL, NULL));
-		// }
 		data->pid = fork();
 		if (data->pid == -1)
 			return ((void)error_mess(NULL, NULL)); // add full clean

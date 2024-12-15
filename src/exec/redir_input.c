@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 02:19:34 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:58:23 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 
 int	redir_input(t_data *data, t_cmd *cmd)
 {
-	t_redir	*current_redir;
+	t_redir *current_redir;
 	int		fd;
 
 	if (!cmd || !cmd->redir)
 		return (1);
 	current_redir = cmd->redir;
 	fd = 0;
-	while (current_redir)
+	while(current_redir)
 	{
 		if (current_redir->type == IN || current_redir->type == HEREDOC)
 		{

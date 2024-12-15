@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/15 02:36:24 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:56:42 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ void	exec_cmd(t_data *data)
 	char	*path;
 	char	**newenv;
 
-	// t_bool	no_cmd;
-	// no_cmd = false;
 	path = NULL;
 	if (data->cmds->cmd && ft_strlen(data->cmds->cmd) < 1 && !data->cmds->redir)
 	{
@@ -111,7 +109,7 @@ void	exec_cmd(t_data *data)
 	}
 	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
 	{
-		redir_builtins(data);
+		// redir_builtins(data);
 		exec_builtin(data, data->cmds);
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);

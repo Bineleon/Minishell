@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
+#    By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/07 19:57:25 by neleon            #+#    #+#              #
-#    Updated: 2024/12/14 01:48:09 by neleon           ###   ########.fr        #
+#    Updated: 2024/12/15 13:53:47 by bineleon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ fclean: clean
 	@${RM} ${NAME}
 	@echo "${GREEN}Full clean  : DONE!${RESET}"
 
-re: fclean all
+re: fclean
+		make all
 
 .PHONY: all clean fclean re run

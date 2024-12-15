@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   children.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 02:16:03 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:56:10 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	fullclose_fd(t_data *data, int a, int b, int c)
-{
-	if (a >= 0 && data->fd[a] != -1)
-		close(data->fd[a]);
-	if (b >= 0 && data->fd[b] != -1)
-		close(data->fd[b]);
-	if (c >= 0 && data->fd[c] != -1)
-		close(data->fd[c]);
-}
+// void	fullclose_fd(t_data *data, int a, int b, int c)
+// {
+// 	if (a >= 0 && data->fd[a] != -1)
+// 		close(data->fd[a]);
+// 	if (b >= 0 && data->fd[b] != -1)
+// 		close(data->fd[b]);
+// 	if (c >= 0 && data->fd[c] != -1)
+// 		close(data->fd[c]);
+// }
 
 void	config_child_signals(void)
 {

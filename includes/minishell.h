@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
 /*   Updated: 2024/12/15 02:28:24 by neleon           ###   ########.fr       */
+=======
+/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/12/15 00:09:25 by elilliu@stu      ###   ########.fr       */
+>>>>>>> exec
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +87,14 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	struct s_cmd			*prev;
-	char					*cmd;
-	t_redir					*redir;
-	t_bool					is_first;
-	char					**args;
-	int						fd_redir[2];
-	struct s_cmd			*next;
-}							t_cmd;
+	struct s_cmd	*prev;
+	char			*cmd;
+	t_redir			*redir;
+	t_bool			is_first;
+	char			**args;
+	int				fd_redir[2];
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_garbage_co
 {
