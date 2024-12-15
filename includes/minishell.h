@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 02:28:24 by neleon           ###   ########.fr       */
-=======
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 00:09:25 by elilliu@stu      ###   ########.fr       */
->>>>>>> exec
+/*   Updated: 2024/12/15 14:03:47 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +24,6 @@
 # include <signal.h>
 # include <stdio.h>
 # include <sys/wait.h>
-# include <termios.h>
 # include <unistd.h>
 
 /* ╔════════════════════════════════════╗ */
@@ -136,7 +128,6 @@ typedef struct s_data
 	t_bool					open_process;
 	char					*delim;
 	t_cmd					*cmds;
-	struct termios			term_state;
 	t_fullcmd				*token_fullcmd;
 	t_garbage_env			*garbage_env;
 	t_garbage_co			*garbage;
