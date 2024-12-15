@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 14:03:47 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:23:57 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,7 @@ t_bool						is_redi(t_fullcmd *token);
 void						skip_var_name(char *line, int *i);
 char						**gc_split(char const *s, char c);
 void						free_post_prompt(t_data *data);
+t_bool	        empty_line(char *line);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

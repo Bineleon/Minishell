@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 14:13:12 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:34:02 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,6 @@
 // 	}
 // }
 
-t_bool	empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t')
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 void	handle_ctrl_d(t_data *data, char *prompt)
 {
@@ -70,43 +57,96 @@ void	handle_ctrl_d(t_data *data, char *prompt)
 	exit(data->exit_status);
 }
 
-void	ft_prompt(t_data *data)
+void handle_prompt_signals()
 {
-	char		*prompt;
-	t_fullcmd	*tokens;
-
-	tokens = NULL;
-	while (1)
-	{
-		handle_signals();
-		printf(CYAN);
-		signal(SIGQUIT, SIG_IGN);
-		prompt = readline("Minishell> \033[0m");
-		signal(SIGQUIT, &handle_sigquit2);
-		if (!prompt)
-			handle_ctrl_d(data, prompt);
-		if (prompt && *prompt)
-		{
-			if (empty_line(prompt))
-				continue ;
-			add_history(prompt);
-			if (check_open_quotes(prompt))
-			{
-				error_mess("error", "open quote\n");
-				continue ;
-			}
-			tokens = parse_tokens(prompt, data);
-			// print_tokens(tokens);
-			if (!check_errors(tokens))
-			{
-				expand_var(data);
-				find_cmds(data);
-				// print_tokens(tokens);
-        // printf("PROMPT\n");
-				exec(data);
-			}
-		}
-		free(prompt);
-	}
-	gc_mem_env(FULL_CLEAN, 0, NULL);
+    handle_signals();
+    signal(SIGQUIT, SIG_IGN);
 }
+
+char *read_prompt()
+{
+    char *prompt;
+
+    printf(CYAN);
+    prompt = readline("Minishell> \033[0m");
+    signal(SIGQUIT, &handle_sigquit2);
+    return (prompt);
+}
+
+void process_prompt(char *prompt, t_data *data)
+{
+    t_fullcmd *tokens = parse_tokens(prompt, data);
+    if (!check_errors(tokens))
+    {
+        expand_var(data);
+        find_cmds(data);
+    }
+}
+
+void ft_prompt(t_data *data)
+{
+    char *prompt;
+
+    while (1)
+    {
+        handle_prompt_signals();
+        prompt = read_prompt();
+        if (!prompt)
+        {
+            handle_ctrl_d(data, prompt);
+            continue;
+        }
+        if (*prompt && !empty_line(prompt))
+        {
+            add_history(prompt);
+            if (check_open_quotes(prompt))
+                error_mess("error", "open quote\n");
+            else
+            {
+                process_prompt(prompt, data);
+                exec(data);
+            }
+        }
+        free(prompt);
+    }
+    gc_mem_env(FULL_CLEAN, 0, NULL);
+}
+
+
+// void	ft_prompt(t_data *data)
+// {
+// 	char		*prompt;
+// 	t_fullcmd	*tokens;
+
+// 	tokens = NULL;
+// 	while (1)
+// 	{
+// 		handle_signals();
+// 		printf(CYAN);
+// 		signal(SIGQUIT, SIG_IGN);
+// 		prompt = readline("Minishell> \033[0m");
+// 		signal(SIGQUIT, &handle_sigquit2);
+// 		if (!prompt)
+// 			handle_ctrl_d(data, prompt);
+// 		if (prompt && *prompt)
+// 		{
+// 			if (empty_line(prompt))
+// 				continue ;
+// 			add_history(prompt);
+// 			if (check_open_quotes(prompt))
+// 			{
+// 				error_mess("error", "open quote\n");
+// 				continue ;
+// 			}
+// 			tokens = parse_tokens(prompt, data);
+// 			if (!check_errors(tokens))
+// 			{
+// 				expand_var(data);
+// 				find_cmds(data);
+// 				exec(data);
+// 			}
+// 		}
+// 		free(prompt);
+// 	}
+// 	gc_mem_env(FULL_CLEAN, 0, NULL);
+// }

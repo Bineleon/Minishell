@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:07:48 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 15:23:27 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 16:10:04 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,30 @@ t_env	**lst_to_arr(t_env *env)
 	return (arr);
 }
 
+static void sub_print_export(t_env *entry, int fd)
+{
+    if (entry->value)
+    {
+        ft_putstr_fd("export ", fd);
+        ft_putstr_fd(entry->key, fd);
+        ft_putstr_fd("=\"", fd);
+        ft_putstr_fd(entry->value, fd);
+        ft_putstr_fd("\"\n", fd);
+    }
+    else if (entry->equal == false)
+    {
+        ft_putstr_fd("export ", fd);
+        ft_putstr_fd(entry->key, fd);
+        ft_putstr_fd("\n", fd);
+    }
+    else if (entry->equal && !entry->value)
+    {
+        ft_putstr_fd("export ", fd);
+        ft_putstr_fd(entry->key, fd);
+        ft_putstr_fd("=\"\"\n", fd);
+    }
+}
+
 void print_export(t_env **arr)
 {
     int i;
@@ -52,29 +76,45 @@ void print_export(t_env **arr)
         return;
     while (arr[i])
     {
-        if (arr[i]->value)
-        {
-            ft_putstr_fd("export ", data->fd_);
-            ft_putstr_fd(arr[i]->key, data->fd_);
-            ft_putstr_fd("=\"", data->fd_);
-            ft_putstr_fd(arr[i]->value, data->fd_);
-            ft_putstr_fd("\"\n", data->fd_);
-        }
-        else if (arr[i]->equal == false)
-        {
-            ft_putstr_fd("export ", data->fd_);
-            ft_putstr_fd(arr[i]->key, data->fd_);
-            ft_putstr_fd("\n", data->fd_);
-        }
-        else if (arr[i]->equal && !arr[i]->value)
-        {
-            ft_putstr_fd("export ", data->fd_);
-            ft_putstr_fd(arr[i]->key, data->fd_);
-            ft_putstr_fd("=\"\"\n", data->fd_);
-        }
+        sub_print_export(arr[i], data->fd_);
         i++;
     }
 }
+
+// void print_export(t_env **arr)
+// {
+//     int i;
+//     t_data *data;
+
+//     i = 0;
+//     data = get_data();
+//     if (!arr)
+//         return;
+//     while (arr[i])
+//     {
+//         if (arr[i]->value)
+//         {
+//             ft_putstr_fd("export ", data->fd_);
+//             ft_putstr_fd(arr[i]->key, data->fd_);
+//             ft_putstr_fd("=\"", data->fd_);
+//             ft_putstr_fd(arr[i]->value, data->fd_);
+//             ft_putstr_fd("\"\n", data->fd_);
+//         }
+//         else if (arr[i]->equal == false)
+//         {
+//             ft_putstr_fd("export ", data->fd_);
+//             ft_putstr_fd(arr[i]->key, data->fd_);
+//             ft_putstr_fd("\n", data->fd_);
+//         }
+//         else if (arr[i]->equal && !arr[i]->value)
+//         {
+//             ft_putstr_fd("export ", data->fd_);
+//             ft_putstr_fd(arr[i]->key, data->fd_);
+//             ft_putstr_fd("=\"\"\n", data->fd_);
+//         }
+//         i++;
+//     }
+// }
 
 // void	print_export(t_env **arr)
 // {
