@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 17:27:19 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 17:27:21 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/15 18:00:38 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 18:00:42 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ void	init_cmds(t_data *data)
 	t_fullcmd	*fullcmdtmp;
 	t_bool		is_first;
 
-	data->fd[0] = -1;
-	data->fd[1] = -1;
-	data->fd[2] = -1;
+	init_data_fd(data);
 	data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
 	init_cmd(data->cmds);
 	cmdstmp = data->cmds;
@@ -99,14 +97,10 @@ void	init_cmds(t_data *data)
 	while (fullcmdtmp)
 	{
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
-		init_pipe(data, cmdstmp, is_first);
+		init_pipe(data, cmdstmp, &fullcmdtmp, is_first);
 		is_first = false;
-		if (redir_input(data, cmdstmp) == 130)
-		{
-			printf("\nTEST4\n");
+		if (redir_puts(data, cmdstmp) == 0)
 			return ;
-		}
-		redir_output(data, cmdstmp);
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{
 			fullcmdtmp = fullcmdtmp->next;

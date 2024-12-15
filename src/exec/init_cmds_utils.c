@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:17:29 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 17:21:06 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 17:55:49 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,11 @@ void	create_new_cmd(t_cmd *cmds, t_fullcmd **current)
 	fill_args(cmds, current, cmds->args, &i);
 }
 
-int	is_last(t_fullcmd **fullcmd, t_cmd *cmd)
+int	is_last(t_fullcmd **fullcmd)
 {
 	t_fullcmd	*current;
 
 	current = *fullcmd;
-	while (current && cmd->cmd && ft_strncmp(cmd->cmd, current->str,
-			ft_strlen(cmd->cmd)) != 0)
-		current = current->next;
 	while (current)
 	{
 		if (current->type == PIPE)
@@ -123,21 +120,22 @@ int	is_last(t_fullcmd **fullcmd, t_cmd *cmd)
 	return (1);
 }
 
-void	init_pipe(t_data *data, t_cmd *cmd, t_bool(is_first))
+void	init_pipe(t_data *data, t_cmd *cmd, t_fullcmd **fullcmd,
+			t_bool(is_first))
 {
 	if (is_first == false)
 	{
-		dup2(data->fd[1], cmd->fd_redir[0]);
+		dup2(data->fd[0], cmd->fd_redir[0]);
 		close(data->fd[0]);
 		close(data->fd[1]);
 	}
-	if (is_last(&data->token_fullcmd, cmd) == 0)
+	if (is_last(fullcmd) == 0)
 	{
 		if (pipe(data->fd) == -1)
 		{
 			error_mess(NULL, NULL);
 			return ;
 		}
-		dup2(data->fd[0], cmd->fd_redir[1]);
+		dup2(data->fd[1], cmd->fd_redir[1]);
 	}
 }

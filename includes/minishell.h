@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 17:23:13 by neleon           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/12/15 18:05:50 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,38 @@ char						*expand_exit_st(char *str, char **result, int i);
 /* ╚════════════════════════════════════╝ */
 
 void						exec(t_data *data);
+void						exec_child(t_data *data);
+int							redir_input(t_data *data, t_cmd *cmd);
+void						heredoc(t_data *data, t_cmd *cmd,
+								t_redir *current_redir);
+void						clean_heredoc(t_data *data);
+void						new_heredoc(t_data *data);
+int							redir_output(t_data *data, t_cmd *cmd);
+void						exec_cmd(t_data *data);
+char						*new_path(char *arg, t_env *env_cpy);
+char						**all_paths(t_env *env);
+char						*join(char *path, char *cmd);
+void						init_cmds(t_data *data);
+void						new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
+char						*joinequal(char *key, char *value);
+char						**ft_newenv(t_data *data);
+void						exec_builtin(t_data *data, t_cmd *cmds);
+t_bool						is_builtin(char *cmd);
+void						redir_builtins(t_data *data);
+int							is_delim(t_redir *current_redir, char *prompt);
+int							new_input_fd(t_data *data, t_cmd *cmd,
+								t_redir *current_redir, int *fd);
+void						adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
+void						create_new_cmd(t_cmd *cmds, t_fullcmd **current);
+void						add_redir(t_redir **redir_list, t_token type,
+								char *file_name);
+void						init_pipe(t_data *data, t_cmd *cmd,
+								t_fullcmd **fullcmd, t_bool(is_first));
+void						init_data_fd(t_data *data);
+int							redir_puts(t_data *data, t_cmd *cmdstmp);
+int							verif_interactive_mode(t_data *data);
+void						finish_process(t_data *data);
+void						exec(t_data *data);
 void						which_child(t_data *data);
 void						first_child(t_data *data);
 void						middle_child(t_data *data);
@@ -237,8 +269,6 @@ void						adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
 void						create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void						add_redir(t_redir **redir_list, t_token type,
 								char *file_name);
-void						init_pipe(t_data *data, t_cmd *cmd,
-								t_bool(is_first));
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
