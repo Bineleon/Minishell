@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 16:20:17 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 17:22:45 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,20 @@
 
 void	exec_child(t_data *data)
 {
+	t_cmd	*current;
+
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	data->open_process = true;
 	dup2(data->cmds->fd_redir[0], STDIN_FILENO);
 	dup2(data->cmds->fd_redir[1], STDOUT_FILENO);
-	close(data->cmds->fd_redir[0]);
-	close(data->cmds->fd_redir[1]);
+	current = data->cmds;
+	while (current)
+	{
+		close(current->fd_redir[0]);
+		close(current->fd_redir[1]);
+		current = current->next;
+	}
 	exec_cmd(data);
 }
 
@@ -70,13 +77,8 @@ void	exec(t_data *data)
 		finish_process(data);
 		if (data->cmds->next)
 			close(data->fd[1]);
-		if (data->fd[2] != -1)
-			close(data->fd[2]);
-		data->fd[2] = data->fd[0];
 		data->cmds = data->cmds->next;
 	}
-	if (data->fd[2] != -1)
-		close(data->fd[2]);
 	wait_pid(data);
 	data->open_process = false;
 }

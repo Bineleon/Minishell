@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 16:20:32 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 16:25:13 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_data
 {
 	t_env					*envp_cpy;
 	size_t					cmds_count;
-	int						fd[3];
+	int						fd[2];
 	int						fd_;
 	int						pid;
 	int						exit_status;

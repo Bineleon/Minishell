@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:26:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 16:02:16 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 16:24:40 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	init_data_fd(t_data *data)
 {
 	data->fd[0] = -1;
 	data->fd[1] = -1;
-	data->fd[2] = -1;
 }
 
 void	redir_puts(t_data *data, t_cmd *cmdstmp)
