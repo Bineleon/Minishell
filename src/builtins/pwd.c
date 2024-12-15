@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:39:51 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 00:38:46 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 15:45:35 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void ft_pwd(t_data *data)
 	{
 		ft_putstr_fd(buf, data->fd_);
 		ft_putstr_fd("\n", data->fd_);
-		close(data->fd_);
+		if (data->fd_ > 1)
+			close(data->fd_);
 		data->exit_status = 0;
 	}
 	else

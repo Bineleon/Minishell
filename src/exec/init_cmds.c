@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 14:59:06 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 16:02:39 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ void	sub_init_cmds(t_cmd *cmd, t_fullcmd **fullcmd, t_bool is_first)
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
-			{
-				// error_mess(current_redir->file_name, NULL);
 				return ;
-			}
 			else
 				close(fd);
 			current_redir = current_redir->next;
@@ -91,9 +88,7 @@ void	init_cmds(t_data *data)
 	t_fullcmd	*fullcmdtmp;
 	t_bool		is_first;
 
-	data->fd[0] = -1;
-	data->fd[1] = -1;
-	data->fd[2] = -1;
+	init_data_fd(data);
 	data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
 	init_cmd(data->cmds);
 	cmdstmp = data->cmds;
@@ -104,8 +99,7 @@ void	init_cmds(t_data *data)
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
 		init_pipe(data, cmdstmp, &fullcmdtmp, is_first);
 		is_first = false;
-		redir_input(data, cmdstmp);
-		redir_output(data, cmdstmp);
+		redir_puts(data, cmdstmp);
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{
 			fullcmdtmp = fullcmdtmp->next;
@@ -115,10 +109,4 @@ void	init_cmds(t_data *data)
 			cmdstmp = cmdstmp->next;
 		}
 	}
-	// int i = 0;
-	// while (data->cmds->args[i])
-	// {
-	// 	printf("ARGS[i] : %s\n", data->cmds->args[i]);
-	// 	i++;
-	// }
 }

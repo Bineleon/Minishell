@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 19:09:28 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 00:35:58 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 15:45:21 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_echo(t_cmd *cmds, int fd)
 	{
 		ft_putstr_fd("\n", fd);
 	}
-	close(fd);
+	if (fd > 1)
+		close(fd);
 	data->exit_status = 0;
 }

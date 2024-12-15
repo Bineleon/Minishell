@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:17:29 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 15:26:58 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 15:58:23 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	create_new_cmd(t_cmd *cmds, t_fullcmd **current)
 
 int	is_last(t_fullcmd **fullcmd)
 {
-	t_fullcmd *current;
+	t_fullcmd	*current;
 
 	current = *fullcmd;
 	while (current)

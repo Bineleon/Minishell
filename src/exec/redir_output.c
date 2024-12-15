@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 00:35:31 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 15:46:22 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	redir_builtins(t_data *data)
 
 	if (!data->cmds || !data->cmds->redir)
 	{
-		data->fd_ = 0;
+		data->fd_ = 1;
 		return ;
 	}
 	current_redir = data->cmds->redir;

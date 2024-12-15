@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 15:13:42 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 16:20:32 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,10 @@ void			create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void			add_redir(t_redir **redir_list, t_token type, char *file_name);
 void			init_pipe(t_data *data, t_cmd *cmd, t_fullcmd **fullcmd,
 					t_bool(is_first));
+void			init_data_fd(t_data *data);
+void			redir_puts(t_data *data, t_cmd *cmdstmp);
+int				verif_interactive_mode(t_data *data);
+void			finish_process(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
