@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 02:19:34 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:41:05 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	new_heredoc(t_data *data)
 	data->fd[1] = -1;
 	data->heredoc = gc_mem(MALLOC, sizeof(t_heredoc), NULL);
 	data->heredoc->fullprompt = NULL;
-	data->heredoc->in_process = true;
+	data->heredoc->in_process = false;
 }
 
 void	clean_heredoc(t_data *data)
@@ -29,7 +29,7 @@ void	clean_heredoc(t_data *data)
 		close(data->heredoc->fd[1]);
 	if (data->heredoc->fullprompt)
 		gc_mem(FREE, 0, data->heredoc->fullprompt);
-	gc_mem(FREE, 0, data->heredoc);
+	data->heredoc = gc_mem(FREE, 0, data->heredoc);
 }
 
 void	save_stdin(int *stdi)
@@ -51,7 +51,6 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 	int		stdi;
 
 	save_stdin(&stdi);
-	printf("stdin : %d\n", stdi);
 	data->sig = 0;
 	new_heredoc(data);
 	data->heredoc->in_process = true;
@@ -92,6 +91,7 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 	dup2(data->heredoc->fd[0], cmd->fd_redir[0]);
 	clean_heredoc(data);
 	free(prompt);
+  prompt = NULL;
 	close(stdi);
 }
 

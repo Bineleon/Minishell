@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:56:59 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 02:22:04 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 12:07:38 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	sigint_process(void)
 {
 	t_data	*data;
 
-	printf("SIGIN\n\n");
 	data = get_data();
 	data->sig = 130;
 	data->exit_status = data->sig;
@@ -57,6 +56,7 @@ static void	sigint_heredoc(void)
 	data->sig = 130;
 	data->exit_status = data->sig;
 	printf("\n");
+  data->heredoc->in_process = false;
 	clean_heredoc(data);
 	close(STDIN_FILENO);
 }
@@ -67,11 +67,10 @@ void	handle_sigint(int sig)
 
 	(void)sig;
 	data = get_data();
-	data->exit_status = 130;
+  data->sig = 130;
+	data->exit_status = data->sig;
 	if (data->heredoc && data->heredoc->in_process)
-	{
 		sigint_heredoc();
-	}
 	else if (!data->open_process)
 		replace_redisplay();
 	else if (data->open_process)
@@ -80,9 +79,6 @@ void	handle_sigint(int sig)
 
 void	handle_signals(void)
 {
-	t_data	*data;
-
-	data = get_data();
 	signal(SIGINT, &handle_sigint);
 	signal(SIGQUIT, &handle_sigquit2);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 18:58:53 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:24:05 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 12:02:54 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	*gc_free(t_garbage_co *garbage, void *ptr)
 		{
 			free(current->ptr);
 			current->ptr = NULL;
+      
 		}
 		current = current->next;
 	}
@@ -41,13 +42,19 @@ static void	*gc_full_clean(t_garbage_co *garbage)
 		{
 			free(tmp->ptr);
 			tmp->ptr = NULL;
+
 		}
 		garbage = garbage->next;
 		free(tmp);
+    tmp = NULL;
 	}
 	if (garbage->ptr)
+  {
 		free(garbage->ptr);
+    garbage->ptr = NULL;
+  }
 	free(garbage);
+  garbage = NULL;
 	return (NULL);
 }
 

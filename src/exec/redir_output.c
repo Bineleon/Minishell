@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:36:36 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:36:39 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 13:47:36 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	redir_builtins(t_data *data)
 		data->fd_ = fd;
 }
 
-int	redir_output(t_data *data, t_cmd *cmd)
+int	redir_cmd(t_data *data, t_cmd *cmd)
 {
 	t_redir	*current_redir;
 	int		fd;
@@ -81,11 +81,49 @@ int	redir_output(t_data *data, t_cmd *cmd)
 				fd = -1;
 			}
 			if (new_output_fd(data, current_redir, &fd) == 0)
-				return (2);
+				return (1);
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
-		return (dup2(fd, STDOUT_FILENO), close(fd), 1);
+		dup2(fd, cmd->fd_redir[1]);
 	return (0);
 }
+
+int	redir_output(t_data *data, t_cmd *cmd)
+{
+	if (!cmd || !cmd->redir)
+		return (0);
+	if (!is_builtin(cmd->cmd))
+		return (redir_cmd(data, cmd));
+	else
+		return (0);
+}
+
+// int	redir_output(t_data *data, t_cmd *cmd)
+// {
+// 	t_redir	*current_redir;
+// 	int		fd;
+
+// 	if (!cmd || !cmd->redir)
+// 		return (0);
+// 	current_redir = cmd->redir;
+// 	fd = -1;
+// 	while (current_redir)
+// 	{
+// 		if (current_redir->type == OUT || current_redir->type == APPEND)
+// 		{
+// 			if (fd > 0)
+// 			{
+// 				close(fd);
+// 				fd = -1;
+// 			}
+// 			if (new_output_fd(data, current_redir, &fd) == 0)
+// 				return (2);
+// 		}
+// 		current_redir = current_redir->next;
+// 	}
+// 	if (fd > 0)
+// 		return (dup2(fd, STDOUT_FILENO), close(fd), 1);
+// 	return (0);
+// }
