@@ -6,7 +6,7 @@
 /*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 16:02:39 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 17:39:38 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	sub_init_cmds(t_cmd *cmd, t_fullcmd **fullcmd, t_bool is_first)
 	t_redir	*current_redir;
 	int		fd;
 
+	fd = 0;
 	cmd->is_first = is_first;
 	new_cmd(cmd, fullcmd);
 	if (!cmd->cmd && cmd->redir)
@@ -70,12 +71,12 @@ void	sub_init_cmds(t_cmd *cmd, t_fullcmd **fullcmd, t_bool is_first)
 			if (current_redir->type == OUT)
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			else
+			else if (current_redir->type == APPEND)
 				fd = open(current_redir->file_name,
 						O_CREAT | O_WRONLY | O_APPEND, 0644);
 			if (fd == -1)
 				return ;
-			else
+			else if (fd)
 				close(fd);
 			current_redir = current_redir->next;
 		}
