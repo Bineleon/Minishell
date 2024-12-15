@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:55 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 15:24:28 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:43:55 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,36 @@ void	ft_env(t_data *data)
 	while (curr)
 	{
 		if (curr->value)
-    {
-			printf("%s=%s\n", curr->key, curr->value);
-    }
+		{
+			ft_putstr_fd(curr->key, data->fd_);
+			ft_putstr_fd("=", data->fd_);
+			ft_putstr_fd(curr->value, data->fd_);
+			ft_putstr_fd("\n", data->fd_);
+		}
 		else if (curr->equal && !curr->value)
-			printf("%s=\n", curr->key);
+		{
+			ft_putstr_fd(curr->key, data->fd_);
+			ft_putstr_fd("=\n", data->fd_);
+		}
 		curr = curr->next;
 	}
 	data->exit_status = 0;
 }
+
+// void	ft_env(t_data *data)
+// {
+// 	t_env	*curr;
+
+// 	curr = data->envp_cpy;
+// 	while (curr)
+// 	{
+// 		if (curr->value)
+//     {
+// 			printf("%s=%s\n", curr->key, curr->value);
+//     }
+// 		else if (curr->equal && !curr->value)
+// 			printf("%s=\n", curr->key);
+// 		curr = curr->next;
+// 	}
+// 	data->exit_status = 0;
+// }

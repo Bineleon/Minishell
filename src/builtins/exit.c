@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:46:13 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/11 20:49:26 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 15:44:47 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_exit(t_cmd *cmds)
 
 	data = get_data();
 	status = 0;
+  ft_putstr_fd("exit\n", data->fd_);
 	if (cmds->args[1])
 		validate_status(cmds, &status);
 	if (check_args_count(cmds))
