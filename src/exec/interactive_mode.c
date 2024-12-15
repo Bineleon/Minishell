@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactive_mode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:05:59 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 16:19:57 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 19:48:48 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,22 @@ t_bool	check_minishell_cmd(t_data *data)
 
 int	verif_interactive_mode(t_data *data)
 {
+	t_cmd *current;
+
+	current = data->cmds;
 	if (check_minishell_cmd(data))
 	{
 		printf(RED);
 		ft_putstr_fd("\033[1;31mminishell :"
-			"interactive mode not allowed 💩\033[0m\n", 2);
+						"interactive mode not allowed 💩\033[0m\n",
+						2);
 		printf(RESET);
+		while (current)
+		{
+			close(current->fd_redir[0]);
+			close(current->fd_redir[1]);
+			current = current->next;
+		}
 		data->exit_status = 127;
 		return (0);
 	}

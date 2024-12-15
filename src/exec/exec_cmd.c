@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/15 13:56:42 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:20:26 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,48 +98,9 @@ void	exec_cmd(t_data *data)
 	char	**newenv;
 
 	path = NULL;
-	if (data->cmds->cmd && ft_strlen(data->cmds->cmd) < 1 && !data->cmds->redir)
-	{
-		error_cmd(data->cmds->cmd);
-		data->exit_status = 127;
-		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);
-		gc_mem_env(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
-	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
-	{
-		// redir_builtins(data);
-		exec_builtin(data, data->cmds);
-		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);
-		gc_mem_env(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
-	if (data->cmds->cmd && access(data->cmds->cmd, F_OK | X_OK) == 0)
-		path = gc_strdup(data->cmds->cmd);
-	else if (data->cmds->cmd && ft_strchr(data->cmds->cmd, '/')
-		&& access(data->cmds->cmd, F_OK | X_OK) != 0)
-	{
-		error_mess(data->cmds->cmd, "No such file or directory");
-		data->exit_status = 127;
-		rl_clear_history();
-		gc_mem(FULL_CLEAN, 0, NULL);
-		gc_mem_env(FULL_CLEAN, 0, NULL);
-		exit(data->exit_status);
-	}
-	else
-	{
-		if (data->cmds->cmd)
-			path = new_path(data->cmds->cmd, data->envp_cpy);
-		else
-		{
-			rl_clear_history();
-			gc_mem(FULL_CLEAN, 0, NULL);
-			gc_mem_env(FULL_CLEAN, 0, NULL);
-			exit(data->exit_status);
-		}
-	}
+	exec_no_cmd(data);
+	exec_b_in_cmd(data);
+	path_exec(data, &path);
 	if (data->cmds->cmd && !path)
 	{
 		error_cmd(data->cmds->cmd);

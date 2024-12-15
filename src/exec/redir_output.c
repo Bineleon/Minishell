@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:02:34 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:17:37 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	redir_cmd(t_data *data, t_cmd *cmd)
 		}
 		current_redir = current_redir->next;
 	}
-	if (fd > 0)
-		dup2(fd, cmd->fd_redir[1]);
+	if (fd > 0)		
+		return(dup2(fd, cmd->fd_redir[1]), close(fd), 0);
 	return (0);
 }
 

@@ -6,23 +6,29 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:06:09 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:28:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	exec_child(t_data *data)
+void    exec_child(t_data *data)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	handle_signals();
-	data->open_process = true;
-	dup2(data->cmds->fd_redir[0], STDIN_FILENO);
-	dup2(data->cmds->fd_redir[1], STDOUT_FILENO);
-	close(data->cmds->fd_redir[0]);
-	close(data->cmds->fd_redir[1]);
-	exec_cmd(data);
+    t_cmd    *current;
+
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+    data->open_process = true;
+    dup2(data->cmds->fd_redir[0], STDIN_FILENO);
+    dup2(data->cmds->fd_redir[1], STDOUT_FILENO);
+    current = data->cmds;
+    while (current)
+    {
+        close(current->fd_redir[0]);
+        close(current->fd_redir[1]);
+        current = current->next;
+    }
+    exec_cmd(data);
 }
 
 int	just_builtin(t_data *data)

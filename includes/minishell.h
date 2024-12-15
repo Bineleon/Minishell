@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:05:50 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 20:19:58 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,8 @@ void						adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
 void						create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void						add_redir(t_redir **redir_list, t_token type,
 								char *file_name);
+void						exec_no_cmd(t_data *data);
+void						exec_b_in_cmd(t_data *data);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
@@ -323,6 +325,8 @@ void						skip_var_name(char *line, int *i);
 char						**gc_split(char const *s, char c);
 void						free_post_prompt(t_data *data);
 t_bool						empty_line(char *line);
+void						clear_exec(t_data *data);
+void						path_exec(t_data *data, char **path);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

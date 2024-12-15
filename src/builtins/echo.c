@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 17:50:15 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/15 18:48:00 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 18:49:25 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -71,7 +70,7 @@ void	ft_echo(t_cmd *cmds, int fd)
 	{
 		if (ft_putstr_fd(cmds->args[i], fd) == -1)
 		{
-			perror("echo"); // error_no_space("echo");
+			perror("echo");
 			data->exit_status = 1;
 			return ;
 		}

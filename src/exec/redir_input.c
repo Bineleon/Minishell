@@ -6,11 +6,9 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:01:04 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 18:45:58 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../../includes/minishell.h"
 
@@ -70,6 +68,9 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 		else if (!prompt && data->sig != 130)
 		{
 			clean_heredoc(data);
+			close(data->cmds->fd_redir[0]);
+			close(data->cmds->fd_redir[1]);
+			close(stdi);
 			error_mess("warning", "heredoc delimited by EOF\n");
 			return ;
 		}
@@ -109,18 +110,14 @@ int	redir_input(t_data *data, t_cmd *cmd)
 				close(fd);
 				fd = 0;
 			}
-			res = new_input_fd(data, cmd, current_redir, &fd) == 0;
+			res = new_input_fd(data, cmd, current_redir, &fd);
 			if (res == 0 || res == 130)
 				return (res);
-			return (0);
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
-	{
-		dup2(fd, cmd->fd_redir[0]);
-		close(fd);
-	}
+		return (dup2(fd, cmd->fd_redir[0]), close(fd), 1);
 	return (1);
 }
 
