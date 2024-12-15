@@ -5,30 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:28:25 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/15 20:23:04 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 20:23:15 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void    exec_child(t_data *data)
+void	exec_child(t_data *data)
 {
-    t_cmd    *current;
+	t_cmd	*current;
 
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-    data->open_process = true;
-    dup2(data->cmds->fd_redir[0], STDIN_FILENO);
-    dup2(data->cmds->fd_redir[1], STDOUT_FILENO);
-    current = data->cmds;
-    while (current)
-    {
-        close(current->fd_redir[0]);
-        close(current->fd_redir[1]);
-        current = current->next;
-    }
-    exec_cmd(data);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	data->open_process = true;
+	dup2(data->cmds->fd_redir[0], STDIN_FILENO);
+	dup2(data->cmds->fd_redir[1], STDOUT_FILENO);
+	current = data->cmds;
+	while (current)
+	{
+		close(current->fd_redir[0]);
+		close(current->fd_redir[1]);
+		current = current->next;
+	}
+	exec_cmd(data);
 }
 
 int	just_builtin(t_data *data)

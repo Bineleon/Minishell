@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:05:59 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 19:48:48 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 20:23:59 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_bool	check_minishell_cmd(t_data *data)
 
 int	verif_interactive_mode(t_data *data)
 {
-	t_cmd *current;
+	t_cmd	*current;
 
 	current = data->cmds;
 	if (check_minishell_cmd(data))

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:48:00 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 18:49:25 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 20:32:24 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ t_bool	check_option(char *arg)
 	return (true);
 }
 
-t_bool	check_other_opt(char *arg)
-{
-	if (arg[0] == '-' && arg[1] && arg[1] != 'n')
-		return (true);
-	return (false);
-}
-
 void	handle_echo_args(t_cmd *cmds, int *i, t_bool *nl_option)
 {
 	*nl_option = false;
@@ -52,6 +45,15 @@ void	handle_option(t_cmd *cmds, t_bool *nl_option, int *i)
 		*nl_option = true;
 		(*i)++;
 	}
+}
+
+static void	sub_echo(t_data *data, int fd, t_bool nl_option)
+{
+	if (!nl_option)
+		ft_putstr_fd("\n", fd);
+	data->exit_status = 0;
+	if (fd > 1)
+		close(fd);
 }
 
 void	ft_echo(t_cmd *cmds, int fd)
@@ -78,9 +80,5 @@ void	ft_echo(t_cmd *cmds, int fd)
 			ft_putstr_fd(" ", fd);
 		i++;
 	}
-	if (!nl_option)
-		ft_putstr_fd("\n", fd);
-	data->exit_status = 0;
-	if (fd > 1)
-		close(fd);
+	sub_echo(data, fd, nl_option);
 }
