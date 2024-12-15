@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 20:19:58 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 20:26:12 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ void						add_redir(t_redir **redir_list, t_token type,
 								char *file_name);
 void						exec_no_cmd(t_data *data);
 void						exec_b_in_cmd(t_data *data);
+int							is_last(t_fullcmd **fullcmd);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */

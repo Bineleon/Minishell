@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:00:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 18:38:18 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 20:25:40 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	init_pipe(t_data *data, t_cmd *cmd, t_fullcmd **fullcmd,
+			t_bool(is_first))
+{
+	if (is_first == false)
+	{
+		dup2(data->fd[0], cmd->fd_redir[0]);
+		close(data->fd[0]);
+		close(data->fd[1]);
+	}
+	if (is_last(fullcmd) == 0)
+	{
+		if (pipe(data->fd) == -1)
+		{
+			error_mess(NULL, NULL);
+			return ;
+		}
+		dup2(data->fd[1], cmd->fd_redir[1]);
+	}
+}
 
 void	add_redir(t_redir **redir_list, t_token type, char *file_name)
 {
