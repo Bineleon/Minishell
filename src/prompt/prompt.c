@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:21:46 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 14:11:13 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	ft_prompt(t_data *data)
 				expand_var(data);
 				find_cmds(data);
 				// print_tokens(tokens);
+        // printf("PROMPT\n");
 				exec(data);
 			}
 		}

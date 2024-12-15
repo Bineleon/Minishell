@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 13:59:31 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:07:43 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,6 @@ void	handle_sigint(int sig)
 
 void	handle_signals(void)
 {
-	t_data	*data;
-
-	data = get_data();
 	signal(SIGINT, &handle_sigint);
 	signal(SIGQUIT, &handle_sigquit2);
 }
