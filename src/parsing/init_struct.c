@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 17:14:19 by bineleon          #+#    #+#             */
-/*   Updated: 2024/12/15 00:07:46 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 15:26:42 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,4 @@ void	init_cmd(t_cmd *cmd)
 	}
 	dup2(STDIN_FILENO, cmd->fd_redir[0]);
 	dup2(STDOUT_FILENO, cmd->fd_redir[1]);
-	close(cmd->fd_redir[0]);
-	close(cmd->fd_redir[1]);
 }

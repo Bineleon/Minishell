@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 00:09:25 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 15:13:42 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,10 +196,7 @@ char			*expand_exit_st(char *str, char **result, int i);
 /* ╚════════════════════════════════════╝ */
 
 void			exec(t_data *data);
-void			which_child(t_data *data);
-void			first_child(t_data *data);
-void			middle_child(t_data *data);
-void			last_child(t_data *data);
+void			exec_child(t_data *data);
 int				redir_input(t_data *data, t_cmd *cmd);
 void			heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir);
 void			clean_heredoc(t_data *data);
@@ -217,11 +214,13 @@ void			exec_builtin(t_data *data, t_cmd *cmds);
 t_bool			is_builtin(char *cmd);
 void			redir_builtins(t_data *data);
 int				is_delim(t_redir *current_redir, char *prompt);
-int				new_input_fd(t_data *data, t_cmd *cmd, t_redir *current_redir, int *fd);
+int				new_input_fd(t_data *data, t_cmd *cmd, t_redir *current_redir,
+					int *fd);
 void			adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
 void			create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void			add_redir(t_redir **redir_list, t_token type, char *file_name);
-void			init_pipe(t_data *data, t_cmd *cmd, t_bool(is_first));
+void			init_pipe(t_data *data, t_cmd *cmd, t_fullcmd **fullcmd,
+					t_bool(is_first));
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */

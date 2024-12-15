@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 00:28:59 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 15:26:44 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	which_child(t_data *data)
+void	exec_child(t_data *data)
 {
-	if (!data->cmds->prev)
-		first_child(data);
-	else if (!data->cmds->next)
-		last_child(data);
-	else
-		middle_child(data);
+	data->open_process = true;
+	dup2(data->cmds->fd_redir[0], STDIN_FILENO);
+	dup2(data->cmds->fd_redir[1], STDOUT_FILENO);
+	close(data->cmds->fd_redir[0]);
+	close(data->cmds->fd_redir[1]);
+	exec_cmd(data);
 }
 
 t_bool	check_minishell(char *cmd)
@@ -83,7 +83,7 @@ void	exec(t_data *data)
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			which_child(data);
+			exec_child(data);
 		}
 		data->open_process = true;	
 		if (data->cmds->next)

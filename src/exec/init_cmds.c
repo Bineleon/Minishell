@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu@student.42.fr <elilliu>            +#+  +:+       +#+        */
+/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 00:09:29 by elilliu@stu      ###   ########.fr       */
+/*   Updated: 2024/12/15 14:59:06 by elilliu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	init_cmds(t_data *data)
 	while (fullcmdtmp)
 	{
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
-		init_pipe(data, cmdstmp, is_first);
+		init_pipe(data, cmdstmp, &fullcmdtmp, is_first);
 		is_first = false;
 		redir_input(data, cmdstmp);
 		redir_output(data, cmdstmp);
