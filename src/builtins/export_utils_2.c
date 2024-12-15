@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:07:48 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:12:38 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 15:23:27 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,58 @@ t_env	**lst_to_arr(t_env *env)
 	return (arr);
 }
 
-void	print_export(t_env **arr)
+void print_export(t_env **arr)
 {
-	int	i;
+    int i;
+    t_data *data;
 
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		if (arr[i]->value)
-			printf("export %s=\"%s\"\n", arr[i]->key, arr[i]->value);
-		else if (arr[i]->equal == false)
-			printf("export %s\n", arr[i]->key);
-		else if (arr[i]->equal && !arr[i]->value)
-			printf("export %s=\"\"\n", arr[i]->key);
-		i++;
-	}
+    i = 0;
+    data = get_data();
+    if (!arr)
+        return;
+    while (arr[i])
+    {
+        if (arr[i]->value)
+        {
+            ft_putstr_fd("export ", data->fd_);
+            ft_putstr_fd(arr[i]->key, data->fd_);
+            ft_putstr_fd("=\"", data->fd_);
+            ft_putstr_fd(arr[i]->value, data->fd_);
+            ft_putstr_fd("\"\n", data->fd_);
+        }
+        else if (arr[i]->equal == false)
+        {
+            ft_putstr_fd("export ", data->fd_);
+            ft_putstr_fd(arr[i]->key, data->fd_);
+            ft_putstr_fd("\n", data->fd_);
+        }
+        else if (arr[i]->equal && !arr[i]->value)
+        {
+            ft_putstr_fd("export ", data->fd_);
+            ft_putstr_fd(arr[i]->key, data->fd_);
+            ft_putstr_fd("=\"\"\n", data->fd_);
+        }
+        i++;
+    }
 }
+
+// void	print_export(t_env **arr)
+// {
+// 	int	i;
+//   t_data *data;
+
+// 	i = 0;
+//   data = get_data();
+// 	if (!arr)
+// 		return ;
+// 	while (arr[i])
+// 	{
+// 		if (arr[i]->value)
+// 			printf("export %s=\"%s\"\n", arr[i]->key, arr[i]->value);
+// 		else if (arr[i]->equal == false)
+// 			printf("export %s\n", arr[i]->key);
+// 		else if (arr[i]->equal && !arr[i]->value)
+// 			printf("export %s=\"\"\n", arr[i]->key);
+// 		i++;
+// 	}
+// }

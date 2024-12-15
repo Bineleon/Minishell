@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:45:55 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 15:12:18 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:24:28 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_env(t_data *data)
 	{
 		if (curr->value)
     {
-      
 			printf("%s=%s\n", curr->key, curr->value);
     }
 		else if (curr->equal && !curr->value)

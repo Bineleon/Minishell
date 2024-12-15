@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 15:04:47 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:26:12 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void	exec(t_data *data)
 			exec_builtin(data, data->cmds);
 			return ;
 		}
-		data->pid = fork();dup2(data->cmds->fd_redir[0], STDIN_FILENO);
-			close(data->cmds->fd_redir[0]);
+		data->pid = fork();
 		if (data->pid == -1)
 			return ((void)error_mess(NULL, NULL)); // add full clean
 		if (data->pid == 0)
