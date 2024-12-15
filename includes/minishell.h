@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:16:43 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 15:01:26 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 02:28:24 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <signal.h>
 # include <stdio.h>
 # include <sys/wait.h>
+# include <termios.h>
 # include <unistd.h>
-#include <termios.h>
 
 /* ╔════════════════════════════════════╗ */
 /* ║                ENUM                ║ */
@@ -85,6 +85,7 @@ typedef struct s_cmd
 	t_redir					*redir;
 	t_bool					is_first;
 	char					**args;
+	int						fd_redir[2];
 	struct s_cmd			*next;
 }							t_cmd;
 
@@ -123,11 +124,12 @@ typedef struct s_data
 	int						fd_;
 	int						pid;
 	int						exit_status;
+	int						sig;
 	t_heredoc				*heredoc;
-  t_bool         hd_active;
 	t_bool					open_process;
 	char					*delim;
 	t_cmd					*cmds;
+	struct termios			term_state;
 	t_fullcmd				*token_fullcmd;
 	t_garbage_env			*garbage_env;
 	t_garbage_co			*garbage;
@@ -213,8 +215,9 @@ void						which_child(t_data *data);
 void						first_child(t_data *data);
 void						middle_child(t_data *data);
 void						last_child(t_data *data);
-int							redir_input(t_data *data);
-void						heredoc(t_data *data, t_redir *current_redir);
+int							redir_input(t_data *data, t_cmd *cmd);
+void						heredoc(t_data *data, t_cmd *cmd,
+								t_redir *current_redir);
 void						clean_heredoc(t_data *data);
 void						new_heredoc(t_data *data);
 int							redir_output(t_data *data, t_cmd *cmd);
@@ -230,12 +233,14 @@ void						exec_builtin(t_data *data, t_cmd *cmds);
 t_bool						is_builtin(char *cmd);
 void						redir_builtins(t_data *data);
 int							is_delim(t_redir *current_redir, char *prompt);
-int							new_input_fd(t_data *data, t_redir *current_redir,
-								int *fd);
+int							new_input_fd(t_data *data, t_cmd *cmd,
+								t_redir *current_redir, int *fd);
 void						adding_new_redirs(t_cmd *cmds, t_fullcmd **current);
 void						create_new_cmd(t_cmd *cmds, t_fullcmd **current);
 void						add_redir(t_redir **redir_list, t_token type,
 								char *file_name);
+void						init_pipe(t_data *data, t_cmd *cmd,
+								t_bool(is_first));
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
@@ -250,7 +255,7 @@ void						ft_prompt(t_data *data);
 void						handle_signals(void);
 void						handle_sigquit2(int sig);
 void						handle_signals2(void);
-void	handle_child_sigquit(int sig);
+void						handle_child_sigquit(int sig);
 
 /* ╔════════════════════════════════════╗ */
 /* ║               UTILS                ║ */

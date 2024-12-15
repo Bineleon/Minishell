@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 18:26:55 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/07 20:32:11 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 02:21:11 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*join(char *path, char *cmd)
 {
 	char	*tmp;
 	char	*str;
-	
+
 	tmp = gc_strjoin(path, "/");
 	str = gc_strjoin(tmp, cmd);
 	if (!str)

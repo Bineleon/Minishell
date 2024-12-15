@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/14 01:58:52 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 02:36:24 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	exec_cmd(t_data *data)
 {
 	char	*path;
 	char	**newenv;
-	// t_bool	no_cmd;
 
+	// t_bool	no_cmd;
 	// no_cmd = false;
 	path = NULL;
 	if (data->cmds->cmd && ft_strlen(data->cmds->cmd) < 1 && !data->cmds->redir)
@@ -113,8 +113,6 @@ void	exec_cmd(t_data *data)
 	{
 		redir_builtins(data);
 		exec_builtin(data, data->cmds);
-    if (data->fd_ > 0)
-			close(data->fd_);
 		rl_clear_history();
 		gc_mem(FULL_CLEAN, 0, NULL);
 		gc_mem_env(FULL_CLEAN, 0, NULL);
@@ -155,6 +153,7 @@ void	exec_cmd(t_data *data)
 	}
 	if (path)
 	{
+		data->open_process = true;
 		newenv = ft_newenv(data);
 		if (!newenv)
 			return ((void)gc_mem(FREE, 0, path));

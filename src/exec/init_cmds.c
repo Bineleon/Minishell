@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 01:37:01 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/14 01:37:51 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 02:17:32 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ void	init_cmds(t_data *data)
 	while (fullcmdtmp)
 	{
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
+		init_pipe(data, cmdstmp, is_first);
 		is_first = false;
+		redir_input(data, cmdstmp);
+		redir_output(data, cmdstmp);
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{
 			fullcmdtmp = fullcmdtmp->next;
