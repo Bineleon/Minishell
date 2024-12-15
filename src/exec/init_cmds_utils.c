@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:17:29 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 13:57:27 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:15:17 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	is_last(t_fullcmd **fullcmd, t_cmd *cmd)
 	t_fullcmd *current;
 
 	current = *fullcmd;
-	while (current && ft_strncmp(cmd->cmd, current->str, ft_strlen(cmd->cmd)) != 0)
+	while (current && cmd->cmd && ft_strncmp(cmd->cmd, current->str, ft_strlen(cmd->cmd)) != 0)
 		current = current->next;
 	while (current)
 	{
