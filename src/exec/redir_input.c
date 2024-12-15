@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:45:58 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/15 20:46:28 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 21:03:33 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,52 +45,6 @@ void	restore_stdin(int *stdi)
 	close(*stdi);
 }
 
-void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
-{
-	char	*prompt;
-	int		stdi;
-
-	save_stdin(&stdi);
-	printf("stdin : %d\n", stdi);
-	data->sig = 0;
-	new_heredoc(data);
-	data->heredoc->in_process = true;
-	handle_signals();
-	if (pipe(data->heredoc->fd) == -1)
-		return ((void)clean_heredoc(data), (void)error_mess(NULL, NULL));
-	prompt = NULL;
-	while (data->sig != 130)
-	{
-		signal(SIGQUIT, SIG_IGN);
-		prompt = readline("> ");
-		if (!prompt && data->sig == 130)
-			return (restore_stdin(&stdi));
-		else if (!prompt && data->sig != 130)
-		{
-			clean_heredoc(data);
-			close(data->cmds->fd_redir[0]);
-			close(data->cmds->fd_redir[1]);
-			close(stdi);
-			error_mess("warning", "heredoc delimited by EOF\n");
-			return ;
-		}
-		if (is_delim(current_redir, prompt) == 1)
-		{
-			gc_mem(FREE, (size_t)NULL, prompt);
-			break ;
-		}
-		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt,
-				prompt);
-		gc_mem(FREE, (size_t)NULL, prompt);
-		data->heredoc->fullprompt = gc_strjoin(data->heredoc->fullprompt, "\n");
-	}
-	ft_putstr_fd(data->heredoc->fullprompt, data->heredoc->fd[1]);
-	dup2(data->heredoc->fd[0], cmd->fd_redir[0]);
-	clean_heredoc(data);
-	free(prompt);
-	close(stdi);
-}
-
 int	redir_input(t_data *data, t_cmd *cmd)
 {
 	t_redir	*current_redir;
@@ -100,16 +54,13 @@ int	redir_input(t_data *data, t_cmd *cmd)
 	if (!cmd || !cmd->redir)
 		return (1);
 	current_redir = cmd->redir;
-	fd = 0;
+	fd = -1;
 	while (current_redir)
 	{
 		if (current_redir->type == IN || current_redir->type == HEREDOC)
 		{
 			if (fd > 0)
-			{
-				close(fd);
-				fd = 0;
-			}
+				close_fd(&fd);
 			res = new_input_fd(data, cmd, current_redir, &fd);
 			if (res == 0 || res == 130)
 				return (res);

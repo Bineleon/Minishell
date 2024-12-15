@@ -6,42 +6,11 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:23:30 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 17:21:40 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 23:23:48 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// void	print_tokens(t_fullcmd *tokens)
-// {
-// 	t_fullcmd	*current;
-
-// 	current = tokens;
-// 	while (current)
-// 	{
-// 		printf("Token: Type = ");
-// 		if (current->type == PIPE)
-// 			printf("PIPE");
-// 		else if (current->type == WORD)
-// 			printf("WORD");
-// 		else if (current->type == IN)
-// 			printf("IN");
-// 		else if (current->type == OUT)
-// 			printf("OUT");
-// 		else if (current->type == HEREDOC)
-// 			printf("HEREDOC");
-// 		else if (current->type == APPEND)
-// 			printf("APPEND");
-// 		else if (current->type == EXPAND)
-// 			printf("EXPAND");
-// 		else if (current->type == SQUOTE)
-// 			printf("SQUOTE");
-// 		else if (current->type == DQUOTE)
-// 			printf("DQUOTE");
-// 		printf(", token = (%s)\n", current->str);
-// 		current = current->next;
-// 	}
-// }
 
 void	handle_ctrl_d(t_data *data, char *prompt)
 {

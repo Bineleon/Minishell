@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 18:17:37 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/15 21:05:52 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 22:11:34 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -36,7 +35,7 @@ void	close_fd(int *fd)
 	(*fd) = -1;
 }
 
-void	redir_builtins(t_data *data)
+int	redir_builtins(t_data *data)
 {
 	t_redir	*current_redir;
 	int		fd;
@@ -44,7 +43,7 @@ void	redir_builtins(t_data *data)
 	if (!data->cmds || !data->cmds->redir)
 	{
 		data->fd_ = 1;
-		return ;
+		return (1);
 	}
 	current_redir = data->cmds->redir;
 	fd = 0;
@@ -55,12 +54,13 @@ void	redir_builtins(t_data *data)
 			if (fd > 0)
 				close_fd(&fd);
 			if (new_output_fd(data, current_redir, &fd) == 0)
-				return ;
+				return (0);
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
 		data->fd_ = fd;
+	return (1);
 }
 
 int	redir_cmd(t_data *data, t_cmd *cmd)
@@ -86,8 +86,8 @@ int	redir_cmd(t_data *data, t_cmd *cmd)
 		}
 		current_redir = current_redir->next;
 	}
-	if (fd > 0)		
-		return(dup2(fd, cmd->fd_redir[1]), close(fd), 0);
+	if (fd > 0)
+		return (dup2(fd, cmd->fd_redir[1]), close(fd), 0);
 	return (0);
 }
 

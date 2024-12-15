@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 20:23:04 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 20:23:15 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 23:22:10 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	just_builtin(t_data *data)
 	{
 		close(data->cmds->fd_redir[0]);
 		close(data->cmds->fd_redir[1]);
-		redir_builtins(data);
+		if (redir_builtins(data) == 0)
+			return (1);
 		exec_builtin(data, data->cmds);
 		return (1);
 	}
@@ -59,30 +60,40 @@ void	wait_pid(t_data *data)
 	}
 }
 
-void	exec(t_data *data)
+int	init_exec(t_data *data)
 {
 	data->sig = 0;
-	init_cmds(data);
+	if (!init_cmds(data))
+		return (0);
 	if (data->sig == 130)
-		return ;
+		return (0);
 	data->open_process = false;
 	if (verif_interactive_mode(data) == 0)
+		return (0);
+	return (1);
+}
+
+void	exec(t_data *data)
+{
+	if (init_exec(data) == 0)
 		return ;
 	while (data->cmds != NULL)
 	{
+		if (redir_puts(data, data->cmds) == 0)
+		{
+			close(data->cmds->fd_redir[0]);
+			close(data->cmds->fd_redir[1]);
+			data->cmds = data->cmds->next;
+			continue ;
+		}
 		if (just_builtin(data) == 1)
 			return ;
 		data->pid = fork();
 		if (data->pid == -1)
-			return ((void)error_mess(NULL, NULL)); // add full clean
+			return (gc_mem(FULL_CLEAN, 0, NULL), (void)error_mess(NULL, NULL));
 		if (data->pid == 0)
 			exec_child(data);
 		finish_process(data);
-		if (data->cmds->next)
-			close(data->fd[1]);
-		if (data->fd[2] != -1)
-			close(data->fd[2]);
-		data->fd[2] = data->fd[0];
 		data->cmds = data->cmds->next;
 	}
 	if (data->fd[2] != -1)

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 16:05:59 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 20:23:59 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 23:21:56 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ int	verif_interactive_mode(t_data *data)
 	if (check_minishell_cmd(data))
 	{
 		printf(RED);
-		ft_putstr_fd("\033[1;31mminishell :"
-						"interactive mode not allowed 💩\033[0m\n",
-						2);
+		ft_putstr_fd("\033[1;31mminishell :\033[0m", 2);
+		ft_putstr_fd("\033[1;31m interactive mode not allowed 💩\033[0m\n", 2);
 		printf(RESET);
 		while (current)
 		{
@@ -69,4 +68,9 @@ void	finish_process(t_data *data)
 	close(data->cmds->fd_redir[0]);
 	close(data->cmds->fd_redir[1]);
 	data->open_process = true;
+	if (data->cmds->next)
+		close(data->fd[1]);
+	if (data->fd[2] != -1)
+		close(data->fd[2]);
+	data->fd[2] = data->fd[0];
 }

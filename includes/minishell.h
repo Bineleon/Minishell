@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 20:34:26 by neleon           ###   ########.fr       */
+/*   Created: 2024/12/15 21:21:36 by neleon            #+#    #+#             */
+/*   Updated: 2024/12/15 22:16:33 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,13 +220,12 @@ void						exec_cmd(t_data *data);
 char						*new_path(char *arg, t_env *env_cpy);
 char						**all_paths(t_env *env);
 char						*join(char *path, char *cmd);
-void						init_cmds(t_data *data);
+int							init_cmds(t_data *data);
 void						new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
 char						*joinequal(char *key, char *value);
 char						**ft_newenv(t_data *data);
 void						exec_builtin(t_data *data, t_cmd *cmds);
 t_bool						is_builtin(char *cmd);
-void						redir_builtins(t_data *data);
 int							is_delim(t_redir *current_redir, char *prompt);
 int							new_input_fd(t_data *data, t_cmd *cmd,
 								t_redir *current_redir, int *fd);
@@ -255,13 +254,12 @@ void						exec_cmd(t_data *data);
 char						*new_path(char *arg, t_env *env_cpy);
 char						**all_paths(t_env *env);
 char						*join(char *path, char *cmd);
-void						init_cmds(t_data *data);
 void						new_cmd(t_cmd *cmds, t_fullcmd **fullcmd);
 char						*joinequal(char *key, char *value);
 char						**ft_newenv(t_data *data);
 void						exec_builtin(t_data *data, t_cmd *cmds);
 t_bool						is_builtin(char *cmd);
-void						redir_builtins(t_data *data);
+int							redir_builtins(t_data *data);
 int							is_delim(t_redir *current_redir, char *prompt);
 int							new_input_fd(t_data *data, t_cmd *cmd,
 								t_redir *current_redir, int *fd);
@@ -272,6 +270,8 @@ void						add_redir(t_redir **redir_list, t_token type,
 void						exec_no_cmd(t_data *data);
 void						exec_b_in_cmd(t_data *data);
 int							is_last(t_fullcmd **fullcmd);
+void						save_stdin(int *stdi);
+void						restore_stdin(int *stdi);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
@@ -328,6 +328,7 @@ void						free_post_prompt(t_data *data);
 t_bool						empty_line(char *line);
 void						clear_exec(t_data *data);
 void						path_exec(t_data *data, char **path);
+void						close_fd(int *fd);
 
 /* ╔════════════════════════════════════╗ */
 /* ║        GARBAGE COLLECTOR           ║ */

@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 22:26:27 by elilliu@stu       #+#    #+#             */
-/*   Updated: 2024/12/15 20:20:26 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 21:53:58 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*new_path(char *arg, t_env *env_cpy)
 	i = 0;
 	paths = all_paths(env_cpy);
 	if (!paths)
-		return (NULL);
+		return (gc_mem(FREE, 0, paths), NULL);
 	while (paths[i])
 	{
 		str = join(paths[i], arg);

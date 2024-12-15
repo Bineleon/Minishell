@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:51:54 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 20:18:06 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 22:16:56 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	exec_b_in_cmd(t_data *data)
 {
 	if (data->cmds->cmd && is_builtin(data->cmds->cmd))
 	{
+		if (redir_builtins(data) == 0)
+			clear_exec(data);
 		exec_builtin(data, data->cmds);
 		clear_exec(data);
 	}

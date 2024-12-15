@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elilliu <elilliu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 18:00:38 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 20:25:40 by elilliu          ###   ########.fr       */
+/*   Updated: 2024/12/15 22:45:00 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,13 @@ void	sub_init_cmds(t_cmd *cmd, t_fullcmd **fullcmd, t_bool is_first)
 	}
 }
 
-void	init_cmds(t_data *data)
+int	init_cmds(t_data *data)
 {
 	t_cmd		*cmdstmp;
 	t_fullcmd	*fullcmdtmp;
 	t_bool		is_first;
 
 	init_data_fd(data);
-	data->cmds = gc_mem(MALLOC, sizeof(t_cmd), NULL);
 	init_cmd(data->cmds);
 	cmdstmp = data->cmds;
 	fullcmdtmp = data->token_fullcmd;
@@ -120,8 +119,6 @@ void	init_cmds(t_data *data)
 		sub_init_cmds(cmdstmp, &fullcmdtmp, is_first);
 		init_pipe(data, cmdstmp, &fullcmdtmp, is_first);
 		is_first = false;
-		if (redir_puts(data, cmdstmp) == 0)
-			return ;
 		if (fullcmdtmp && fullcmdtmp->type == PIPE)
 		{
 			fullcmdtmp = fullcmdtmp->next;
@@ -131,4 +128,5 @@ void	init_cmds(t_data *data)
 			cmdstmp = cmdstmp->next;
 		}
 	}
+	return (1);
 }

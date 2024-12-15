@@ -6,7 +6,7 @@
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 11:49:57 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 17:26:47 by neleon           ###   ########.fr       */
+/*   Updated: 2024/12/15 21:00:06 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int	new_input_fd(t_data *data, t_cmd *cmd, t_redir *current_redir, int *fd)
 		signal(SIGQUIT, SIG_IGN);
 		heredoc(data, cmd, current_redir);
 		if (data->sig == 130)
-		{
-			printf("\nTEST1\n");
 			return (130);
-		}
 		handle_signals();
 		if (*fd > 0)
 			close(*fd);

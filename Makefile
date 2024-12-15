@@ -6,7 +6,7 @@
 #    By: neleon <neleon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/15 19:15:32 by neleon            #+#    #+#              #
-#    Updated: 2024/12/15 19:28:10 by neleon           ###   ########.fr        #
+#    Updated: 2024/12/15 20:57:46 by neleon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME			= minishell
 EXEC_DIR		= src/exec/
 EXEC			= children.c exec.c init_cmds.c exec_utils.c redir_input.c\
 				redir_input_utils.c redir_output.c exec_cmd.c exec_builtins.c\
-				init_cmds_utils.c exec_cmd_utils.c interactive_mode.c
+				init_cmds_utils.c exec_cmd_utils.c interactive_mode.c heredoc.c
 SRC				+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR		= src/main/
