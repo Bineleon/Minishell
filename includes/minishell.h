@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: neleon <neleon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 20:25:05 by neleon            #+#    #+#             */
-/*   Updated: 2024/12/15 20:25:18 by neleon           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/12/15 20:34:26 by neleon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ void						add_redir(t_redir **redir_list, t_token type,
 								char *file_name);
 void						exec_no_cmd(t_data *data);
 void						exec_b_in_cmd(t_data *data);
+int							is_last(t_fullcmd **fullcmd);
 
 /* ╔════════════════════════════════════╗ */
 /* ║              PROMPT                ║ */
