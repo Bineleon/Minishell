@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/12/15 14:07:43 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:50:05 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	sigint_process(void)
 {
 	t_data	*data;
 
-	printf("SIGIN\n\n");
 	data = get_data();
 	data->sig = 130;
 	data->exit_status = data->sig;
@@ -67,7 +66,8 @@ void	handle_sigint(int sig)
 
 	(void)sig;
 	data = get_data();
-	data->exit_status = 130;
+  data->sig = 130;
+	data->exit_status = data->sig;
 	if (data->heredoc && data->heredoc->in_process)
 	{
 		sigint_heredoc();

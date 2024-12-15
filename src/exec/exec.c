@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 17:39:12 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 13:56:25 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:53:53 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	exec(t_data *data)
 {
 	int	status;
 
+  data->sig = 0;
 	init_cmds(data);
+  if (data->sig == 130)
+    return;
 	data->open_process = false;
 	if (check_minishell_cmd(data))
 	{

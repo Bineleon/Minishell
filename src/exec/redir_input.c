@@ -6,7 +6,7 @@
 /*   By: bineleon <neleon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 21:20:10 by elilliu           #+#    #+#             */
-/*   Updated: 2024/12/15 13:58:23 by bineleon         ###   ########.fr       */
+/*   Updated: 2024/12/15 14:51:44 by bineleon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	clean_heredoc(t_data *data)
 		close(data->heredoc->fd[1]);
 	if (data->heredoc->fullprompt)
 		gc_mem(FREE, 0, data->heredoc->fullprompt);
-	gc_mem(FREE, 0, data->heredoc);
+	data->heredoc = gc_mem(FREE, 0, data->heredoc);
 }
 
 void	save_stdin(int *stdi)
@@ -69,8 +69,8 @@ void	heredoc(t_data *data, t_cmd *cmd, t_redir *current_redir)
 		{
 			// data->heredoc->in_process = false;
 			// clean_heredoc(data);
-			restore_stdin(&stdi);
-			return ;
+      printf("\nTEST0\n");
+			return (restore_stdin(&stdi));
 		}
 		else if (!prompt && data->sig != 130)
 		{
@@ -99,6 +99,7 @@ int	redir_input(t_data *data, t_cmd *cmd)
 {
 	t_redir *current_redir;
 	int		fd;
+  int   res;
 
 	if (!cmd || !cmd->redir)
 		return (1);
@@ -113,13 +114,22 @@ int	redir_input(t_data *data, t_cmd *cmd)
 				close(fd);
 				fd = 0;
 			}
-			if (new_input_fd(data, cmd, current_redir, &fd) == 0)
+      res = new_input_fd(data, cmd, current_redir, &fd) == 0;
+      printf("\nRES %d\n", res);
+      if (res == 0 || res == 130)
+      {
+          printf("\nTEST2\n");
+          return (res);
+      }
 				return (0);
 		}
 		current_redir = current_redir->next;
 	}
 	if (fd > 0)
+  {
 		dup2(fd, cmd->fd_redir[0]);
+    close(fd);
+  }
 	return (1);
 }
 
