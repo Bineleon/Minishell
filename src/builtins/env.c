@@ -35,21 +35,3 @@ void	ft_env(t_data *data)
 	}
 	data->exit_status = 0;
 }
-
-// void	ft_env(t_data *data)
-// {
-// 	t_env	*curr;
-
-// 	curr = data->envp_cpy;
-// 	while (curr)
-// 	{
-// 		if (curr->value)
-//     {
-// 			printf("%s=%s\n", curr->key, curr->value);
-//     }
-// 		else if (curr->equal && !curr->value)
-// 			printf("%s=\n", curr->key);
-// 		curr = curr->next;
-// 	}
-// 	data->exit_status = 0;
-// }
