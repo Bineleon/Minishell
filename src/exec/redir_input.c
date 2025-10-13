@@ -71,32 +71,3 @@ int	redir_input(t_data *data, t_cmd *cmd)
 		return (dup2(fd, cmd->fd_redir[0]), close(fd), 1);
 	return (1);
 }
-
-// int	redir_input(t_data *data)
-// {
-// 	t_redir	*current_redir;
-// 	int		fd;
-
-// 	if (!data->cmds || !data->cmds->redir)
-// 		return (0);
-// 	current_redir = data->cmds->redir;
-// 	fd = 0;
-// 	while (current_redir)
-// 	{
-// 		if (current_redir->type == IN || current_redir->type == HEREDOC)
-// 		{
-// 			if (fd > 0)
-// 			{
-// 				close(fd);
-// 				fd = 0;
-// 			}
-// 			if (new_input_fd(data, current_redir, &fd) == 0)
-// 				return (2);
-// ajouter gestion d'erreur en cas de non droits pour le fichier
-// 		}
-// 		current_redir = current_redir->next;
-// 	}
-// 	if (fd > 0)
-// 		return (dup2(fd, STDIN_FILENO), close(fd), 1);
-// 	return (0);
-// }
