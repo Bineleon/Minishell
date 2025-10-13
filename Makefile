@@ -18,8 +18,8 @@ NAME			= minishell
 
 EXEC_DIR		= src/exec/
 EXEC			= children.c exec.c init_cmds.c exec_utils.c redir_input.c\
-				redir_input_utils.c redir_output.c exec_cmd.c exec_builtins.c\
-				init_cmds_utils.c exec_cmd_utils.c interactive_mode.c heredoc.c
+				redir_input_utils.c redir_output.c exec_cmd.c builtins.c\
+				init_cmds_utils.c cmd_utils.c interactive_mode.c heredoc.c
 SRC				+= $(addprefix ${EXEC_DIR}, ${EXEC})
 
 MAIN_DIR		= src/main/
@@ -27,10 +27,9 @@ MAIN			= main.c
 SRC				+= $(addprefix ${MAIN_DIR}, ${MAIN})
 
 PARSING_DIR		= src/parsing/
-PARSING			= init_struct.c parse_env.c token_check.c parse_error.c\
-				04_expand.c 05_expand.c 06_expand.c 07_expand.c 08_expand_utils.c\
-				00_token.c 01_token.c 02_token.c 03_token.c last_token.c expand_utils_2.c\
-				parse_error_2.c
+PARSING			= init_struct.c parse_env.c parse_cmd.c parse_err.c parse_err2.c\
+				expand_all.c expand_core.c expand_dquote.c expand_word.c expand_utils.c expand_utils2.c\
+				token_core.c token_create.c token_quote.c token_var.c token_type.c
 SRC				+= $(addprefix ${PARSING_DIR}, ${PARSING})
 
 PROMPT_DIR		= src/prompt/
@@ -38,12 +37,12 @@ PROMPT			= prompt.c
 SRC				+= $(addprefix ${PROMPT_DIR}, ${PROMPT})
 
 SIGNAL_DIR		= src/signal/
-SIGNAL			= signal_handler.c signal_handler2.c
+SIGNAL			= signals.c signals2.c
 SRC				+= $(addprefix ${SIGNAL_DIR}, ${SIGNAL})
 
 UTILS_DIR		= src/utils/
-UTILS			= garbage_collector.c garbage_env.c split.c utils.c error_mess.c\
-				utils_2.c utils_gc.c utils_itoa_gc.c
+UTILS			= gc_core.c gc_env.c gc_split.c utils.c err_msg.c\
+				utils2.c gc_utils.c gc_itoa.c
 SRC				+= $(addprefix ${UTILS_DIR}, ${UTILS})
 
 BUILTINS_DIR	= src/builtins/
