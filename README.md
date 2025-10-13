@@ -85,13 +85,13 @@ minishell> echo $?   # last command exit status
 
 | Command | Description | Examples |
 |---|---|---|
-| `echo` | Print arguments (supports quotes, `-n` if implemented) | `echo -n "hello"` |
-| `cd` | Change directory (with or without arg) | `cd`, `cd ~`, `cd /tmp` |
+| `echo` | Print arguments (supports quotes, `-n`) | `echo -n "hello"` |
+| `cd` | Change directory | `cd`, `cd ~`, `cd /tmp` |
 | `pwd` | Print current directory | `pwd` |
 | `export` | Define environment variables | `export KEY=value` |
 | `unset` | Remove environment variables | `unset KEY` |
 | `env` | Print the current environment | `env` |
-| `exit` | Quit the shell (optional code) | `exit`, `exit 2` |
+| `exit` | Quit the shell | `exit` |
 
 ---
 
@@ -102,11 +102,11 @@ minishell> echo $?   # last command exit status
 - `>> file` redirects **stdout** to file (append).
 - `<< DELIM` reads until a line matching `DELIM` (Heredoc). Signals are handled during heredoc; `Ctrl‑C` cancels cleanly.
 
-Errors (syntax, file access, etc.) are reported with meaningful messages and proper exit status.
+Errors (syntax, file access, etc.) are reported with specific messages and proper exit status.
 
 ---
 
-## 🧠 Memory Manager (Garbage Collector)
+## Memory Manager (Garbage Collector)
 
 The project uses a **very small custom garbage collector** to make memory management easier and avoid leaks.  
 Instead of freeing every `malloc` manually everywhere in the code, all allocations are **tracked automatically** and can be cleaned in one go.
