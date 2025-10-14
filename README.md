@@ -117,7 +117,7 @@ Instead of freeing every `malloc` manually everywhere in the code, all allocatio
 - The GC keeps a list of all allocated pointers.
 - You can free:
   - **One pointer**: remove it from the list and free it.
-  - **Everything at once**: clear all tracked memory (used at program exit or when resetting a shell state).
+  - **Everything at once**: clear all tracked memory.
 
 ### Example usage
 ```c
